@@ -6,10 +6,9 @@ import profileImg from "@/public/assets/light_profile-img.png";
 const Logo = () => {
   return (
     <Link href="/" className="flex items-center text-dark">
-      <div className="w-16 rounded-full overflow-hidden ">
+      <div className="w-36  overflow-hidden ">
         <Image src={profileImg} alt="logo" className="w-full h-auto " />
       </div>
-      <span className="font-bold text-xl">DH DEVa</span>
     </Link>
   );
 };

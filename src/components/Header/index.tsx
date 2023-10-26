@@ -14,7 +14,7 @@ import {
 
 const Header = () => {
   return (
-    <header className="w-full p-4 px-10 flex items-center justify-between">
+    <header className="w-full p-6 px-10 flex items-center justify-between">
       <Logo />
       <nav className="w-max py-3 px-8 border border-dark border-solid rounded-full font-medium capitalize flex items-center fixed top-6 right-1/2 translate-x-1/2 bg-light/80 backdrop-blur-sm ">
         <Link href="/" className="mr-2">
