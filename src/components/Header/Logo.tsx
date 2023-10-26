@@ -9,7 +9,7 @@ const Logo = () => {
       <div className="w-16 rounded-full overflow-hidden ">
         <Image src={profileImg} alt="logo" className="w-full h-auto " />
       </div>
-      <span className="font-bold text-xl">DH DEV</span>
+      <span className="font-bold text-xl">DH DEVa</span>
     </Link>
   );
 };
