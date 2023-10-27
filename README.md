@@ -1,3 +1,13 @@
+
+노션 정리
+[Click here](https://www.notion.so/Nextjs-Blog-ContentLayer-8ccda2c882b44e2d9c36ea0996dcf73e)
+
+![image](https://github.com/s2s2hyun/dh-project/assets/100761993/1d197756-4615-41e5-b69d-f812baaf21f9)
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
