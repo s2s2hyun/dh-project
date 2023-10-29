@@ -24,7 +24,7 @@ const Header = () => {
           About
         </Link>
         <Link href="/contact" className="mr-2">
-          Contacct
+          Contact
         </Link>
         <button>
           <SunIcon />

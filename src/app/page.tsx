@@ -7,7 +7,7 @@ export default function Home() {
 
   return (
     <main className="flex flex-col items-center justify-center ">
-      <HomeCoverSection blogs={allBlogs} />
+      <HomeCoverSection blogs={allBlogs as unknown as any} />
     </main>
   );
 }
