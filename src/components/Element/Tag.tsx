@@ -2,7 +2,14 @@ import { cx } from "@/src/utils";
 import Link from "next/link";
 import React from "react";
 
-const Tag = ({ link = "", name, ...props }) => {
+interface TagProps  {
+  link?: string;
+  name: string;
+  className?: any;
+}
+
+
+const Tag = ({ link = "", name, ...props }: TagProps) => {
   return (
     <Link
       href={link}
