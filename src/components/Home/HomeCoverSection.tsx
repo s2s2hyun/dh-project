@@ -24,9 +24,6 @@ const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
   const sortedBlogs = sortBlogs(blogs);
 
   const blog = sortedBlogs[0] as Blog;
-
-  console.log(blog , "blog 는 현재 뭐가 나와 ? ")
-
   return (
     <div className="w-full inline-block">
       <article className=" flex flex-col items-start justify-end  mx-10 relative h-[85vh]">
