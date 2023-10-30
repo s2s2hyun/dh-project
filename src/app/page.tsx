@@ -4,7 +4,7 @@ import { allBlogs } from "contentlayer/generated";
 import FeaturedPost from "../components/Home/FeaturedPost";
 
 export default function Home() {
-  console.log(allBlogs);
+  console.log(allBlogs.length);
 
   return (
     <main className="flex flex-col items-center justify-center ">

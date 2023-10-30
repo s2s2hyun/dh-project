@@ -35,7 +35,7 @@ const FeaturedPost = ({ blogs }: { blogs: Blog[] }) => {
         <BlogLayoutTwo blog={sortedBlogs[3]} />
         </article>
         <article className="col-span-1 row-span-1 relative">
-        <BlogLayoutTwo blog={sortedBlogs[4]}/>
+        <BlogLayoutTwo blog={sortedBlogs[1]}/>
         </article>
       </div>
     </section>
