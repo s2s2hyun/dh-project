@@ -14,7 +14,6 @@ const BlogLayoutOne = ({ blog }: any) => {
         alt={blog.title}
         width={blog.image.width}
         height={blog.image.height}
-        fill
         className="w-full h-full object-center object-cover rounded-3xl -z-10"
       />
       <div className="w-3/4 p-16 flex flex-col items-start justify-center z-0 text-light">
