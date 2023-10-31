@@ -13,7 +13,7 @@ interface Blog {
   updatedAt: string;
   image: BlogImage;
   title: string;
-  tags: string;
+  tags: string[];
   description: string;
   url: string;
   // ... any other properties used in the Blog object
@@ -32,10 +32,10 @@ const FeaturedPost = ({ blogs }: { blogs: Blog[] }) => {
           <BlogLayoutOne blog={sortedBlogs[2]} />
         </article>
         <article className="col-span-1 row-span-1 relative">
-        <BlogLayoutTwo blog={sortedBlogs[3]} />
+          <BlogLayoutTwo blog={sortedBlogs[3]} />
         </article>
         <article className="col-span-1 row-span-1 relative">
-        <BlogLayoutTwo blog={sortedBlogs[1]}/>
+          <BlogLayoutTwo blog={sortedBlogs[1]} />
         </article>
       </div>
     </section>

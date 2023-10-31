@@ -18,16 +18,18 @@ const BlogLayoutOne = ({ blog }: any) => {
       />
       <div className="w-full absolute  bottom-0 p-10 z-20 ">
         {/* <Link href={`/categories/${blog.tags[0]}`}>{blog.tags[0]}</Link> */}
-        <Tag link={`/categories/${blog.tags[0]}`} name={blog.tags[0]} 
-        className="px-6 text-sm py-2 !border "
+        <Tag
+          link={`/categories/${blog.tags[0]}`}
+          name={blog.tags[0]}
+          className="px-6 text-sm py-2 !border "
         />
         <Link href={blog.url} className="mt-6">
           <h2 className="font-bold capitalize text-2xl text-light mt-4">
             <span
-              className="bg-gradient-to-r from-accent to-accent bg-[length:0px_6px]
+              className="bg-gradient-to-r from-accent/50 to-accent/50 bg-[length:0px_6px]
                 hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 "
             >
-              {blog.title}s
+              {blog.title}
             </span>
           </h2>
         </Link>

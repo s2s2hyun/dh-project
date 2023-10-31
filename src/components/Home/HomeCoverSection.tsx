@@ -14,9 +14,9 @@ interface Blog {
   updatedAt: string;
   image: BlogImage;
   title: string;
-  tags: string;
+  tags: string[];
   description: string;
-  url:string;
+  url: string;
   // ... any other properties used in the Blog object
 }
 
@@ -44,7 +44,8 @@ const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
               <span
                 className="bg-gradient-to-r from-accent to-accent dark:from-accentDark/50 
                 dark:to-accentDark/50 bg-[length:0px_6px]
-                hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 ">
+                hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 "
+              >
                 {blog.title}
               </span>
             </h1>
