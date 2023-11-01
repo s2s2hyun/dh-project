@@ -1,12 +1,7 @@
-
 노션 정리
 [Click here](https://cheerful-cabbage-759.notion.site/Nextjs-Blog-ContentLayer-8ccda2c882b44e2d9c36ea0996dcf73e?pvs=4)
 
 ![image](https://github.com/s2s2hyun/dh-project/assets/100761993/1d197756-4615-41e5-b69d-f812baaf21f9)
-
-
-
-
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -44,6 +39,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
 
 blog create

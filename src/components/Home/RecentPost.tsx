@@ -1,39 +1,39 @@
-import React from "react";
-import { sortBlogs } from "@/src/utils";
-import Link from "next/link";
-import BlogLayoutThree from "../Blog/BlogLayoutThree";
-import { BlogPost } from "@/types/BlogPost";
+import React from 'react'
+import { sortBlogs } from '@/src/utils'
+import Link from 'next/link'
+import BlogLayoutThree from '../Blog/BlogLayoutThree'
+import { BlogPost } from '@/types/BlogPost'
 
 const RecentPost = ({ blogs }: { blogs: BlogPost[] }) => {
-  const sortedBlogs = sortBlogs(blogs);
+  const sortedBlogs = sortBlogs(blogs)
 
   // console.log(sortedBlogs, " sortedBlogs 여기 맞지? ");
 
   return (
-    <section className="w-full mt-32 px-32 flex flex-col items-center justify-center">
-      <div className="flex w-full justify-between items-center">
-        <h2 className="inline-block font-bold capitalize text-4xl">
+    <section className="mt-32 flex w-full flex-col items-center justify-center px-32">
+      <div className="flex w-full items-center justify-between">
+        <h2 className="inline-block text-4xl font-bold capitalize">
           Recent Posts
         </h2>
         <Link
           href="/categories/all"
-          className="inline-block font-medium text-accent underline  underline-offset-2 text-lg"
+          className="inline-block text-lg font-medium text-accent  underline underline-offset-2"
         >
           View all
         </Link>
       </div>
 
-      <div className="grid grid-cols-3 grid-rows-3 gap-16 mt-16">
+      <div className="mt-16 grid grid-cols-3 grid-rows-2 gap-16">
         {sortedBlogs.slice(5, 11).map((blog, index) => {
           return (
-            <article key={index} className="col-span-1 row-span-1 relative">
+            <article key={index} className="relative col-span-1 row-span-1">
               <BlogLayoutThree blog={blog} />
             </article>
-          );
+          )
         })}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default RecentPost;
+export default RecentPost

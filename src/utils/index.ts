@@ -12,6 +12,6 @@ export const sortBlogs = (blogs: Blog[]) => {
   return blogs
     .slice()
     .sort((a, b) =>
-      compareDesc(parseISO(a.publisedhAt), parseISO(b.updatedAt))
+      compareDesc(parseISO(a.publisedhAt), parseISO(b.updatedAt)),
     );
 };

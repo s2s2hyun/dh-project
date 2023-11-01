@@ -1,10 +1,10 @@
-import React from "react";
-import { cx } from "../utils";
+import React from 'react'
+import { cx } from '../utils'
 
 type IconProps = {
-  className?: string;
-  [key: string]: any; // For the rest of the properties
-};
+  className?: string
+  [key: string]: any // For the rest of the properties
+}
 
 export const SunIcon = ({ className, ...rest }: IconProps) => {
   return (
@@ -14,7 +14,8 @@ export const SunIcon = ({ className, ...rest }: IconProps) => {
       height="24"
       viewBox="0 0 24 24"
       {...rest}
-      className={cx("w-full h-auto", className || "")}>
+      className={cx('h-auto w-full', className || '')}
+    >
       <rect x="0" y="0" width="24" height="24" fill="rgba(255, 255, 255, 0)" />
       <g
         fill="none"
@@ -22,7 +23,8 @@ export const SunIcon = ({ className, ...rest }: IconProps) => {
         strokeDasharray="2"
         strokeDashoffset="2"
         strokeLinecap="round"
-        strokeWidth="2">
+        strokeWidth="2"
+      >
         <path d="M0 0">
           <animate
             fill="freeze"
@@ -87,7 +89,8 @@ export const SunIcon = ({ className, ...rest }: IconProps) => {
         stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeWidth="2">
+        strokeWidth="2"
+      >
         <path d="M7 6 C7 12.08 11.92 17 18 17 C18.53 17 19.05 16.96 19.56 16.89 C17.95 19.36 15.17 21 12 21 C7.03 21 3 16.97 3 12 C3 8.83 4.64 6.05 7.11 4.44 C7.04 4.95 7 5.47 7 6 Z" />
         {/* @ts-ignore */}
         <set attributeName="opacity" begin="0.6s" to="0" />
@@ -147,7 +150,8 @@ export const SunIcon = ({ className, ...rest }: IconProps) => {
         r="10"
         fill="currentColor"
         mask="url(#lineMdMoonFilledToSunnyFilledLoopTransition0)"
-        opacity="0">
+        opacity="0"
+      >
         {/* @ts-ignore */}
         <set attributeName="opacity" begin="0.6s" to="1" />
         <animate
@@ -159,8 +163,8 @@ export const SunIcon = ({ className, ...rest }: IconProps) => {
         />
       </circle>
     </svg>
-  );
-};
+  )
+}
 
 export const MoonIcon = ({ className, ...rest }: IconProps) => (
   <svg
@@ -169,13 +173,15 @@ export const MoonIcon = ({ className, ...rest }: IconProps) => (
     height="24"
     viewBox="0 0 24 24"
     {...rest}
-    className={cx("w-full h-auto", className || "")}>
+    className={cx('h-auto w-full', className || '')}
+  >
     <g
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
       strokeLinejoin="round"
-      strokeWidth="2">
+      strokeWidth="2"
+    >
       <g strokeDasharray="2">
         <path d="M12 21v1M21 12h1M12 3v-1M3 12h-1">
           <animate
@@ -198,7 +204,8 @@ export const MoonIcon = ({ className, ...rest }: IconProps) => (
       <path
         fill="currentColor"
         d="M7 6 C7 12.08 11.92 17 18 17 C18.53 17 19.05 16.96 19.56 16.89 C17.95 19.36 15.17 21 12 21 C7.03 21 3 16.97 3 12 C3 8.83 4.64 6.05 7.11 4.44 C7.04 4.95 7 5.47 7 6 Z"
-        opacity="0">
+        opacity="0"
+      >
         {/* @ts-ignore */}
         <set attributeName="opacity" begin="0.5s" to="1" />
       </path>
@@ -324,7 +331,8 @@ export const MoonIcon = ({ className, ...rest }: IconProps) => (
       cy="12"
       r="6"
       fill="currentColor"
-      mask="url(#lineMdSunnyFilledLoopToMoonFilledLoopTransition1)">
+      mask="url(#lineMdSunnyFilledLoopToMoonFilledLoopTransition1)"
+    >
       {/* @ts-ignore */}
       <set attributeName="opacity" begin="0.5s" to="0" />
       <animate
@@ -336,7 +344,7 @@ export const MoonIcon = ({ className, ...rest }: IconProps) => (
       />
     </circle>
   </svg>
-);
+)
 
 export const LinkedIcon = ({ className, ...rest }: IconProps) => {
   return (
@@ -346,7 +354,8 @@ export const LinkedIcon = ({ className, ...rest }: IconProps) => {
       height={43}
       viewBox="0 0 42  43"
       {...rest}
-      className={cx(className || "")}>
+      className={cx(className || '')}
+    >
       <g clipPath="url(#a)">
         <path
           fill="#0076B2"
@@ -363,8 +372,8 @@ export const LinkedIcon = ({ className, ...rest }: IconProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const TwiiterIcon = ({ className, ...rest }: IconProps) => {
   return (
@@ -374,7 +383,8 @@ export const TwiiterIcon = ({ className, ...rest }: IconProps) => {
       height={43}
       viewBox="0 0 42  43"
       {...rest}
-      className={cx(className || "")}>
+      className={cx(className || '')}
+    >
       <g clipPath="url(#a)">
         <path
           fill="#1D9BF0"
@@ -387,8 +397,8 @@ export const TwiiterIcon = ({ className, ...rest }: IconProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const GithubIcon = ({ className, ...rest }: IconProps) => {
   return (
@@ -398,7 +408,8 @@ export const GithubIcon = ({ className, ...rest }: IconProps) => {
       height={43}
       viewBox="0 0 42  43"
       {...rest}
-      className={cx(className || "")}>
+      className={cx(className || '')}
+    >
       <g fill="#181616">
         <path
           fillRule="evenodd"
@@ -408,8 +419,8 @@ export const GithubIcon = ({ className, ...rest }: IconProps) => {
         <path d="M8.69 31.282c-.044.103-.198.133-.34.063-.144-.066-.224-.206-.178-.308.043-.106.198-.135.342-.064.144.067.226.207.176.31Zm.803.93c-.095.091-.28.049-.405-.095-.13-.143-.154-.335-.058-.427.098-.091.277-.048.407.095.13.145.155.335.056.428Zm.781 1.185c-.121.088-.32.006-.443-.177-.121-.183-.121-.403.004-.49.122-.089.318-.01.442.172.121.186.121.406-.003.495Zm1.07 1.145c-.108.125-.34.091-.509-.078-.173-.166-.221-.402-.113-.526.11-.125.343-.09.514.078.173.166.225.402.109.526Zm1.477.665c-.048.161-.27.234-.496.166-.224-.07-.37-.26-.324-.422.045-.163.27-.239.496-.165.224.07.37.257.324.421Zm1.622.123c.005.17-.185.31-.42.314-.237.005-.43-.132-.432-.3 0-.17.187-.31.424-.314.235-.005.428.132.428.3Zm1.508-.266c.029.165-.135.335-.369.38-.23.045-.443-.058-.473-.222-.028-.17.139-.34.369-.384.234-.042.444.058.473.226Z" />
       </g>
     </svg>
-  );
-};
+  )
+}
 
 export const DribbleIcon = ({ className, ...rest }: IconProps) => {
   return (
@@ -419,7 +430,8 @@ export const DribbleIcon = ({ className, ...rest }: IconProps) => {
       height={43}
       viewBox="0 0 42  43"
       {...rest}
-      className={cx(className || "")}>
+      className={cx(className || '')}
+    >
       <g clipPath="url(#a)">
         <path
           fill="#E74D89"
@@ -436,5 +448,5 @@ export const DribbleIcon = ({ className, ...rest }: IconProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
