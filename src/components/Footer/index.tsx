@@ -2,7 +2,13 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { DribbleIcon, GithubIcon, LinkedIcon, TwiiterIcon } from '../Icon'
+import {
+  DribbleIcon,
+  GithubIcon,
+  GithubLightIcon,
+  LinkedIcon,
+  TwiiterIcon,
+} from '../Icon'
 import Link from 'next/link'
 
 // import React from 'react';
@@ -66,10 +72,10 @@ const Footer = () => {
         </a>
         <a
           href="http://example.com"
-          className="mr-8 inline-block h-6 w-6 fill-light"
+          className="mr-8 inline-block h-6 w-6 fill-white"
         >
           {/* <Image src={githubImg} alt="Github" /> */}
-          <GithubIcon className="ease fill-light transition-all duration-200 hover:scale-125 dark:fill-dark" />
+          <GithubLightIcon className="ease fill-white transition-all duration-200 hover:scale-125 dark:fill-dark" />
         </a>
         <a href="http://example.com" className="mr-8 inline-block h-6 w-6">
           {/* <Image src={dribbleImg} alt="Drible" /> */}
