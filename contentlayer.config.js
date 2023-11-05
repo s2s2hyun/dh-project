@@ -54,5 +54,13 @@ const Blog = defineDocumentType(() => ({
 
 export default makeSource({
   contentDirPath: 'content',
+
   documentTypes: [Blog],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: 'append' }],
+    ],
+  },
 })
