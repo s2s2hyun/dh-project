@@ -11,7 +11,7 @@ const BlogDetail = ({ blog }: any) => {
       </time>
       <span className="m-3">10 views</span>
       <div className="m-3">{blog.readingTime.text}</div>
-      <Link href={`/categories/${blog?.tags[0]}`}>#{blog?.tags[0]}</Link>
+      <Link href={`/categories/${blog?.tags[0]}`}>{blog?.tags[0]}</Link>
     </div>
   )
 }
