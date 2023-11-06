@@ -49,8 +49,20 @@ const Blog = defineDocumentType(() => ({
       type: 'json',
       resolve: (doc) => readingTime(doc.body.raw),
     },
+    toc: {
+      type: 'json',
+      resolve: async (doc) => {
+        const regulrExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g
+
+        return true
+      },
+    },
   },
 }))
+
+const codeOption = {
+  theme: 'github-dark',
+}
 
 export default makeSource({
   contentDirPath: 'content',
@@ -61,6 +73,7 @@ export default makeSource({
     rehypePlugins: [
       rehypeSlug,
       [rehypeAutolinkHeadings, { behavior: 'append' }],
+      [rehypePrettyCode, codeOption],
     ],
   },
 })
