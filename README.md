@@ -1,4 +1,5 @@
-![image](https://github.com/s2s2hyun/dh-project/assets/100761993/1d197756-4615-41e5-b69d-f812baaf21f9)
+![image](https://github.com/s2s2hyun/dh-project/assets/100761993/f7f66e86-1c5e-4cd8-996d-b1a03aa52160)
+
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
