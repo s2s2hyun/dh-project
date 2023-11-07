@@ -1,45 +1,45 @@
-import { sortBlogs } from "@/src/utils";
-import React from "react";
-import BlogLayoutOne from "../Blog/BlogLayoutOne";
-import BlogLayoutTwo from "../Blog/BlogLayoutTwo";
+import { sortBlogs } from '@/src/utils'
+import React from 'react'
+import BlogLayoutOne from '../Blog/BlogLayoutOne'
+import BlogLayoutTwo from '../Blog/BlogLayoutTwo'
 
 interface BlogImage {
-  filePath: string;
-  blurhashDataUrl: string;
+  filePath: string
+  blurhashDataUrl: string
 }
 
 interface Blog {
-  publisedhAt: string;
-  updatedAt: string;
-  image: BlogImage;
-  title: string;
-  tags: string[];
-  description: string;
-  url: string;
+  publishedAt: string
+  updatedAt: string
+  image: BlogImage
+  title: string
+  tags: string[]
+  description: string
+  url: string
   // ... any other properties used in the Blog object
 }
 
 const FeaturedPost = ({ blogs }: { blogs: Blog[] }) => {
-  const sortedBlogs = sortBlogs(blogs);
+  const sortedBlogs = sortBlogs(blogs)
 
   return (
-    <section className="w-full mt-32 px-32 flex flex-col items-center justify-center">
-      <h2 className="w-full inline-block font-bold capitalize text-4xl">
+    <section className="mt-32 flex w-full flex-col items-center justify-center px-32">
+      <h2 className="inline-block w-full text-4xl font-bold capitalize">
         Feature Posts
       </h2>
-      <div className="grid grid-cols-2 grid-rows-2 gap-6 mt-16">
-        <article className="col-span-1 row-span-2 relative">
+      <div className="mt-16 grid grid-cols-2 grid-rows-2 gap-6">
+        <article className="relative col-span-1 row-span-2">
           <BlogLayoutOne blog={sortedBlogs[2]} />
         </article>
-        <article className="col-span-1 row-span-1 relative">
+        <article className="relative col-span-1 row-span-1">
           <BlogLayoutTwo blog={sortedBlogs[3]} />
         </article>
-        <article className="col-span-1 row-span-1 relative">
+        <article className="relative col-span-1 row-span-1">
           <BlogLayoutTwo blog={sortedBlogs[1]} />
         </article>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default FeaturedPost;
+export default FeaturedPost

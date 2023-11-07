@@ -7,7 +7,7 @@ const BlogDetail = ({ blog }: any) => {
   return (
     <div className="mx-10 flex flex-wrap items-center justify-around rounded-lg bg-accent px-10 py-2 text-xl font-medium text-light">
       <time className="m-3">
-        {format(parseISO(blog.publisedhAt), 'LLLL d, yyyy')}
+        {format(parseISO(blog.publishedAt), 'LLLL d, yyyy')}
       </time>
       <span className="m-3">10 views</span>
       <div className="m-3">{blog.readingTime.text}</div>

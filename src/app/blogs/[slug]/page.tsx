@@ -4,6 +4,12 @@ import RenderMdx from '@/src/components/Blog/RenderMdx'
 import Tag from '@/src/components/Element/Tag'
 import Image from 'next/image'
 
+interface Heading {
+  level: 'one' | 'two' | 'three'
+  text: string
+  slug: string
+}
+
 export default function Page({ params }: { params: { slug: string } }) {
   const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug)
 
@@ -38,7 +44,22 @@ export default function Page({ params }: { params: { slug: string } }) {
       <BlogDetail blog={blog} slug={params.slug} />
 
       <div className="mt-8 grid grid-cols-12 gap-16 px-10">
-        <div className="col-span-4">Toc</div>
+        <div className="col-span-4">
+          <details>
+            <summary>Table of Content</summary>
+            <ul>
+              {blog?.toc.map((heading: Heading) => {
+                return (
+                  <li key={`#${heading.slug}`}>
+                    <a href={`#${heading.slug}`}>
+                      <span>{heading.text}</span>
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </details>
+        </div>
         <RenderMdx blog={blog} />
       </div>
     </article>
