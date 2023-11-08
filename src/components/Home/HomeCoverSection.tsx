@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import Tag from '../Element/Tag'
+import { slug } from 'github-slugger'
 
 interface BlogImage {
   filePath: string
@@ -38,7 +39,7 @@ const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
         />
         <div className="z-0 flex w-3/4 flex-col items-start justify-center p-16 text-light">
           {/* <Link href={`/categories/${blog.tags[0]}`}>{blog.tags[0]}</Link> */}
-          <Tag link={`/categories/${blog.tags[0]}`} name={blog.tags[0]} />
+          <Tag link={`/categories/${slug(blog.tags[0])}`} name={blog.tags[0]} />
           <Link href={blog.url} className="mt-6">
             <h1 className="text-4xl font-bold capitalize ">
               <span
