@@ -16,7 +16,6 @@ interface Blog {
   tags: string[]
   description: string
   url: string
-  // ... any other properties used in the Blog object
 }
 
 const FeaturedPost = ({ blogs }: { blogs: Blog[] }) => {
