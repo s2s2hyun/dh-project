@@ -24,7 +24,7 @@ const FeaturedPost = ({ blogs }: { blogs: Blog[] }) => {
   return (
     <section className="mt-32 flex w-full flex-col items-center justify-center px-32">
       <h2 className="inline-block w-full text-4xl font-bold capitalize">
-        Feature Posts
+        Feature Postssssssssssss
       </h2>
       <div className="mt-16 grid grid-cols-2 grid-rows-2 gap-6">
         <article className="relative col-span-1 row-span-2">
