@@ -12,3 +12,20 @@ export interface BlogPost {
   description: string
   url: string
 }
+
+export interface BlogDetailProps {
+  publishedAt: string
+  readingTime: { text: string }
+  tags?: string[]
+}
+
+export interface BlogViewCountProps {
+  blog: BlogDetailProps
+  slug: string
+}
+
+export interface ViewCounterProps {
+  slug: string
+  noCount?: boolean
+  showCount?: boolean
+}

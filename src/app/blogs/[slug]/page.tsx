@@ -48,7 +48,7 @@ export default function Page({ params }: { params: { slug: string } }) {
           />
         </div>
       </div>
-      <BlogDetail blog={blog} slug={params.slug} />
+      {blog && <BlogDetail blog={blog} slug={params.slug} />}
 
       <div className="mt-8 grid grid-cols-12 gap-16 px-10">
         <div className="col-span-4">
