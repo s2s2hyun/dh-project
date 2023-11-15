@@ -4,6 +4,7 @@ import RenderMdx from '@/src/components/Blog/RenderMdx'
 import Tag from '@/src/components/Element/Tag'
 import Image from 'next/image'
 import { slug } from 'github-slugger'
+import SiteMetaData from '@/src/utils/siteMetaData'
 
 interface Heading {
   level: 'one' | 'two' | 'three'
@@ -13,6 +14,44 @@ interface Heading {
 
 export async function generateStaticParams() {
   return allBlogs.map((blog) => ({ slug: blog._raw.flattenedPath }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}) {
+  const blog = allBlogs.find((blog) => blog._raw.flattenedPath === params.slug)
+
+  if (!blog) {
+    return
+  }
+
+  const publishedAt = new Date(blog.publishedAt).toISOString()
+  const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString()
+
+  let imageList = [SiteMetaData.socialBanner]
+
+  if (blog.image) {
+    imageList =
+      typeof blog.image.filePath === 'string'
+        ? [SiteMetaData.siteUrl]
+        : blog.image.filePath
+  }
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    openGraph: {
+      title: blog.title,
+      description: blog.description,
+      url: blog.url,
+      locale: 'ko-KR',
+      type: 'article',
+      publishedTime: publishedAt,
+      modifiedTime: modifiedAt,
+    },
+  }
 }
 
 export default function Page({ params }: { params: { slug: string } }) {
