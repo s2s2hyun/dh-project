@@ -15,17 +15,18 @@ const BlogLayoutOne = ({ blog }: any) => {
         alt={blog.title}
         width={blog.image.width}
         height={blog.image.height}
-        className="h-full w-full rounded-xl object-cover object-center "
+        className="ease h-full w-full rounded-xl object-cover object-center transition-all duration-300 group-hover:scale-105 "
+        sizes=" (max-width:1180px) 100vw, 50vw,"
       />
-      <div className="absolute bottom-0  z-20 w-full p-10 ">
+      <div className="xs:p-6 absolute  bottom-0 z-20 w-full p-4 sm:p-10">
         {/* <Link href={`/categories/${blog.tags[0]}`}>{blog.tags[0]}</Link> */}
         <Tag
           link={`/categories/${slug(blog.tags[0])}`}
           name={blog.tags[0]}
-          className="!border px-6 py-2 text-sm "
+          className="!border px-6 py-1 text-xs sm:py-2 sm:text-sm "
         />
         <Link href={blog.url} className="mt-6">
-          <h2 className="mt-4 text-2xl font-bold capitalize text-light">
+          <h2 className="xs:text-base mt-2 font-bold capitalize text-light sm:mt-4 sm:text-xl md:text-2xl">
             <span
               className="bg-gradient-to-r from-accent/50 to-accent/50 bg-[length:0px_6px]
                 bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_6px] "

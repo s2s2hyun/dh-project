@@ -6,7 +6,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  // mode: "jit",
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -28,6 +28,12 @@ const config: Config = {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(-100%)' },
         },
+      },
+      screens: {
+        sxl: '1180px',
+        // @media (min-width 1180px){....}
+        xs: '480px',
+        // @media (min-width 480px){....}
       },
     },
   },

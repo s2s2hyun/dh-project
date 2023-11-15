@@ -22,7 +22,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="mt-12 font-in text-xl font-medium leading-relaxed"
+      className="xs:text-lg mt-12 font-in text-base  font-medium leading-relaxed sm:text-xl"
     >
       Hello! My Name is
       <input
@@ -56,7 +56,7 @@ export default function ContactForm() {
       <input
         type="submit"
         value="Submit"
-        className="mt-8 inline-block cursor-pointer rounded border-2 border-solid border-dark px-8 py-3 text-xl font-medium capitalize "
+        className="mt-8 inline-block cursor-pointer rounded border-2 border-solid border-dark px-6 py-2 text-lg font-medium capitalize dark:border-light sm:px-8 sm:py-3 sm:text-xl "
       />
     </form>
   )

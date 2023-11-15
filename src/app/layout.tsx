@@ -5,6 +5,7 @@ import { cx } from '../utils'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SiteMetaData from '@/src/utils/siteMetaData'
+import Script from 'next/script'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -61,8 +62,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cx(inter.variable, manrope.variable, 'bg-light font-mr')}
+        className={cx(
+          inter.variable,
+          manrope.variable,
+          'bg-light font-mr dark:bg-dark',
+        )}
       >
+        <Script id="theme-script">
+          {`if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }`}
+        </Script>
+
         <Header />
         {children}
         <Footer />

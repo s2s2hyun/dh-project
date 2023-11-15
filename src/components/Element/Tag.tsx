@@ -1,25 +1,25 @@
-import { cx } from "@/src/utils";
-import Link from "next/link";
-import React from "react";
+import { cx } from '@/src/utils'
+import Link from 'next/link'
+import React from 'react'
 
 interface TagProps {
-  link?: string;
-  name: string;
-  className?: string;
+  link?: string
+  name: string
+  className?: string
 }
 
-const Tag = ({ link = "", name, ...props }: TagProps) => {
+const Tag = ({ link = '', name, ...props }: TagProps) => {
   return (
     <Link
       href={link}
       className={cx(
-        "inline-block py-3 px-10 bg-dark text-light rounded-full capitalize font-semibold border border-solid border-light hover:scale-105 transition-all ease duration-200",
-        props.className ?? "",
+        'ease inline-block rounded-full border border-solid border-light bg-dark px-6 py-2 text-sm font-semibold capitalize text-light transition-all duration-200 hover:scale-105 sm:px-10 sm:py-3 sm:text-base',
+        props.className ?? '',
       )}
     >
       {name}
     </Link>
-  );
-};
+  )
+}
 
-export default Tag;
+export default Tag

@@ -30,14 +30,22 @@ export async function generateMetadata({
   const publishedAt = new Date(blog.publishedAt).toISOString()
   const modifiedAt = new Date(blog.updatedAt || blog.publishedAt).toISOString()
 
-  let imageList = [SiteMetaData.socialBanner]
+  let imageList: any = [SiteMetaData.socialBanner]
 
   if (blog.image) {
     imageList =
       typeof blog.image.filePath === 'string'
-        ? [SiteMetaData.siteUrl]
-        : blog.image.filePath
+        ? [SiteMetaData.siteUrl + blog.image.filePath.replace('../public', '')]
+        : blog.image
   }
+
+  const ogImages = imageList.map((img: string) => {
+    return {
+      url: img.includes('http') ? img : SiteMetaData.siteUrl + img,
+    }
+  })
+
+  const authors = blog?.author ? [blog.author] : SiteMetaData.authors
 
   return {
     title: blog.title,
@@ -50,6 +58,8 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
+      images: ogImages,
+      authors: authors.length > 0 ? authors : [SiteMetaData.authors],
     },
   }
 }
@@ -68,11 +78,11 @@ export default function Page({ params }: { params: { slug: string } }) {
             link={`/categories/${blog?.tags?.[0]}`}
             className="px-6 py-2 text-sm"
           />
-          <h1 className="relative mt-6 inline-block w-5/6 text-5xl font-semibold capitalize leading-normal text-light">
+          <h1 className="relative mt-6 inline-block w-5/6 text-2xl  font-semibold capitalize leading-normal text-light md:text-3xl lg:text-5xl">
             {blog?.title}
           </h1>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 top-0 h-full bg-dark/60 ">
+        <div className="absolute bottom-0 left-0 right-0 top-0 h-full bg-dark/60 dark:bg-dark/40 ">
           <Image
             src={
               blog?.image?.filePath.replace('../public', '') ??
@@ -89,10 +99,10 @@ export default function Page({ params }: { params: { slug: string } }) {
       </div>
       {blog && <BlogDetail blog={blog} slug={params.slug} />}
 
-      <div className="mt-8 grid grid-cols-12 gap-16 px-10">
-        <div className="col-span-4">
+      <div className="sxl:gap-16 mt-8 grid grid-cols-12 gap-y-8 px-5  md:px-10 lg:gap-8">
+        <div className="col-span-12 lg:col-span-4">
           <details
-            className="sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto rounded-lg border-[1px] border-solid border-dark p-4 text-dark "
+            className="sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto rounded-lg border-[1px] border-solid border-dark p-4 text-dark dark:border-light dark:text-light "
             open
           >
             <summary className="cursor-pointer text-lg font-semibold  capitalize">
@@ -107,7 +117,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                       data-level={heading.level}
                       className="flex items-center
                       justify-start border-solid border-dark/40
-                      data-[level=two]:border-t data-[level=three]:pl-6 data-[level=two]:pl-0 data-[level=two]:pt-2
+                      data-[level=two]:border-t data-[level=three]:pl-4 data-[level=two]:pl-0 data-[level=two]:pt-2 sm:data-[level=three]:pl-6
                       "
                     >
                       {heading.level === 'three' ? (
