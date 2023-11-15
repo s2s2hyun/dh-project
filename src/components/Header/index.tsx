@@ -15,6 +15,7 @@ import {
 } from '../Icon'
 import SiteMetaData from '@/src/utils/siteMetaData'
 import { useThemeSwitch } from '../Hooks/useThemeSwitch'
+import { cx } from '@/src/utils'
 
 const Header = () => {
   const [mode, setMode] = useThemeSwitch()
@@ -77,9 +78,18 @@ const Header = () => {
         <Link href="/contact" className="mr-2">
           Contact
         </Link>
-        <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}>
-          <SunIcon />
-          {/* <MoonIcon /> */}
+        <button
+          onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+          className={cx(
+            'ease p-13 ml-2 flex h-6 w-6 items-center justify-center rounded-full',
+          )}
+          aria-label="theme-switcher"
+        >
+          {mode === 'light' ? (
+            <MoonIcon className={'fill-dark'} />
+          ) : (
+            <SunIcon className={'fill-dark'} />
+          )}
         </button>
       </nav>
       <div className=" hidden lg:block">

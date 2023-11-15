@@ -278,8 +278,8 @@ export const MoonIcon = ({ className, ...rest }: IconProps) => (
       </path>
     </g>
     <mask id="lineMdSunnyFilledLoopToMoonFilledLoopTransition1">
-      <circle cx="12" cy="12" r="12" fill="#fff" />
-      <circle cx="22" cy="2" r="3" fill="#fff">
+      <circle cx="12" cy="12" r="12" fill="#000" />
+      <circle cx="22" cy="2" r="3" fill="#000">
         <animate
           fill="freeze"
           attributeName="cx"

@@ -5,12 +5,13 @@ import React, { useEffect, useState } from 'react'
 type Theme = 'dark' | 'light'
 
 export function useThemeSwitch(): [
-  string,
-  React.Dispatch<React.SetStateAction<string>>,
+  // string,
+  Theme,
+  React.Dispatch<React.SetStateAction<Theme>>,
 ] {
-  const preferDarkQuery = '(prefers-color-schema:dark)'
+  const preferDarkQuery = '(prefers-color-schema:light)'
   const storageKey = 'theme'
-  const [mode, setMode] = useState('dark')
+  const [mode, setMode] = useState<Theme>('light')
 
   const toggleTheme = (theme: Theme) => {
     if (theme === 'dark') {
@@ -25,10 +26,11 @@ export function useThemeSwitch(): [
     const userPref = window.localStorage.getItem(storageKey)
 
     if (userPref) {
-      return userPref
+      return userPref as Theme
     }
 
-    return window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'
+    // return window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'
+    return 'light'
   }
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export function useThemeSwitch(): [
     const handleChange = () => {
       const newMode = getUserPreference()
       setMode(newMode)
-      toggleTheme(newMode as Theme)
+      toggleTheme(newMode)
     }
     handleChange()
 
@@ -49,7 +51,7 @@ export function useThemeSwitch(): [
   }, [])
 
   useEffect(() => {
-    toggleTheme(mode as Theme)
+    toggleTheme(mode)
   }, [mode])
 
   return [mode, setMode]
