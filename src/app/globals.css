@@ -1,15 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* https://rehype-pretty-code.netlify.app/ */
-/* mdx 스타일링 참고 해야함 */
+
+@import url('https://fonts.googleapis.com/earlyaccess/notosanskr.css');
+/* https://rehype-pretty-code.netlify.app/ */ /* mdx 스타일링 참고 해야함 */
 /* body {
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 0;
 } */
-
 html {
   scroll-behavior: smooth;
 }
@@ -85,4 +85,8 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   text-align: center;
   font-size: 1rem;
   color: #747474;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
 }

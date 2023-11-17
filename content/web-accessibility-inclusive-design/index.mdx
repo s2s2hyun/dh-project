@@ -31,16 +31,19 @@ Next.JS 프레임워크 에서 contentlayer 라이브러리를 사용하여 정�
 
 > 굳이 왜? 기능 좋은 블로그들 엄청 많은데 왜 만들어서 사용해? 다른데에 시간 더 투자해!
 
-맞죠... 현재도 부족하지만 궁금하고 해보고싶은 욕구 때문에 제가 직접 만들었을때 가장 큰 장점은 제 마음대로 디자인이 가능한게 가장 큰 매력이였습니다.
+맞죠... 현재도 부족하지만 궁금하고 해보고싶은 욕구 때문에 제가 직접 만들었을때 큰 장점은 제 마음대로 디자인이 가능한게 가장 매력이였습니다.
 블로그 플랫폼에 가장 알려진 네이버 , 티스토리, velog 등등 .. 보다보면 레이아웃만 보면 특정 블로그 플랫폼이 떠오르는 디자인이라고 생각했습니다.
-뭐 정말 블로그를 시간내서 잘 꾸미신분들을 보면 엄청 기존의 남들이 쓰는 틀이 아닌 커스텀이 굉장히 잘 만져진곳도 많더라구요.
-나는 내 블로그의 나만의 색을 뭔가 좀 표현하고 싶다는 생각에 이러한 디자인을 만들었으며 , 기존 Next.Js 12 Pages Router가 아닌 Next.Js 13 App Router 로 공부하고자 만들었습니다.
+
+<br />뭐 정말 블로그를 시간내서 잘 꾸미신분들을 보면 엄청 기존의 남들이 쓰는
+틀이 아닌 커스텀이 굉장히 잘 만져진곳도 많더라구요. 나는 내 블로그의 나만의 색을
+뭔가 좀 표현하고 싶다는 생각에 이러한 디자인을 만들었으며 , 기존 Next.Js 12
+Pages Router가 아닌 Next.Js 13 App Router 로 공부하고자 만들었습니다.
 
 > [프로젝트 코드 보러가기 (GitHub Repository)](https://github.com/s2s2hyun/dh-project)
 
 ## 2. contentlayer를 사용한 정적 블로그 제작👩‍🌾
 
-contentlayer를 사용하기 위해 먼저 Next.Js 프로젝트를 생성해줍니다.
+### 2.1contentlayer를 사용하기 위해 먼저 Next.Js 프로젝트를 생성.
 
 ```
 npx create-next-app@latest
@@ -66,7 +69,7 @@ rehype-highlight , rehype-pretty-code , shiki 는 마크다운으로 작성된 �
 
 이제 <bold>next.config.js</bold>와 <bold>tsconfig.json</bold> 파일을 수정을 해주어야 합니다.
 
-<bold>next.config.js</bold>
+### next.config.js
 
 ```
 /** @type {import('next').NextConfig} */
@@ -85,7 +88,7 @@ module.exports = withContentlayer({ ...nextConfig });
 reactStrictMode => React 의 Strict 모드를 활성화 합니다. 이 모드는 개발 모드에서 애플리케이션 내의 잠재적인 문제를 찾는데 도움을 줍니다.
 SWC Minify => swcMinify는 SWC 기반의 최소화를 활성화 합니다. 최소화는 자바스크립트 코드의 파일 크기를 줄여 로드 시간을 개선하는 과정입니다.
 
-<bold>tsconfig.json</bold>
+### tsconfig.json
 
 ```
 {
@@ -121,9 +124,15 @@ SWC Minify => swcMinify는 SWC 기반의 최소화를 활성화 합니다. 최�
 
 ```
 
-<bold>contentlayer.config.ts</bold>
+### contentlayer.config.ts
 
-![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+<Image
+  src="/blogs/nextjsfirst.png"
+  width="400"
+  height="300"
+  alt="Image"
+  sizes="100vw"
+/>
 
 프로젝트내에 contentlayer.config.ts 파일을 생성후
 
@@ -237,9 +246,21 @@ export default makeSource({
 내가 사용하고자 하는 스키마를 정의 했으며 , 일반적으로 생각을 했을때 제목 , 작성일자 업데이트 일자 , 설명 , 이미지 , 작성자 , 태그(리스트를 만들시 분별하기 위한)
 이 필요로 하다 생각해서 만들었습니다.
 
-![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+<Image
+  src="/blogs/nextjssecond.PNG"
+  width="400"
+  height="300"
+  alt="Image"
+  sizes="100vw"
+/>
 
-![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+<Image
+  src="/blogs/nextjsthrid.PNG"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
 
 ## What to expect from here on out
 
