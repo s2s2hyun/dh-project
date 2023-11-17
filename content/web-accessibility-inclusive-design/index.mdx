@@ -1,0 +1,372 @@
+---
+title: 'NextJs13 에서 contentlayer 사용하여 정적블로그 만들기(1) '
+description: 'Next.Js 에서 contentlayer 사용하여 정적블로그 손쉽게 만들어보는 방법 '
+image: '../../public/blogs/christina-wocintechchat-com-OtHEYbQXLFU-unsplash.jpg'
+publishedAt: '2023-11-03'
+updatedAt: '2023-11-03'
+author: 'DH'
+isPublished: true
+tags:
+  - Nest.JS
+  - web development
+---
+
+Next.JS 프레임워크 에서 contentlayer 라이브러리를 사용하여 정적블로그를 소개 하겠습니다.
+정적블로그를 만들고 나서 , 처음으로 글을 작성해봅니다.
+첫번째 블로그 글의 주제로 저의 정적 블로그를 만들었던 과정을 적어보려고 합니다.
+
+## 1. 왜 블로그를 만들게 되었는가?🤔
+
+저는 기존에 부트캠프 코드캠프에서 첫 코딩 공부를 시작했습니다. 자신이 공부한 내용을 Velog 에 적어 좋은 정보를 전달하자는 취지로 블로그 작성을 권장 했었습니다.
+하지만 저는 블로그 작성에 있어서 적응을 못해서 그런지 이전에 적었던 블로그 내용을 봐도 뭔말인지도 잘 모르겠고 정말 제 자신이 봐도 정말 창피하다고 생각이 들었습니다.
+꾸준하게 블로그 작성은 못했지만 , 나만의 웹 블로그를 만들고 좀 더 책임감을 지니고 꾸준하게 공부한 내용을 하나하나 내가 만든 웹사이트에 히스토리를 만들고 싶다 생각이 들었습니다.
+
+그러다가 Next.JS 홈페이지를 둘러보다가 [Vercel Templates](https://vercel.com/templates) 페이지 까지 들어가게 되어 둘러보다가 , 이런 웹 디자인의 블로그를 하나를 만들고싶다!
+이생각이 문뜩 들었습니다. 그러면서 함께 공부한 프론트엔드 개발자분이 확장자 mdx 로 git blog 를 작성한다고 들어서 궁금해서 google 에 프론트엔드 mdx 블로그 검색을 하다보니
+"Next.JS 와 contentlayer로 MDX 블로그 만들기" 라는 문구가 보여서 클릭을 해봤습니다.
+
+[contentlayer](https://contentlayer.dev/) 라이브러리는 Next.JS 에서 정적블로그를 손쉽게 제작할 수 있도록 도와주는 아주 멋진 라이브러리인거 같아서 , 퇴근하고 나서
+하나하나 검색하며 찾아보고 contentlayer 라이브러리를 사용중에 오류도 겪어보고 생각보다 재밌던 경험이였습니다.
+
+> 굳이 왜? 기능 좋은 블로그들 엄청 많은데 왜 만들어서 사용해? 다른데에 시간 더 투자해!
+
+맞죠... 현재도 부족하지만 궁금하고 해보고싶은 욕구 때문에 제가 직접 만들었을때 가장 큰 장점은 제 마음대로 디자인이 가능한게 가장 큰 매력이였습니다.
+블로그 플랫폼에 가장 알려진 네이버 , 티스토리, velog 등등 .. 보다보면 레이아웃만 보면 특정 블로그 플랫폼이 떠오르는 디자인이라고 생각했습니다.
+뭐 정말 블로그를 시간내서 잘 꾸미신분들을 보면 엄청 기존의 남들이 쓰는 틀이 아닌 커스텀이 굉장히 잘 만져진곳도 많더라구요.
+나는 내 블로그의 나만의 색을 뭔가 좀 표현하고 싶다는 생각에 이러한 디자인을 만들었으며 , 기존 Next.Js 12 Pages Router가 아닌 Next.Js 13 App Router 로 공부하고자 만들었습니다.
+
+> [프로젝트 코드 보러가기 (GitHub Repository)](https://github.com/s2s2hyun/dh-project)
+
+## 2. contentlayer를 사용한 정적 블로그 제작👩‍🌾
+
+contentlayer를 사용하기 위해 먼저 Next.Js 프로젝트를 생성해줍니다.
+
+```
+npx create-next-app@latest
+
+What is your project named? my-app
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like to use `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to customize the default import alias (@/*)? No / Yes
+What import alias would you like configured? @/*
+```
+
+프로젝트를 생성 완료되고 나서 contentlayer를 사용하기 위해 필요한 yarn 라이브러리들을 설치해줍니다.
+
+```
+yarn add contentlayer next-contentlayer rehype-highlight rehype-pretty-code shiki date-fns
+
+```
+
+rehype-highlight , rehype-pretty-code , shiki 는 마크다운으로 작성된 코드글을 예쁘게 꾸며주는 라이브러리 입니다.
+
+이제 <bold>next.config.js</bold>와 <bold>tsconfig.json</bold> 파일을 수정을 해주어야 합니다.
+
+<bold>next.config.js</bold>
+
+```
+/** @type {import('next').NextConfig} */
+
+const { withContentlayer } = require("next-contentlayer");
+
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+};
+
+module.exports = withContentlayer({ ...nextConfig });
+
+```
+
+reactStrictMode => React 의 Strict 모드를 활성화 합니다. 이 모드는 개발 모드에서 애플리케이션 내의 잠재적인 문제를 찾는데 도움을 줍니다.
+SWC Minify => swcMinify는 SWC 기반의 최소화를 활성화 합니다. 최소화는 자바스크립트 코드의 파일 크기를 줄여 로드 시간을 개선하는 과정입니다.
+
+<bold>tsconfig.json</bold>
+
+```
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": "./", // 여기에 baseUrl을 추가했습니다
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./*"],
+      "contentlayer/generated": ["./.contentlayer/generated"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}
+
+
+```
+
+<bold>contentlayer.config.ts</bold>
+
+![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+
+프로젝트내에 contentlayer.config.ts 파일을 생성후
+
+```
+
+import { makeSource, defineDocumentType } from '@contentlayer/source-files'
+import readingTime from 'reading-time'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePrettyCode from 'rehype-pretty-code'
+import rehypeSlug from 'rehype-slug'
+import remarkGfm from 'remark-gfm'
+import GithubSlugger from 'github-slugger'
+
+const Blog = defineDocumentType(() => ({
+  name: 'Blog',
+  filePathPattern: '**/**/*.mdx',
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    publishedAt: {
+      type: 'date',
+      required: true,
+    },
+    updatedAt: {
+      type: 'date',
+      required: true,
+    },
+    description: {
+      type: 'string',
+      required: true,
+    },
+    image: { type: 'image' },
+    isPublished: {
+      type: 'boolean',
+      default: true,
+    },
+    author: {
+      type: 'string',
+      required: true,
+    },
+    tags: {
+      type: 'list',
+      of: { type: 'string' },
+    },
+  },
+  // mdx 로 작성한 글정보에 대해서 입력해야 하는 필드 정의
+
+
+
+
+
+  computedFields: {
+    url: {
+      type: 'string',
+      resolve: (doc) => `/blogs/${doc._raw.flattenedPath}`,
+    },
+    readingTime: {
+      type: 'json',
+      resolve: (doc) => readingTime(doc.body.raw),
+    },
+    toc: {
+      type: 'json',
+      resolve: async (doc) => {
+        const regulrExp = /\n(?<flag>#{1,6})\s+(?<content>.+)/g
+        const slugger = new GithubSlugger()
+        const headings = Array.from(doc.body.raw.matchAll(regulrExp)).map(
+          ({ groups }) => {
+            const flag = groups?.flag
+            const content = groups?.content
+
+            return {
+              level:
+                flag?.length == 1 ? 'one' : flag?.length == 2 ? 'two' : 'three',
+              text: content,
+              slug: content ? slugger.slug(content) : undefined,
+            }
+          },
+        )
+
+        return headings
+      },
+    },
+  },
+}))
+
+const codeOptions = {
+  theme: 'github-dark',
+  grid: false,
+}
+
+export default makeSource({
+  // 마크다운 파일이 저장되어 있는 루트 폴더
+  /* options */
+  contentDirPath: 'content',
+  documentTypes: [Blog],
+  mdx: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypeAutolinkHeadings, { behavior: 'append' }],
+      [rehypePrettyCode, codeOptions],
+    ],
+  },
+})
+
+```
+
+내가 사용하고자 하는 스키마를 정의 했으며 , 일반적으로 생각을 했을때 제목 , 작성일자 업데이트 일자 , 설명 , 이미지 , 작성자 , 태그(리스트를 만들시 분별하기 위한)
+이 필요로 하다 생각해서 만들었습니다.
+
+![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+
+![Alt text for image](../../public/blogs/nextjsfirst.png 'Optional title')
+
+---
+
+## What to expect from here on out
+
+What follows from here is just a bunch of absolute nonsense I've written to dogfood the plugin itself. It includes every sensible typographic element I could think of, like **bold text**, unordered lists, ordered lists, code blocks, block quotes, _and even italics_.
+
+It's important to cover all of these use cases for a few reasons:
+
+1.  We want everything to look good out of the box.
+2.  Really just the first reason, that's the whole point of the plugin.
+3.  Here's a third pretend reason though a list with three items looks more realistic than a list with two items.
+
+Now we're going to try out another header style.
+
+### Typography should be easy
+
+So that's a header for you — with any luck if we've done our job correctly that will look pretty reasonable.
+
+Something a wise person once told me about typography is:
+
+> Typography is pretty important if you don't want your stuff to look like trash. Make it good then it won't be bad.
+
+It's probably important that images look okay here by default as well:
+
+<Image
+  src="/blogs/c-d-x-PDX_a_82obo-unsplash.jpg"
+  width="718"
+  height="404"
+  alt="Image"
+  sizes="100vw"
+/>
+
+Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+
+Now I'm going to show you an example of an unordered list to make sure that looks good, too:
+
+- So here is the first item in this list.
+- In this example we're keeping the items short.
+- Later, we'll use longer, more complex list items.
+
+And that's the end of this section.
+
+## What if we stack headings?
+
+### We should make sure that looks good, too.
+
+Sometimes you have headings directly underneath each other. In those cases you often have to undo the top margin on the second heading because it usually looks better for the headings to be closer together than a paragraph followed by a heading should be.
+
+### When a heading comes after a paragraph …
+
+When a heading comes after a paragraph, we need a bit more space, like I already mentioned above. Now let's see what a more complex list would look like.
+
+- **I often do this thing where list items have headings.**
+
+  For some reason I think this looks cool which is unfortunate because it's pretty annoying to get the styles right.
+
+  I often have two or three paragraphs in these list items, too, so the hard part is getting the spacing between the paragraphs, list item heading, and separate list items to all make sense. Pretty tough honestly, you could make a strong argument that you just shouldn't write this way.
+
+- **Since this is a list, I need at least two items.**
+
+  I explained what I'm doing already in the previous list item, but a list wouldn't be a list if it only had one item, and we really want this to look realistic. That's why I've added this second list item so I actually have something to look at when writing the styles.
+
+- **It's not a bad idea to add a third item either.**
+
+  I think it probably would've been fine to just use two items but three is definitely not worse, and since I seem to be having no trouble making up arbitrary things to type, I might as well include it.
+
+After this sort of list I usually have a closing statement or paragraph, because it kinda looks weird jumping right to a heading.
+
+## Code should look okay by default.
+
+I think most people are going to use [highlight.js](https://highlightjs.org/) or [Prism](https://prismjs.com/) or something if they want to style their code blocks but it wouldn't hurt to make them look _okay_ out of the box, even with no syntax highlighting.
+
+Here's what a default `tailwind.config.js` file looks like at the time of writing:
+
+```js
+module.exports = {
+  purge: [],
+  theme: {
+    extend: {},
+  },
+  variants: {},
+  plugins: [],
+}
+```
+
+Hopefully that looks good enough to you.
+
+### What about nested lists?
+
+Nested lists basically always look bad which is why editors like Medium don't even let you do it, but I guess since some of you goofballs are going to do it we have to carry the burden of at least making it work.
+
+1.  **Nested lists are rarely a good idea.**
+    - You might feel like you are being really "organized" or something but you are just creating a gross shape on the screen that is hard to read.
+    - Nested navigation in UIs is a bad idea too, keep things as flat as possible.
+    - Nesting tons of folders in your source code is also not helpful.
+2.  **Since we need to have more items, here's another one.**
+    - I'm not sure if we'll bother styling more than two levels deep.
+    - Two is already too much, three is guaranteed to be a bad idea.
+    - If you nest four levels deep you belong in prison.
+3.  **Two items isn't really a list, three is good though.**
+    - Again please don't nest lists if you want people to actually read your content.
+    - Nobody wants to look at this.
+    - I'm upset that we even have to bother styling this.
+
+The most annoying thing about lists in Markdown is that `<li>` elements aren't given a child `<p>` tag unless there are multiple paragraphs in the list item. That means I have to worry about styling that annoying situation too.
+
+- **For example, here's another nested list.**
+
+  But this time with a second paragraph.
+
+  - These list items won't have `<p>` tags
+  - Because they are only one line each
+
+- **But in this second top-level list item, they will.**
+
+  This is especially annoying because of the spacing on this paragraph.
+
+  - As you can see here, because I've added a second line, this list item now has a `<p>` tag.
+
+    This is the second line I'm talking about by the way.
+
+  - Finally here's another list item so it's more like a list.
+
+- A closing list item, but with no nested list, because why not?
+
+And finally a sentence to close off this section.
+
+## There are other elements we need to style
+
+I almost forgot to mention links, like [this link to the Tailwind CSS website](https://tailwindcss.com). We almost made them blue but that's so yesterday, so we went with dark gray, feels edgier.

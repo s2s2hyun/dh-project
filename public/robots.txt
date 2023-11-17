@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://s2s2hyun.com
+
+# Sitemaps
+Sitemap: https://s2s2hyun.com/sitemap.xml
