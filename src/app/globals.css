@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/earlyaccess/notosanskr.css');
 /* https://rehype-pretty-code.netlify.app/ */ /* mdx 스타일링 참고 해야함 */
 /* body {
   width: 100%;
@@ -88,5 +86,5 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
 }
 
 body {
-  font-family: 'Noto Sans KR', sans-serif;
+  /* font-family: 'Noto Sans KR', sans-serif; */
 }

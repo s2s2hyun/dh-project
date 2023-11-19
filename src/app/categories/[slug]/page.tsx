@@ -60,9 +60,10 @@ const CategoryPage = ({ params }: { params: Params }) => {
   })
 
   const categoryName = decodeURIComponent(params.slug)
+
   return (
     <article className="mt-12 flex flex-col text-dark dark:text-light">
-      <div className="sxl:px-32 flex flex-col px-5 sm:px-10 md:px-24">
+      <div className="flex flex-col px-5 sm:px-10 md:px-24 sxl:px-32">
         <h1 className="mt-6 text-2xl font-semibold md:text-4xl lg:text-5xl ">
           #{params.slug}
         </h1>
@@ -71,7 +72,7 @@ const CategoryPage = ({ params }: { params: Params }) => {
         </span>
       </div>
       <Categories categories={allCategories} currentSlug={params.slug} />
-      <div className="sxl:px-32 sm:  sxl:mt-32 mt-24 grid grid-cols-1 grid-rows-2 gap-16 px-5 sm:grid-cols-2 sm:px-10 md:px-24 lg:grid-cols-3">
+      <div className="sm: mt-24  grid grid-cols-1 grid-rows-2 gap-16 px-5 sm:grid-cols-2 sm:px-10 md:px-24 lg:grid-cols-3 sxl:mt-32 sxl:px-32">
         {blogs.map((blog, index) => (
           <article key={index} className="relative col-span-1 row-span-1">
             <BlogLayoutThree blog={blog} />

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Manrope } from 'next/font/google'
+import { Noto_Sans_KR } from 'next/font/google'
 import './globals.css'
 import { cx } from '../utils'
 import Header from '../components/Header'
@@ -7,16 +7,10 @@ import Footer from '../components/Footer'
 import SiteMetaData from '@/src/utils/siteMetaData'
 import Script from 'next/script'
 
-const inter = Inter({
+const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-in',
-})
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-mr',
 })
 
 export const metadata: Metadata = {
@@ -62,11 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cx(
-          inter.variable,
-          manrope.variable,
-          'bg-light font-mr dark:bg-dark',
-        )}
+        className={cx(notoSansKr.variable, 'bg-light font-mr dark:bg-dark')}
       >
         <Script id="theme-script">
           {`if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
