@@ -16,7 +16,7 @@ const BlogLayoutOne = ({ blog }: any) => {
         width={blog.image.width}
         height={blog.image.height}
         className="ease h-full w-full rounded-xl object-cover object-center transition-all duration-300 group-hover:scale-105 "
-        sizes=" (max-width:1180px) 100vw, 50vw,"
+        sizes="(max-width:1180px) 100vw, 50vw,"
       />
       <div className="xs:p-6 absolute  bottom-0 z-20 w-full p-4 sm:p-10">
         {/* <Link href={`/categories/${blog.tags[0]}`}>{blog.tags[0]}</Link> */}

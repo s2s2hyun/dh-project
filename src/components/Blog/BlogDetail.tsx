@@ -16,7 +16,6 @@ const BlogDetail = ({ blog, slug: blogSlug }: BlogViewCountProps) => {
         <ViewCounter slug={blogSlug} />
       </span>
       <div className="m-3">{blog.readingTime.text}</div>
-      {/* <Link href={`/categories/${slug(blog?.tags[0])}`}>{blog?.tags[0]}</Link> */}
       {blog?.tags && (
         <Link href={`/categories/${slug(blog.tags[0])}`}>{blog.tags[0]}</Link>
       )}
