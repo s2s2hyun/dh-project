@@ -39,13 +39,9 @@ const Footer = () => {
   return (
     <footer className="m-2 mt-16 flex flex-col items-center rounded-2xl bg-dark pb-8 text-light dark:bg-accentDark/90 dark:text-dark sm:m-10">
       <h3 className="mt-16 px-4 text-center text-2xl font-medium capitalize dark:font-bold sm:text-3xl lg:text-4xl ">
-        Interesting Stories | Updates | Guides
+        일상 | 블로그 | 개발
       </h3>
-      <p className="mt-5 px-4 text-center text-sm font-light dark:font-medium sm:w-3/5 sm:text-base ">
-        Subscribe to learn about new technology and updates. Join over 5000+
-        members community to stay up to date with latest news.
-      </p>
-      <form
+      {/* <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-4 mt-6 flex w-fit  items-stretch rounded bg-light dark:bg-dark  sm:min-w-[384px] sm:p-2"
       >
@@ -60,7 +56,7 @@ const Footer = () => {
           type="submit"
           className="cursor-pointer rounded bg-dark px-3 py-1 font-medium text-light dark:bg-light dark:text-dark sm:px-5"
         />
-      </form>
+      </form> */}
       <div className="mt-8 flex items-center">
         <a href="http://example.com" className="mr-8 inline-block h-6 w-6">
           {/* <Image src={linkedInImg} alt="sns_LinkedIn_logo" /> */}
