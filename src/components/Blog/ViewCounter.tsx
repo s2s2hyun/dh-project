@@ -52,7 +52,7 @@ const ViewCounter = ({
           console.log('error incrementing view count inside try block', error)
         }
 
-        console.log(data)
+        // console.log(data)
 
         setViews(data ? data.count : 0)
       } catch (error) {

@@ -17,12 +17,12 @@ export default function ContactForm() {
     formState: { errors },
   } = useForm<FormData>()
   const onSubmit = (data: FormData) => console.log(data)
-  console.log(errors)
+  // console.log(errors)
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="xs:text-lg mt-12 font-in text-base  font-medium leading-relaxed sm:text-xl"
+      className="mt-12 font-in text-base font-medium  leading-relaxed xs:text-lg sm:text-xl"
     >
       Hello! My Name is
       <input
