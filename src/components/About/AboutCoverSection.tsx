@@ -9,15 +9,15 @@ const AboutCoverSection = () => {
         <Image
           src={profileCharacter}
           alt="profile character"
-          className="xs:w-3/4 h-full object-contain object-center md:w-full"
+          className="h-full object-contain object-center xs:w-3/4 md:w-full"
           priority
           sizes="(max-width:768px) 100vw, (max-width:1180px) 50vw, 50vw,"
         />
       </div>
 
-      <div className="xs:p-10 flex w-full flex-col items-start justify-center pb-10 text-left md:w-1/2 lg:px-16">
-        <h2 className="sxl:text-6xl xs:text-5xl text-center text-4xl font-bold capitalize lg:text-start">
-          Dream Big , Work Hard, Achieve More!
+      <div className="flex w-full flex-col items-start justify-center pb-10 text-left xs:p-10 md:w-1/2 lg:px-16">
+        <h2 className="text-center text-4xl font-bold capitalize xs:text-5xl lg:text-start sxl:text-6xl">
+          매일 매일 성장하고픈 개발자
         </h2>
         <p className="mt-4 text-base font-medium capitalize">
           This Mantra Drives My Work As A Passionate Freelancer. I Blend

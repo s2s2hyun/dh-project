@@ -18,7 +18,6 @@ interface Blog {
   tags: string[]
   description: string
   url: string
-  // ... any other properties used in the Blog object
 }
 
 const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
@@ -38,7 +37,6 @@ const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
           className="-z-10 h-full w-full rounded-3xl object-cover object-center"
         />
         <div className="z-0 flex w-full flex-col items-start justify-center p-6 text-light sm:p-8 md:p-12  lg:w-3/4 lg:p-16">
-          {/* <Link href={`/categories/${blog.tags[0]}`}>{blog.tags[0]}</Link> */}
           <Tag link={`/categories/${slug(blog.tags[0])}`} name={blog.tags[0]} />
           <Link href={blog.url} className="mt-6">
             <h1 className="text-lg font-bold capitalize md:text-3xl lg:text-4xl ">
