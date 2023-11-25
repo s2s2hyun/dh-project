@@ -4,10 +4,10 @@ import React, { useState } from 'react'
 import Logo from './Logo'
 import Link from 'next/link'
 import Image from 'next/image'
-
 import {
   DribbleIcon,
   GithubIcon,
+  GithubLightIcon,
   LinkedIcon,
   MoonIcon,
   SunIcon,
@@ -16,6 +16,7 @@ import {
 import SiteMetaData from '@/src/utils/siteMetaData'
 import { useThemeSwitch } from '../Hooks/useThemeSwitch'
 import { cx } from '@/src/utils'
+import DarkLogo from './DarkLogo'
 
 const Header = () => {
   const [mode, setMode] = useThemeSwitch()
@@ -29,8 +30,16 @@ const Header = () => {
   return (
     <header className=" flex w-full items-center justify-between p-6 px-10">
       {/* mobile */}
+      {mode === 'light' ? (
+        <>
+          <Logo />
+        </>
+      ) : (
+        <>
+          <DarkLogo />
+        </>
+      )}
 
-      <Logo />
       <button
         className="relative z-50 inline-block sm:hidden"
         onClick={toggle}
@@ -103,11 +112,15 @@ const Header = () => {
         </a>
         <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
           {/* <Image src={githubImg} alt="Github" /> */}
-          <GithubIcon className="ease transition-all duration-200 hover:scale-125" />
-        </a>
-        <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
-          {/* <Image src={dribbleImg} alt="Drible" /> */}
-          <DribbleIcon className="ease transition-all duration-200 hover:scale-125" />
+          {mode === 'light' ? (
+            <>
+              <GithubIcon className="ease transition-all duration-200 hover:scale-125" />
+            </>
+          ) : (
+            <>
+              <GithubLightIcon className="ease transition-all duration-200 hover:scale-125" />
+            </>
+          )}
         </a>
       </div>
     </header>

@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   compiler: {
-    // removeConsole: true,
+    removeConsole: true,
   },
 }
 

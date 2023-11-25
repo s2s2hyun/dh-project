@@ -1,17 +1,17 @@
 const SiteMetaData = {
-  title: 'Next.js Blog With Tailwind CSS and Contentlayer',
-  description: 'A Blog created with Next.js , tailwind.css and contentlayer',
+  title: 'Frontend Developer DH',
+  description: 'Web Developer Blog',
   authors: [
     {
       name: 'DH',
-      url: 'https://github.com/s2s2hyun',
+      url: 'https://donghyundev.com/',
     },
   ],
   language: 'ko-KR',
   theme: 'system',
   siteUrl: 'https://github.com/s2s2hyun',
-  siteLogo: '/next.svg',
-  socialBanner: '/next.svg',
+  siteLogo: '/myfavicon.png',
+  socialBanner: '/myfavicon.png',
   email: 's2s2hyun0601@gmail.com',
   github: 'https://github.com/s2s2hyun',
   linkedIn: 'https://github.com/s2s2hyun',

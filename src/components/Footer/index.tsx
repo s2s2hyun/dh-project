@@ -73,10 +73,6 @@ const Footer = () => {
           {/* <Image src={githubImg} alt="Github" /> */}
           <GithubLightIcon className="ease fill-white transition-all duration-200 hover:scale-125 dark:fill-dark" />
         </a>
-        <a href="http://example.com" className="mr-8 inline-block h-6 w-6">
-          {/* <Image src={dribbleImg} alt="Drible" /> */}
-          <DribbleIcon className="ease transition-all duration-200 hover:scale-125" />
-        </a>
       </div>
       <div className="relative  mt-16 flex w-full flex-col items-center justify-between border-t border-solid border-light px-8  py-6 font-medium md:mt-24 md:flex-row">
         <span className="text-center">
@@ -91,7 +87,7 @@ const Footer = () => {
         <div className="text-center">
           Made with &hearts; by{' '}
           <a
-            href="https://devdreaming.com"
+            href="https://github.com/s2s2hyun"
             className="underline"
             target="_blank"
           >
