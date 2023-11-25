@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     description: SiteMetaData.description,
     url: SiteMetaData.siteUrl,
     siteName: SiteMetaData.title,
-    images: [SiteMetaData.socialBanner],
+    images: [SiteMetaData.siteLogo],
     locale: 'ko-KR',
     type: 'website',
   },
@@ -61,6 +61,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon-16x16.png" />
+      </head>
       <body
         className={cx(
           notoSansKr.variable,
