@@ -1,5 +1,5 @@
 const SiteMetaData = {
-  title: 'Frontend Developer DH',
+  title: 'Frontend Developer 임동현',
   description: 'Web Developer Blog',
   authors: [
     {
