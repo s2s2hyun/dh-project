@@ -63,6 +63,10 @@ export default function RootLayout({
     <html lang="kor">
       <head>
         <link rel="icon" href="/favicon-16x16.png" />
+        <meta
+          name="naver-site-verification"
+          content="3ec8b6ae3e09d81748339a89bbe42c30372614b6"
+        />
       </head>
       <body
         className={cx(
