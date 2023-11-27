@@ -1,5 +1,4 @@
 module.exports = {
-  siteUrl: 'https://s2s2hyun.com',
+  siteUrl: 'https://donghyundev.com/',
   generateRobotsTxt: true,
-  sitemapSize: 7000,
 }

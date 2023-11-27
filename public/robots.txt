@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://s2s2hyun.com
+Host: https://donghyundev.com/
 
 # Sitemaps
-Sitemap: https://s2s2hyun.com/sitemap.xml
+Sitemap: https://donghyundev.com/sitemap.xml
