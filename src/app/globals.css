@@ -10,6 +10,7 @@
 } */
 html {
   scroll-behavior: smooth;
+  font-family: 'Pretendard-Regular';
 }
 
 h1 > a > .icon.icon-link:before,
@@ -22,6 +23,7 @@ h3 > a > .icon.icon-link:before {
 h2 > a,
 h3 > a {
   text-decoration: none !important;
+  font-family: 'Pretendard-Regular';
 }
 
 code {
@@ -74,6 +76,7 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   padding: 4px 8px;
   font-size: 1rem;
   border-end-start-radius: 4px;
+  font-family: 'Pretendard-Regular';
 }
 
 [data-rehype-pretty-code-caption] {
@@ -83,6 +86,15 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
   text-align: center;
   font-size: 1rem;
   color: #747474;
+  font-family: 'Pretendard-Regular';
+}
+
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {

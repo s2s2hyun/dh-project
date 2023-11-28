@@ -114,7 +114,7 @@ css 가 적용된 폰트의 모습을 보실수 있습니다.
 
 #### 2.1.2. id 셀렉터
 
-id 셀렉터는 #id와 같이 #을 사용한다. 문서 전체에서 특정 id를 가진 요소는 하나뿐이어야 하므로 id 셀렉터는 하나의 요소만 선택할 수 있다.
+`id{:html}` 셀렉터는 `#id{:html}` 와 같이 #을 사용한다. 문서 전체에서 특정 id를 가진 요소는 하나뿐이어야 하므로 id 셀렉터는 하나의 요소만 선택할 수 있다.
 
 ```index.css
 index.html
@@ -242,17 +242,17 @@ UI 상태 셀렉터는 selector:enabled는 셀렉터가 사용 가능하게 활�
 
 구조 가상 클래스는 해당 셀렉터가 어떤 위치를 차지하고 있는지에 따라 선택된다.
 
-- selector:first-child는 셀렉터 요소 중 첫째 자식인 요소를 선택한다. selector:last-child는 셀렉터 요소 중 마지막 자식인 요소를 선택한다.
+- `selector:first-child{:html}`는 셀렉터 요소 중 첫째 자식인 요소를 선택한다. `selector:last-child{:html}`는 셀렉터 요소 중 마지막 자식인 요소를 선택한다.
 
-selector:nth-child(n)는 셀렉터 요소 중 n번째 자식인 요소를 선택한다. selector:nth-last-child(n)는 셀렉터 요소 중 뒤에서부터 n번째 자식인 요소를 선택한다.
+`selector:nth-child(n){:html}`는 셀렉터 요소 중 n번째 자식인 요소를 선택한다.`selector:nth-last-child(n){:html}` 는 셀렉터 요소 중 뒤에서부터 n번째 자식인 요소를 선택한다.
 
-이때 n이 0과 음수인 경우는 생략된다. 따라서 li:nth-child(2n-1)은 홀수 번째 자식인 li요소를 선택한다.
+이때 n이 0과 음수인 경우는 생략된다. 따라서 `li:nth-child(2n-1){:html}` 은 홀수 번째 자식인 li요소를 선택한다.
 
-- selector:first-of-type는 형제 요소 중 selector에 해당하는 가장 처음 요소를 선택한다. selector:last-of-type는 형제 요소 중 selector에 해당하는 가장 마지막 요소를 선택한다.
+- `selector:first-of-type{:html}`는 형제 요소 중 selector에 해당하는 가장 처음 요소를 선택한다. `selector:last-of-type{:html}`는 형제 요소 중 selector에 해당하는 가장 마지막 요소를 선택한다.
 
-selector:nth-of-type(n)는 형제 요소 중 selector 조건에 해당하는 n번째 요소를 선택한다. selector:nth-last-of-type(n)는 형제 요소 중 selector에 해당하는 뒤에서부터 n번째 요소를 선택한다.
+`selector:nth-of-type(n){:html}`는 형제 요소 중 selector 조건에 해당하는 n번째 요소를 선택한다.`selector:nth-last-of-type(n){:html}` 는 형제 요소 중 selector에 해당하는 뒤에서부터 n번째 요소를 선택한다.
 
-부정 셀렉터도 있다. selector:not(A)는 A selector에 해당하는 요소를 제외한 나머지 요소를 선택한다.
+부정 셀렉터도 있다. `selector:not(A){:html}`는 A selector에 해당하는 요소를 제외한 나머지 요소를 선택한다.
 
 정합성 셀렉터 :valid는 input이나 form 요소의 정합성 검증이 성공했을 때 선택한다. :invalid는 검증이 실패했을 때 선택한다. 이런 정합성 검증은 required, pattern 등의 속성을 통해 할 수 있다.
 
@@ -260,9 +260,9 @@ selector:nth-of-type(n)는 형제 요소 중 selector 조건에 해당하는 n�
 
 가상 요소는 요소의 특정 부분, 예를 들어서 특정 요소의 앞 등에 스타일링을 적용하기 위해 사용된다. ::를 사용해 표현하며 CSS 표준에 정의된 이름을 사용해야 한다.
 
-::first-letter는 요소 내용의 첫 번째 글자를 선택한다. ::first-line은 요소 내용의 첫 번째 줄을 선택한다.
+`::first-letter{:html}`는 요소 내용의 첫 번째 글자를 선택한다. `::first-line{:html}`은 요소 내용의 첫 번째 줄을 선택한다.
 
-::before는 요소의 앞에 위치하는 공간을 선택한다. ::after는 요소의 내용 뒤에 위치하는 공간을 선택한다. 그리고 ::selection은 드래그한 콘텐츠를 선택한다.
+`::before{:html}`는 요소의 앞에 위치하는 공간을 선택한다. `::after{:html}`는 요소의 내용 뒤에 위치하는 공간을 선택한다. 그리고 `::selection{:html}`은 드래그한 콘텐츠를 선택한다.
 
 ```index.css
 ::selection{
