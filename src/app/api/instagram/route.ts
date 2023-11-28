@@ -1,11 +1,10 @@
 import axios, { AxiosError } from 'axios'
-import { NextApiRequest, NextApiResponse } from 'next'
 
 // export async function GET(request: Request, res: Response) {
 //   res.status(200).json({ message: 'Hello GET' })
 // }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   // 복잡한 데이터 구조를 생성
   const data = {
     user: {
