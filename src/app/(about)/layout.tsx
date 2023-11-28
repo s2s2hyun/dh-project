@@ -1,4 +1,5 @@
 import InsightRoll from '@/src/components/About/InsightRoll'
+import Providers from '@/src/utils/providers'
 import { ReactNode } from 'react'
 
 const insights = [
@@ -13,9 +14,11 @@ const insights = [
 ]
 export default function AboutLayout({ children }: { children: ReactNode }) {
   return (
-    <main className="flex w-full flex-col items-center justify-between">
-      <InsightRoll insights={insights} />
-      {children}
-    </main>
+    <Providers>
+      <main className="flex w-full flex-col items-center justify-between">
+        <InsightRoll insights={insights} />
+        {children}
+      </main>
+    </Providers>
   )
 }

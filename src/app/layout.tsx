@@ -6,6 +6,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SiteMetaData from '@/src/utils/siteMetaData'
 import Script from 'next/script'
+import Providers from '../utils/providers'
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -82,7 +83,6 @@ export default function RootLayout({
             document.documentElement.classList.remove('dark');
           }`}
         </Script>
-
         <Header />
         {children}
         <Footer />

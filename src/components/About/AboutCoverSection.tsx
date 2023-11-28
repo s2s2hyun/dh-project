@@ -19,13 +19,35 @@ const AboutCoverSection = () => {
         <h2 className="text-center text-4xl font-bold capitalize dark:text-white xs:text-5xl lg:text-start sxl:text-6xl">
           매일 매일 성장하고픈 개발자
         </h2>
-        <p className="mt-4 text-base font-medium capitalize dark:text-white">
-          This Mantra Drives My Work As A Passionate Freelancer. I Blend
-          Innovative Technology With Timeless Design For Captivating Digital
-          Experiences. Inspired By Nature And Literature, I`m A Perpetual
-          Learner Embracing Challenges. With Each Project, I Aim To Leave A
-          Lasting Impact-One Pixel At A Time.
-        </p>
+        <b className="mt-4 text-2xl  font-[600] capitalize dark:text-white">
+          i&apos;m
+        </b>
+        <ul>
+          <li className="text-base font-[400]  dark:text-white ">
+            <span className="text-sm font-[400]  dark:text-white ">●</span> 높은
+            목표를 가지고 성장을 추구하며 성실한 개발자가 되기위해 노력합니다.
+          </li>
+          <li className="text-base font-[400]  dark:text-white ">
+            <span className="text-sm font-[400]  dark:text-white ">●</span>{' '}
+            빠르게 변화하는 프론트엔드 생태계에서 본질을 잊지 않으려고
+            노력합니다.
+          </li>
+          <li className="text-base font-[400]  dark:text-white ">
+            <span className="text-sm font-[400]  dark:text-white">●</span>{' '}
+            커뮤니케이션 및 사람간의 유대를 중요시하고 좋은 동료가 되기 위해
+            노력합니다.
+          </li>
+        </ul>
+        <b className="mt-4 text-2xl  font-[600] capitalize dark:text-white">
+          Career
+        </b>
+        <ul>
+          <li className="text-base font-[400]  dark:text-white ">
+            <span className="text-sm font-[400]  dark:text-white">●</span>{' '}
+            파프리카 인더스트리 ( 2020.10 ~ 2023.11)
+          </li>
+          <li></li>
+        </ul>
       </div>
     </section>
   )
