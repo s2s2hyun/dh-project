@@ -1,6 +1,6 @@
 import { runCors } from '@/middleware'
 import { EmailFormData } from '@/types/mailData'
-import { NextApiRequest, NextApiResponse } from 'next'
+import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
 const transporter = nodemailer.createTransport({
@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   },
 })
 
-export async function sendEmail({
+async function sendEmail({
   name,
   email,
   phoneNumber,
@@ -30,15 +30,13 @@ export async function sendEmail({
   return transporter.sendMail(mailData)
 }
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  console.log(req.body, 'here yo')
-
-  const formData = req.body
+export async function POST(req: NextRequest, res: NextResponse) {
+  const formData = await req.json()
 
   try {
     await sendEmail(formData)
-    res.status(200).json({ message: 'Email sent successfully' })
+    return new Response(null, { status: 200 })
   } catch (error) {
-    res.status(500).json({ message: 'Failed to send email', error })
+    return new Response(null, { status: 500 })
   }
 }
