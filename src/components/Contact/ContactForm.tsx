@@ -1,11 +1,13 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { EmailFormData } from '@/types/mailData'
 
 export default function ContactForm() {
+  const [userData, setUserData] = useState({})
+
   const {
     register,
     handleSubmit,
@@ -13,35 +15,25 @@ export default function ContactForm() {
   } = useForm<EmailFormData>()
 
   const onSubmit = async (data: EmailFormData) => {
-    console.log(data, 'data')
+    setUserData(data)
     try {
-      const response = await fetch('/api/sendMail', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
+      const response = await axios.post('/api/sendMail', data)
 
-      if (!response.ok) {
-        const errorText = await response.text() // Fetch the response as text to see the error message
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${errorText}`,
+      console.log(response.data, 'data값에 뭐가 쓰였어 지금')
+    } catch (error: any) {
+      if (error.response) {
+        console.error(
+          `HTTP error! status: ${error.response.status}, message: ${error.response.data}`,
         )
-      }
-
-      // Conditionally parse the response as JSON
-      let responseData
-      if (response.headers.get('Content-Type')?.includes('application/json')) {
-        responseData = await response.json()
+      } else if (error.request) {
+        console.error('No response was received', error.request)
       } else {
-        responseData = await response.text()
+        console.error('Error', error.message)
       }
-      console.log(responseData)
-    } catch (error) {
-      console.error(error, '< 에러나왔음 fetch ')
     }
   }
+
+  // console.log(userData, 'userData')
 
   return (
     <form
