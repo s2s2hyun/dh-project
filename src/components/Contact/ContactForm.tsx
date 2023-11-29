@@ -2,22 +2,37 @@
 
 import React from 'react'
 import { useForm } from 'react-hook-form'
-
-type FormData = {
-  name: string
-  email: string
-  phoneNumber: string
-  projectDetails: string
-}
+import axios from 'axios'
+import { EmailFormData } from '@/types/mailData'
 
 export default function ContactForm() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>()
-  const onSubmit = (data: FormData) => console.log(data)
-  // console.log(errors)
+  } = useForm<EmailFormData>()
+
+  const onSubmit = async (data: EmailFormData) => {
+    console.log(data, 'data')
+    try {
+      const response = await fetch('/api/sendMail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const responseData = await response.json()
+      console.log(responseData)
+    } catch (error) {
+      console.error(error, '< 에러나왔음 fetch ')
+    }
+  }
 
   return (
     <form
