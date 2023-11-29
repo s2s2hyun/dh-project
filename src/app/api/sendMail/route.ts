@@ -22,9 +22,13 @@ async function sendEmail({
 }: EmailFormData) {
   const mailData = {
     to: process.env.GMAIL_USER_ID,
-    subject: `[BLOG] ${subject}`,
+    subject: `[BLOG] ${name}`,
     from: email,
-    message: `${projectDetails}\n${phoneNumber} \n${name}`,
+    html: `
+            <p>Name: ${name} </p>
+            <p>Email: ${email} </p>
+            <p>Message: ${projectDetails} </p>
+            `,
   }
 
   return transporter.sendMail(mailData)
@@ -32,6 +36,7 @@ async function sendEmail({
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const formData = await req.json()
+  console.log(formData)
 
   try {
     await sendEmail(formData)

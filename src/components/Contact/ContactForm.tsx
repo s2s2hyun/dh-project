@@ -24,10 +24,19 @@ export default function ContactForm() {
       })
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+        const errorText = await response.text() // Fetch the response as text to see the error message
+        throw new Error(
+          `HTTP error! status: ${response.status}, message: ${errorText}`,
+        )
       }
 
-      const responseData = await response.json()
+      // Conditionally parse the response as JSON
+      let responseData
+      if (response.headers.get('Content-Type')?.includes('application/json')) {
+        responseData = await response.json()
+      } else {
+        responseData = await response.text()
+      }
       console.log(responseData)
     } catch (error) {
       console.error(error, '< 에러나왔음 fetch ')
