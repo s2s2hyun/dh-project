@@ -62,10 +62,6 @@ const Footer = () => {
           {/* <Image src={linkedInImg} alt="sns_LinkedIn_logo" /> */}
           <LinkedIcon className="ease transition-all duration-200 hover:scale-125" />
         </a>
-        <a href="http://example.com" className="mr-8 inline-block h-6 w-6">
-          {/* <Image src={twitterImg} alt="Twitter" /> */}
-          <TwiiterIcon className="ease transition-all duration-200 hover:scale-125" />
-        </a>
         <a
           href="http://example.com"
           className="mr-8 inline-block h-6 w-6 fill-white"

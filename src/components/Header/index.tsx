@@ -28,7 +28,7 @@ const Header = () => {
   }
 
   return (
-    <header className=" flex w-full items-center justify-between p-6 px-10">
+    <header className=" flex w-full items-center justify-between p-6 px-10 ">
       {/* mobile */}
       {mode === 'light' ? (
         <>
@@ -77,7 +77,7 @@ const Header = () => {
         </div>
       </button>
       {/* Pc */}
-      <nav className="fixed right-1/2 top-6 z-50 hidden w-max translate-x-1/2 items-center rounded-full border border-solid border-dark bg-light/80 px-8 py-3 font-medium capitalize backdrop-blur-sm lg:flex ">
+      <nav className="fixed right-1/2 top-6 z-50 hidden w-max translate-x-1/2 items-center rounded-full border border-solid border-dark bg-light/80 px-8 py-3 font-medium capitalize backdrop-blur-sm sm:flex ">
         <Link href="/" className="mr-2">
           Home
         </Link>
@@ -101,14 +101,10 @@ const Header = () => {
           )}
         </button>
       </nav>
-      <div className=" hidden lg:block">
+      <div className=" hidden sm:block">
         <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
           {/* <Image src={linkedInImg} alt="sns_LinkedIn_logo" /> */}
           <LinkedIcon className="ease transition-all duration-200 hover:scale-125" />
-        </a>
-        <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
-          {/* <Image src={twitterImg} alt="Twitter" /> */}
-          <TwiiterIcon className="ease transition-all duration-200 hover:scale-125" />
         </a>
         <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
           {/* <Image src={githubImg} alt="Github" /> */}

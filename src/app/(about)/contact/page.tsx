@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 const ContactPage = () => {
   return (
     <section className="boder-solid flex h-auto w-full flex-col items-center justify-center border-b-2 border-dark text-dark dark:border-light md:h-[75vh]  md:flex-row ">
-      <div className="inline-block h-full w-full border-solid border-dark dark:border-light dark:text-light sm:w-4/5 md:w-2/5 md:border-r-2 ">
+      <div className="inline-block h-full w-full border-solid border-dark dark:border-light dark:text-light sm:w-4/5 md:w-[35%] md:min-w-[400px] md:border-r-2 ">
         <LottieAnimation />
       </div>
-      <div className="xs:px-10 flex w-full flex-col items-start justify-center px-5 pb-8 md:w-3/5 md:px-16">
-        <h2 className="xs:text-3xl text-2xl font-bold capitalize sm:text-4xl ">
+      <div className="flex w-full flex-col items-start justify-center px-5 pb-8 xs:px-10 md:w-3/5 md:px-12">
+        <h2 className="text-2xl font-bold capitalize xs:text-3xl sm:text-4xl ">
           Let`s Connect !
         </h2>
         <ContactForm />
