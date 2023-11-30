@@ -86,17 +86,26 @@ const Header = () => {
           top: click ? '1rem' : '-5rem',
         }}
       >
-        <Link href="/" className="mr-2">
-          Home
+        <Link href="/" legacyBehavior>
+          <a className="mr-2" onClick={toggle}>
+            Home
+          </a>
         </Link>
-        <Link href="/about" className="mx-2">
-          About
+        <Link href="/about" className="mx-2" legacyBehavior>
+          <a className="mx-2" onClick={toggle}>
+            About
+          </a>
         </Link>
-        <Link href="/contact" className="mx-2">
-          Contact
+        <Link href="/contact" className="mx-2" legacyBehavior>
+          <a className="mx-2" onClick={toggle}>
+            Contact
+          </a>
         </Link>
         <button
-          onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+          onClick={() => {
+            setMode(mode === 'light' ? 'dark' : 'light')
+            toggle()
+          }}
           className={cx(
             'ease ml-2 flex h-6 w-6 items-center justify-center rounded-full p-1',
           )}

@@ -54,8 +54,10 @@ export default function ContactForm({
     >
       <div className="flex w-full flex-col items-center justify-center ">
         <div className=" flex w-full justify-between ">
-          <div>안녕하세요, 연락주시는분의 정보를 알려주세요</div>
-          <div>
+          <div className="text-sm sm:text-base">
+            안녕하세요, 연락주시는분의 정보를 알려주세요
+          </div>
+          <div className="text-sm sm:text-base">
             <span className="text-blue-500 dark:text-red-500">*</span> 필수 작성
             항목
           </div>

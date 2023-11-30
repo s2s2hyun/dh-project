@@ -15,8 +15,8 @@ const AboutCoverSection = () => {
         />
       </div>
 
-      <div className="flex w-full flex-col items-start justify-center pb-10 text-left xs:p-10 md:w-1/2 lg:px-16">
-        <h2 className="text-center text-4xl font-bold capitalize dark:text-white xs:text-5xl lg:text-start sxl:text-6xl">
+      <div className="flex w-full flex-col items-start justify-center px-4 pb-10 text-left xs:p-10 md:w-1/2 lg:px-16">
+        <h2 className="text-center text-3xl font-bold capitalize dark:text-white xs:text-5xl lg:text-start sxl:text-6xl">
           매일 매일 성장하고픈 개발자
         </h2>
         <b className="mt-4 text-2xl  font-[600] capitalize dark:text-white">
