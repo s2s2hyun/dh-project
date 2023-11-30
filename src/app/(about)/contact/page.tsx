@@ -38,7 +38,7 @@ const ContactPage = () => {
           <LottieAnimation />
         </div>
         <div className="flex w-full flex-col items-start justify-center px-5 pb-8 xs:px-10 md:w-3/5 md:px-12">
-          <h2 className="text-2xl font-bold capitalize xs:text-3xl sm:text-4xl ">
+          <h2 className="text-2xl font-bold capitalize dark:text-light xs:text-3xl sm:text-4xl ">
             Let`s Connect !
           </h2>
           {mailPage == 0 ? (

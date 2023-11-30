@@ -23,14 +23,16 @@ export function useThemeSwitch(): [
   }
 
   const getUserPreference = () => {
-    const userPref = window.localStorage.getItem(storageKey)
+    // window 객체가 존재할 때만 실행
+    if (typeof window !== 'undefined') {
+      const userPref = window.localStorage.getItem(storageKey)
 
-    if (userPref) {
-      return userPref as Theme
+      if (userPref) {
+        return userPref as Theme
+      }
     }
 
-    // return window.matchMedia(preferDarkQuery).matches ? 'dark' : 'light'
-    return 'light'
+    return 'light' // 기본값 반환
   }
 
   useEffect(() => {

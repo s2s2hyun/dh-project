@@ -14,7 +14,7 @@ const SiteMetaData = {
   socialBanner: './logo-me.png',
   email: 's2s2hyun0601@gmail.com',
   github: 'https://github.com/s2s2hyun',
-  linkedIn: 'https://github.com/s2s2hyun',
+  linkedIn: 'https://www.linkedin.com/in/s2s2hyun/',
   locale: 'ko-KR',
 }
 
