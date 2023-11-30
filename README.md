@@ -1,4 +1,4 @@
-### 29일 Nodemailer 설치완료 , 29일 메일 기능 , instagram
+### Dh-blog
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
