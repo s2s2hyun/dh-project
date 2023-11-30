@@ -33,12 +33,12 @@ const About = () => {
   //   return 'An error has occurred: ' + err.message
   // }
 
-  useEffect(() => {
-    axios
-      .get('http://172.18.33.131:3000/api/instagram')
-      .then((res) => console.log(res.data))
-      .catch((error) => console.log(error))
-  }, [])
+  // useEffect(() => {
+  //   axios
+  //     .get('http://172.18.33.131:3000/api/instagram')
+  //     .then((res) => console.log(res.data))
+  //     .catch((error) => console.log(error))
+  // }, [])
 
   // console.log(data)
 
