@@ -103,3 +103,16 @@ body {
   padding: 0;
   margin: 0;
 }
+
+.send-mail-page {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+.send-mail-page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

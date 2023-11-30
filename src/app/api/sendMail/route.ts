@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 async function sendEmail({
   name,
   email,
-  phoneNumber,
+  // phoneNumber,
   projectDetails,
   subject,
 }: EmailFormData) {
@@ -27,7 +27,6 @@ async function sendEmail({
     html: `
             <p>Name: ${name} </p>
             <p>Email: ${email} </p>
-            <p>연락처: ${phoneNumber} </p>
             <p>Message: ${projectDetails} </p>
             `,
   }
