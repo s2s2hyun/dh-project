@@ -161,7 +161,7 @@ const Skills = () => {
                   className=" flex h-[100px] items-center border-l-8 border-l-sky-400 bg-zinc-200 capitalize  transition-all
               duration-200 dark:bg-accentDark/90"
                 >
-                  <h5 className="pl-4 text-xl ">
+                  <h5 className="pl-4 text-lg font-black  ">
                     가상에서 펼쳐지는 K-패션의 향연 - *‘KOCCA METAVERSE FASHION
                     FESTIVAL-KMFF2022’**
                   </h5>
@@ -184,13 +184,57 @@ const Skills = () => {
                   <ul className="list-disc pl-5">
                     <li className="py-3 text-black dark:border-light dark:text-light">
                       <span className='xs:text-base" text-base dark:border-light dark:text-light'>
-                        Here
+                        문화체육관광부 , 한국 콘텐츠 진흥원 메타버스 패션
+                        페스티벌 가상의 공간에서 펼쳐지는 패션 콘텐츠 전시회를
+                        중점으로 , 국내 디자이너 브랜드 20팀을 홍보하며 , 각
+                        브랜드별 팝업스토어를 연결해주는 컨텐츠
                       </span>
                     </li>
                     <li className="py-3 text-black dark:border-light dark:text-light">
                       <span className='xs:text-base" text-base dark:border-light dark:text-light'>
-                        Here
+                        6개 언어(한국 , 영어 , 중국어 , 일본어 , 프랑스어
+                        ,스페인어) 선택 시 게임 내부의 언어 전부 번역 설정 ,
+                        React Hook form 라이브러리 유효성 검사를 통해서 회원가입
+                        Form 을 전달했습니다. KMFF 2022 메타버스에 보여지는
+                        화면서 각 버튼에 대한 간단한 이벤트 처리를 했으며 , Mbti
+                        , 전체적인 UI 웹 퍼블리싱을 담당했습니다.
                       </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <span className='xs:text-base" text-base dark:border-light dark:text-light'>
+                        이번 기회에 React-Three-fiber 를 처음으로 다뤄보며 정말
+                        웹에 세계는 정말 끝이 없다고 느껴졌으며 , 스스로
+                        부족함을 많이 느꼈던 프로젝트였습니다. 이번 프로젝트를
+                        계기로 웹에 세계가 굉장히 더 넓다는걸 깨닫는 계기가
+                        되었습니다.
+                      </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://progress-s2s2hyun.notion.site/2022-Kmff-Metaverse-Fashion-festival-28cb57fa2b6748d888ae33a485b23fc5?pvs=4"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련링크]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://www.youtube.com/watch?v=VGmdB_0HAxo"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련 Youtube]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://www.jaturi.kr/news/articleView.html?idxno=10204"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련 기사]
+                      </a>
                     </li>
                   </ul>
                 </div>
@@ -224,13 +268,47 @@ const Skills = () => {
                   <ul className="list-disc pl-5">
                     <li className="py-3 text-black dark:border-light dark:text-light">
                       <span className='xs:text-base" text-base dark:border-light dark:text-light'>
-                        Here
+                        2022 부산 G-Star FATALBOMB 게임 설명 및 캐릭터 소개를
+                        만들었으며, G-Star 이벤트를 위해 사전예약, 이벤트 랭킹
+                        페이지를 구현을 했습니다. 사전예약서 받은 고객의 정보로
+                        게임을 접속하여, 게임에서 점수 스코어가 가장 높은
+                        유저에게 행사 경품을 제공했습니다.
                       </span>
                     </li>
                     <li className="py-3 text-black dark:border-light dark:text-light">
                       <span className='xs:text-base" text-base dark:border-light dark:text-light'>
-                        Here
+                        프로젝트를 참여하며 느낀점: 부산 G-STAR 행사를 내가 만든
+                        웹사이트로 부터 고객들에게 서비스의 정보를 제공하며
+                        행사를 위한 이벤트 참여까지 행사장에서 함께 즐기면서
+                        하다보니 정말 보람차며 , 매우 즐거웠던 행사였습니다.
                       </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://progress-s2s2hyun.notion.site/2022-G-star-Fatalbomb-ba9ba1e03ee14fedbc5633f4b811b1c1?pvs=4"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련링크]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://www.globalepic.co.kr/view.php?ud=202211161239515076cf2d78c68_29"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련 News]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://www.youtube.com/watch?v=uEh2PMBkc7U"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [관련 Youtube]
+                      </a>
                     </li>
                   </ul>
                 </div>
