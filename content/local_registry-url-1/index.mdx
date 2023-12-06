@@ -1,0 +1,149 @@
+---
+title: '[JavaScript] 웹에서 응용 프로그램(.exe)를 실행하는 방법1'
+description: '[JavaScript] 웹(Chrome)에서 응용 프로그램(Local) 실행 시키기 - Registry를 이용한 URL 호출방법'
+image: '../../public/blogs/emile-perron-xrVDYZRGdw4-unsplash.jpg'
+publishedAt: '2023-12-04'
+updatedAt: '2023-12-04'
+author: 'DH'
+isPublished: true
+tags:
+  - javascript
+---
+
+<Image
+  src="/blogs/local_registry-url/blog-luncher.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+롤 런처로 예시를 들고자 합니다. Windows 제 Pc 기준이오니, 참고하시기 바랍니다.
+
+## 1. 웹에서 응용 프로그램을 실행이 가능할까?🤔
+
+가능은 합니다. 하지만, ActiveX를 이용할 수도 있지만 IE를 지양하는 상황에서 이 방법은 추천하지 않습니다.
+
+대략적인 목차는 다음과 같습니다.
+
+## 2. 목차
+
+### 2-1 Registry에 Local에 저장된 (.exe)파일의 경로 설정
+
+1. Registry에 Local에 저장된 (.exe)파일의 경로 설정
+
+### 2-2 Web에서 지정된 Registry를 바라보는 URL 호출
+
+2. Web에서 지정된 Registry를 바라보는 URL 호출
+
+## 3. 설명
+
+목차에 따라 게시물을 1,2편으로 나누었습니다.
+
+테스트에 사용된 (.exe)파일 및 URL Scheme에 대한 내용은 [여기 (learn Microsoft)](<https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa767914(v=vs.85)?redirectedfrom=MSDN>) 를 참고하세요.
+
+#### 1. 응용 프로그램(.exe)를 실행시키기 위한 Registry 등록
+
+<br />
+
+1.  호출 URL에 들어갈 APP명으로 키를 생성합니다.
+
+가장먼저 레지스트리를 관리자 권한으로 실행을 시킵니다.
+
+<Image
+  src="/blogs/local_registry-url/blog1-1.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+` HKEY_CLASSES_ROOT → [우클릭] → 새로 만들기 → 키 {:html}`
+
+<Image
+  src="/blogs/local_registry-url/blog1-2.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+#### 2. KEY 문자열 값을 등록.
+
+"1)"에서 만든 KEY에 문자열 값을 등록합니다.
+
+` KEY [우클릭] → 새로 만들기 → 문자열 값  {:html}`
+
+생성한 문자열 값의 "이름"을 "URL protocol"로 수정합니다.
+
+<Image
+  src="/blogs/local_registry-url/blog1-5.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/local_registry-url/blog1-3.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+#### 3. KEY 추가 생성
+
+사용자 정의 프로토콜에는 shell\open\command라는 키가 있어야 합니다.
+
+` "1)"에서 생성한 KEY("frontendsample") 하위에 동일한 방법으로 "shell" → "open" → "command" 순으로 생성합니다.  {:html}`
+
+<Image
+  src="/blogs/local_registry-url/blog1-4.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+#### 4. 문자열 값 수정
+
+`"command"의 (기본값) 문자열 값 수정 {:html}`
+
+위에서 생성한 "command" 키에 (기본값) 항목의 데이터 부분을
+
+"응용프로그램의 절대경로" "%1" 로 수정합니다.
+
+"%1"은 응용 프로그램 실행시 args[]에 들어가는 인자값으로 지정하되, 호출 시 사용하지 않아도 무방합니다.
+
+<Image
+  src="/blogs/local_registry-url/blog1-6.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+## 4.결과
+
+호출 테스트
+
+Chrome 주소란에 위에서 생성했던 "KEY명://" 으로 접속합니다.
+
+아래 처럼 발생하는 팝업에서 "열기"를 누르면 응용 프로그램(.exe)가 실행됩니다.
+
+<Image
+  src="/blogs/local_registry-url/blog-1-7.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/local_registry-url/blog-1-8.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
