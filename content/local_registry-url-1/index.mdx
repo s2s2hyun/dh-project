@@ -147,3 +147,94 @@ Chrome 주소란에 위에서 생성했던 "KEY명://" 으로 접속합니다.
   alt="Image"
   sizes="100vw"
 />
+
+### React
+
+```index.html
+import "./App.css";
+
+function RunProgram() {
+  const url = "frontendsample:\\";
+  const exec = document.createElement("a");
+  exec.setAttribute("href", url);
+  exec.click();
+}
+
+function App() {
+  const LolButton = () => {
+    RunProgram();
+  };
+
+  return (
+    <>
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        <h3 style={{ marginBottom: "1rem" }}>Button Click</h3>
+        <button
+          onClick={LolButton}
+          style={{
+            padding: "1.6rem",
+            borderRadius: "1rem",
+            fontSize: "1rem",
+            fontWeight: 600,
+          }}
+        >
+          Click
+        </button>
+      </div>
+    </>
+  );
+}
+
+export default App;
+
+`
+```
+
+위 코드는 RunProgram이라는 함수로 구성되어 있습니다.
+
+<br />이 함수의 핵심은 사용자의 직접적인 상호작용 없이 특정 URL
+(frontendsample:\\)을 자동으로 열어주는 것입니다.
+
+document.createElement("a")를 통해 새로운 a 태그 요소 (링크)를 생성합니다.
+
+[setAttribute (MDN)](<https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/aa767914(v=vs.85)?redirectedfrom=MSDN>)
+
+setAttribute 메서드를 사용해 선택된 요소(exec가 참조하는 a 태그)에 속성을 설정합니다. exec.setAttribute("href", url)
+
+a태그 요소의 href 속성을 "frontendsample:\\"라는 값으로 설정합니다.
+
+local 개발환경에서 테스트를 해보면
+
+<Image
+  src="/blogs/local_registry-url/react-result.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/local_registry-url/react-result2.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+## 하면서 느낀점
+
+우선 나는 웹 개발의 시작을 윈도우로 부터 시작을 했으며, 첫 회사도 노트북이 아닌 데스크탑으로 부터 시작을 했습니다.
+
+예시를 롤 클라이언트 실행으로 했지만, 게임 개발자들과 함께 프로젝트를 진행하면서 게임 install 설치를 받고 위치경로를
+
+레지스트리 편집기를 통해 예상경로에 윈도우 기준으로 미리 정해두고 했습니다. 단점아닌 단점이 보여지는거죠.....
+
+제가 사용하고 있는 방법이 올바른 방법이 아닐 확률도 크다고 생각하며, 이러한 exe 프로그램을 실행시킬려면
+
+전부다 똑같은 환경이 갖춘후에 똑같은 결과물을 보실수 있을꺼 같다고 생각이 듭니다.
+
+※ 추가적으로 인스톨을 했는지 아닌지에 대한 여부가 판별이 어려웠던거 같습니다. 추후 2편을 작성한다면
+
+시간을 내서라도 개선을 한다던지 좋은 정보가 있다면 추후에 업데이트 해보도록 하겠습니다.
+
+읽어주셔서 감사합니다.
