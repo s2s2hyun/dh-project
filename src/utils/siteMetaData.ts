@@ -1,6 +1,6 @@
 const SiteMetaData = {
   title: 'Frontend Developer 임동현',
-  description: 'Web Developer Blog',
+  description: 'Frontend Developer 임동현 Blog',
   authors: [
     {
       name: 'DH',
