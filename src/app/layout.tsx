@@ -65,6 +65,10 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon-16x16.png" />
         <meta
+          name="google-site-verification"
+          content="HnXW6PvAgRAB4tkaRIQpZawuDzASeMGRheyYGRNwLVE"
+        />
+        <meta
           name="naver-site-verification"
           content="3ec8b6ae3e09d81748339a89bbe42c30372614b6"
         />
