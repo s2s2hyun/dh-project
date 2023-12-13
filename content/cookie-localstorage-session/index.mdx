@@ -1,0 +1,116 @@
+---
+title: '쿠키 VS 로컬스토리지 VS 세션'
+description: '브라우저쿠키(Cookie),로컬스토리지(LocalStorage),세션스토리지(sessionStorage)'
+image: '../../public/blogs/logo/web-logo.jpg'
+publishedAt: '2023-12-12'
+updatedAt: '2023-12-12'
+author: 'DH'
+isPublished: true
+tags:
+  - Web
+---
+
+<Image
+  src="/blogs/emile-perron-xrVDYZRGdw4-unsplash.jpg"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+웹 개발을 처음 시작할때, 쿠키 , 로컬스토리지 , 세션에 대해서 굉장히 많이 듣고 어떠한 상황에 써야한다는 정보가 워낙 많다보니 혼란스러울때가 굉장히 많았습니다.
+
+지금은 현재 회사를 퇴사하고 나서 시간적 여유가 있을때 이전에 공부했던 기억을 곱씹으며 다시 정리하고자 블로그 작성을 했습니다.
+
+## 1. Cookie
+
+- 쿠키는 클라이언트에 대한 정보를 이용자의 PC에 있는 하드디스크에 보관하기 위해 웹사이트에서 클라이언트 웹 브라우저에 전송하는 정보이다.
+
+### 1.1 Cookie 의 특징
+
+- 쿠키를 웹 사이트에서 설정하면 모든 웹 요청은 쿠키 정보를 포함하여 서버로 전송됩니다.
+
+- 쿠키는 개수와 용량에 있어 제한을 걸어두고 있다. 하나의 사이트에서 저장 가능한 최대 쿠키수는 20개이며,
+  하나의 사이트에서 저장 가능한 최대 쿠키 크기는 4KB로 제한되어 있습니다.
+
+### 1.2 Cookie의 장/단점
+
+- 장점 : 대부분의 브라우저에 지원이 가능합니다.
+
+- 단점 : api가 한번 더 호출되면서 서버에 부담이 증가됩니다.
+
+## 2. WEB STORAGE (웹 스토리지)
+
+- HTML5에는 웹 사이트의 데이터를 클라이언트에 저장할 수 있는 새로운 자료구조인 WebStorage 스펙이 포함되어져 있습니다.
+
+- Web Storage의 개념은 키/값 쌍으로 데이터를 저장하고 키를 기반으로 데이터를 조회하는 패턴입니다.
+
+- 영구저장소(LocalStorage) 와 임시저장소(sessionStorage)를 따로 두어 데이터를 지속성을 구분할 수 있어 응용 환경에 맞는 선택이 가능합니다.
+
+- 쿠키와 거의 차이가 없어 보일지라도 몇 가지 쿠키의 단점을 극복하는 개선점이 도입되었습니다.
+
+### 2.1 WebStorage의 특징
+
+- 저장된 데이터가 클라이언트에 존재할 뿐 서버로 전송은 이루어지지 않습니다. 이것은 네트워크 트래픽 비용을 줄여 준다는 주요 장점이 됩니다.
+
+- WebStorage는 용량 제한이 없습니다.
+
+- 만료기간의 대한 설정이 없습니다. 즉 한번에 저장한 데이터는 영구적으로 존재하게됩니다.
+
+- 데이터의 지속성과 관련해 두 가지 용도로 저장이 가능합니다. ( LocalStorage , sessionStorage)
+
+## 3.LocalStorage
+
+- LocalStorage는 저장한 데이터를 지우지 않는 이상 영구적으로 보관이 가능하다. 도메인마다 별도로 로컬 스토리지가 생성이 됩니다.
+  Windows 전역 객체의 LocalStorage라는 컬렉션을 통해 저장/조회가 이루어집니다.
+
+### 3.1 LocalStorage의 특징
+
+- 브라우저를 종료한다해도 데이터는 보관되며 다음번에 접속하더라도 그 데이터를 사용할 수 있습니다.
+
+- 저장 용량 한도는 3가지 중에서 가장 높습니다.
+
+### 3.2 LocalStorage의 장/단점
+
+- 장점: 서버에 불필요한 데이터 저장을 하지않고, 용량이 큽니다.
+
+- 단점: HTML4만 지원되는 브라우저에서는 지원이 되지 않습니다.
+
+### 3.3 LocalStorage 저장 / 조회 / 삭제
+
+```
+localStorage.setItem("access_token", "donghyun") // 저장
+localStorage.getItem("access_token"); // 조회
+localStorage.removeItem("acess_token"); // access_token 으로 설정된 키로 접근해 삭제
+localStorage.clear(); // 전체 삭제
+```
+
+## 4. sessionStorage
+
+- sessionStorage는 세션 종료시(브라우저를 닫는경우) 클라이언트에 대한 정보가 삭제가 됩니다.
+  sessionStorage는 Windows 전역 객체의 sessionStorage라는 컬렉션을 통해 저장 / 조회가 이루어집니다.
+
+### 4.1 sessionStorage의 특징
+
+- 데이터가 지속적으로 보관되지 않습니다. 이는 마치 브라우저 기반 세션 쿠키와 성질이 비슷한데, 현재 페이지가 브라우징 되고 있는 브라우저 컨텍스트 내에서만 데이터가 유지됩니다.
+
+### 4.2 sessionStorage의 장 / 단점
+
+- 장점: SessionStorage는 페이지를 다시 로드해도 지속되는 임시 데이터 저장소를 제공하고 쿠키보다 더 나은 보안을 제공하며 서버에 부담을 주지 않습니다.
+
+- 단점: 브라우저 탭을 닫으면 데이터가 사라지고, 다른 탭 간에 정보를 공유할 수 없으며, 저장 용량이 약 5MB로 제한됩니다.
+
+### 4.3 sessionStorage 저장 / 조회 / 삭제
+
+```
+sessionStorage.setItem("access_token", "donghyun"); // 저장
+sessionStorage.getItem("access_token"); // 조회
+sessionStorage.removeItem("access_token") | // access_token 으로 설정된 키로 접근해 삭제
+sessionStorage.clear(); // 전체 삭제
+```
+
+## 5. 어떠한 상황에서 사용하면 좋을까?
+
+- Cookie : 사용자 세션 및 기본 설정을 관리하고 여러 방문 및 웹사이트에서 사용자 행동을 추적하는 데 이상적입니다.
+- LocalStorage : 브라우저를 닫은 후에도 지속되므로 자동 로그인 정보 또는 사용자 인터페이스 사용자 정의와 같은 브라우저 세션 전반에 걸쳐 사용자 데이터를 저장하는 데 가장 적합합니다.
+- SessionStorage : 탭을 닫으면 데이터가 지워지므로 양식 입력이나 장바구니 항목과 같은 단일 세션과 관련된 임시 데이터에 적합합니다.
