@@ -44,7 +44,7 @@ const AboutCoverSection = () => {
         <ul>
           <li className="text-base font-[400]  dark:text-white ">
             <span className="text-sm font-[400]  dark:text-white">●</span>{' '}
-            파프리카 인더스트리 ( 2020.10 ~ 2023.11)
+            파프리카 인더스트리 ( 2022.10 ~ 2023.11)
           </li>
           <li></li>
         </ul>
