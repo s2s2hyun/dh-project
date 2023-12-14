@@ -3,6 +3,7 @@ import BlogLayoutThree from '@/src/components/Blog/BlogLayoutThree'
 import Categories from '@/src/components/Blog/Categories'
 import GithubSlugger, { slug } from 'github-slugger'
 import SiteMetaData from '@/src/utils/siteMetaData'
+import { sortBlogs } from '@/src/utils'
 interface Params {
   slug: string
 }
@@ -38,7 +39,7 @@ export async function generateMetadata({
     title: `${params.slug.replaceAll('-', ' ')} Blogs`,
     description: `Learn more about ${
       params.slug === 'all' ? 'web developer' : params.slug
-    } throught our collection of expert blogs and tutorials`,
+    } Jr.프론트엔드 개발 임동현`,
   }
 }
 
@@ -61,6 +62,8 @@ const CategoryPage = ({ params }: { params: Params }) => {
 
   const categoryName = decodeURIComponent(params.slug)
 
+  const blogDate = sortBlogs(blogs)
+
   return (
     <article className="mt-12 flex flex-col text-dark dark:text-light">
       <div className="flex flex-col px-5 sm:px-10 md:px-24 sxl:px-32">
@@ -73,7 +76,7 @@ const CategoryPage = ({ params }: { params: Params }) => {
       </div>
       <Categories categories={allCategories} currentSlug={params.slug} />
       <div className="sm: mt-24  grid grid-cols-1 grid-rows-2 gap-16 px-5 sm:grid-cols-2 sm:px-10 md:px-24 lg:grid-cols-3 sxl:mt-32 sxl:px-32">
-        {blogs.map((blog, index) => (
+        {blogDate.map((blog, index) => (
           <article key={index} className="relative col-span-1 row-span-1">
             <BlogLayoutThree blog={blog} />
           </article>
