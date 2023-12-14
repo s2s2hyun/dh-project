@@ -37,7 +37,7 @@ const Footer = () => {
   // console.log(errors)
 
   return (
-    <footer className="m-2 mt-16 flex flex-col items-center rounded-2xl bg-dark pb-8 text-light dark:bg-accentDark/90 dark:text-dark sm:m-10">
+    <footer className="m-2 mt-16 flex flex-col items-center rounded-2xl bg-dark pb-8 text-light dark:bg-accentDark/90 dark:text-dark sm:m-7">
       <h3 className="mt-16 px-4 text-center text-2xl font-medium capitalize dark:font-bold sm:text-3xl lg:text-4xl ">
         일상 | 블로그 | 개발
       </h3>

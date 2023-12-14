@@ -11,3 +11,163 @@ tags:
 ---
 
 안녕하세요 오늘은 Next.JS에서 CSR를 왜 사용하는지에 대해서 블로그를 적어보겠습니다.
+
+## 1. Next.js 에서의 CSR, 왜 사용할까?
+
+- React의 CSR에서, 브라우저는 최소한의 HTML 페이지와 Javascript를 다운로드합니다. 그런 다음 Javascript를 사용하여 DOM을 업데이트하고 페이지를 렌더링합니다.
+  애플리케이션이 처음 로드되면 사용자는 전체 페이지를 보기 전에 약간의 지연을 느낄 수 있습니다. 이는 모든 Javascript가 다운로드, 구문 분석 및 실행될 때까지 페이지가 완전히 렌더링이 되지 않기 때문입니다.
+
+- 페이지가 처음 로드된 후에는 필요한 데이터만 가져오면 되고 Javascript는 전체 페이지를 새로 고침할 필요 없이 페이지의 일부를 다시 렌더링할 수 있으므로 동일한 웹 사이트의 다른 페이지로 이동하는 것이 일반적으로 더 빠릅니다.
+
+### 1.1 Next.js에는 클라이언트 측 렌더링을 구현할 수 있는 두 가지 방법이 있습니다.
+
+- 1. useEffect() 서버측 렌더링 방법 getStaticProps 및 대신 페이지 내부에서 React의 Hook을 사용합니다.
+
+- 2. SWR 과 같은 데이터 가져오기 라이브러리 사용을 해서 클라이언트에서 데이터를 가져옵니다. (또는 TanStack Query 를 통해서 가져올수있습니다.)
+
+### 1.2 useEffect를 통한 CSR
+
+`useEffect(){:html}` Next.js 페이지 내부에서 사용하는 예입니다 .
+
+```
+import React, { useState, useEffect } from "react";
+import styles from "./page.module.css";
+
+type Post = {
+  id: number;
+  title: string;
+};
+
+export default function Home() {
+  const [data, setData] = useState<Post[] | null>(null);
+
+  useEffect(() => {
+    fetch("https://koreanjson.com/posts")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("네트워크 응답이 올바르지 않습니다");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setData(data);
+      })
+      .catch((error) => {
+        console.error("fetch 작업에 문제가 발생했습니다:", error);
+      });
+  }, []);
+
+  return (
+    <main className={styles.main}>
+      <div>
+        <h4>Hello CSR</h4>
+        {data ? (
+          <ul>
+            {data.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>게시글을 로딩중입니다...</p>
+        )}
+      </div>
+    </main>
+  );
+}
+```
+
+ex) `https://koreanjson.com/{:html}` Open api 데이터값을 가져온 예시입니다.<br />
+
+<Image
+  src="/blogs/nextjs-csr-swr/recording.gif"
+  width="1000"
+  height="400"
+  alt="gif"
+  sizes="100vw"
+/>
+
+위와 같은 예시를 저장하고 화면을 봤을때, 게시글을 로딩중입니다... 가 가장 먼저 보여진후 그런 다음 데이터를 가져오면 데이터를 다시 렌더링하고 표시합니다.
+
+## 2. SWR 라이브러리
+
+- 위에 React Hook 을 통해 fetch 함수를 통해 데이터를 가져온 패턴이였지만, 더 나은 성능, 캐싱, 낙관적 업데이트 등을 위해 fetch 라이브러리를 사용하는것이 좋다고 Next.js 공식 홈페이지서 추천을 하고있네요
+
+> [Next.js 홈페이지 (CSR & SWR)](https://nextjs.org/docs/pages/building-your-application/rendering/client-side-rendering)
+
+### 2.1 SWR이란?
+
+<Image
+  src="/blogs/nextjs-csr-swr/swr-img.png"
+  width="1000"
+  height="400"
+  alt="gif"
+  sizes="100vw"
+/>
+
+- Stale-While-Revalidate
+- 데이터를 가져오기 위한 React Hook 함수
+- Vercel 에서 만든, 데이터를 가져오기 위한 모듈이다.
+- 백그라운드에서 캐시에 대한 fetch 요청(revalidate)을 하는 동안 신선하지 않은 상태의 캐시 데이터를 사용하여 화면을 렌더링하다가 최종적으로는 최신화된 신선한 데이터를 반환한다.
+- 도중에 에러를 반환하더라도 기존 캐시 데이터를 사용할 수 있게 하여 불필요한 API Call 과 렌더링을 최소화 할 수 있게 한다.
+
+### 2.2 UseSWR
+
+ex)
+
+```
+import React from "react";
+import styles from "./page.module.css";
+import useSWR from "swr";
+
+type Post = {
+  id: number;
+  title: string;
+};
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default function Home() {
+  const { data, error, isLoading } = useSWR<Post[]>(
+    "https://koreanjson.com/posts",
+    fetcher
+  );
+
+  if (error) return <div>Failed to load</div>;
+  if (isLoading) return <p>Loading...</p>;
+
+  return (
+    <main className={styles.main}>
+      <div>
+        <h4>Hello CSR</h4>
+        <ul>
+          {data?.map((post) => (
+            <li key={post.id}>{post.title}</li>
+          ))}
+        </ul>
+      </div>
+    </main>
+  );
+}
+```
+
+- useSWR(key,fetcher)
+
+  - key(string): 데이터의 고유한 식별자이며(일반적으로 API, URL) fetcher 로 전달 됩니다.
+  - fetcher : 데이터를 반환하는 어떠한 비동기 함수도 될 수 있습니다.
+
+- hook은 세 개의 값을 반환합니다: 요청의 상태에 기반한 data,isLoading 그리고 error 를 반환합니다.
+
+위와 같이 예시 코드를 보면 반환된 상태에 따라, 보여주고자 하는 렌더링 화면을 표현을 할 수 있습니다.
+
+> 어떻게 동작하는걸까?
+
+1. useSWR 은 초기에 props로 넘어온 데이터를 SWR 캐시에 저장한다.
+2. SWR는 캐시 데이터가 있으므로, 컴포넌트 최초 렌더링 시 요청을 보내지 않는다.
+3. 대신 다른 화면을 갔다와서 다시 포커싱 되거나, 네트워크가 끊겼다가 다시 복귀되는 등의 상황 또는 사용자의 설정에 따라 원하는 순간에 revalidate 값을 설정하면 SWR은 데이터를 재요청한다.
+4. 만약 새로 불러온 값이 기존의 캐시 데이터와 같다면 따로 리렌더링을 발생시키지 않고, 다른 경우 리렌더링을 진행한다.
+
+## 3. 정리
+
+1. 몇몇 검색 엔진의 크롤러들은 JS를 실행하지 못하여 CSR 방식을 사용할 경우 초기의 빈 화면이나 로딩중인 상태만을 보게 될 수 있다.
+2. 사용자 입장에서 전체 페이지를 보기전에 모든 JS 코드가 로드되고 실행되는 것을 기다려야 하므로 인터넷이나 기기의 연결이 다른 방식을 사용할 떄 보다 더 느리다고 생각할 수 있다.
+3. Next.js는 CSR 뿐만 아니라 SSR,SSG 방식을 각 페이지의 필요에 따라 혼용할 수 있도록 만들어져 있으므로, 무조껀 한 방식만을 채택하기 보다는 각 페이지에 적합한 방식이 무엇인지를 고민하여 사용해보자!
