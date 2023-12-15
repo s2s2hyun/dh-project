@@ -187,10 +187,6 @@ Home 페이지가 호출되면 getStaticProps 가 먼저 실행되며 fetch 통�
 
 만약 동적 라우터(Dynamic Route)를 사용해서 pages/posts[id].tsx 라는 파일을 만들었을 때, id에 따라서 다른 글을 보여주고 싶을 때는 어떻게 하면 좋을까요?
 
-id가 1인 글을 추가한다면 , 우리는 빌드 시에 id가 1인 post data를 불러와서 pre-render 해야합니다.
-
-이러한 예시가 바로 page의 path가 외부 데이터에 의존하는 경우입니다.
-
 getStaticPaths를 사용해서 pre-render 되기 원하는 path들을 명시 해주면 됩니다.
 
 index.tsx
