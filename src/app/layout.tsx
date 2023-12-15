@@ -63,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="kor">
       <head>
-        <link rel="icon" href="/myfavicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
         <meta
           name="google-site-verification"
           content="HnXW6PvAgRAB4tkaRIQpZawuDzASeMGRheyYGRNwLVE"
