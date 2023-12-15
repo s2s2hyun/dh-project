@@ -10,7 +10,7 @@ const SiteMetaData = {
   language: 'ko-KR',
   theme: 'system',
   siteUrl: 'https://donghyundev.com/',
-  siteLogo: './logo-me.png',
+  siteLogo: '/myfavicon.ico',
   socialBanner: './logo-me.png',
   email: 's2s2hyun0601@gmail.com',
   github: 'https://github.com/s2s2hyun',
