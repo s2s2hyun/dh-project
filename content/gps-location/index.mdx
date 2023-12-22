@@ -1,0 +1,172 @@
+---
+title: 'Web GPS 위도, 경도 '
+description: 'Geolocation API(GPS)를 웹에서 사용하는방법'
+image: '../../public/blogs/logo/web-logo.jpg'
+publishedAt: '2023-12-22'
+updatedAt: '2023-12-22'
+author: 'DH'
+isPublished: true
+tags:
+  - Web
+---
+
+안녕하세요 오늘은 Geolocation 을 활용해 현재 내가 위치한 위도,경도에 대해서 블로그를 작성하겠습니다.
+
+저는 이전에 2023 마이크로서울 페스티벌을 다녀왔었는데, 실제 서비스가 되어지는 휴대기기에 GPS를 활용한 웹 서비스를 경험해본적이 있었습니다.
+
+저는 2023년 올 여름에 GPS location을 활용한 개발공부를 잠깐 해본적이 있어서, 마이크로서울 페스티벌에 실제 서비스가 되어진걸 보고 내가 실제로 만들었던
+
+결과랑 비슷한 결과물이 보여지고 있다는게 신기했었습니다. 서비스 이벤트 참여하면서 찍은 사진입니다.
+
+<Image
+  src="/blogs/gps-location/edm-1.jpg"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/gps-location/edm-2.jpg"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/gps-location/edm-3.jpg"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/gps-location/edm-4.jpg"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+## 1.GPS
+
+앱,웹 서비스중 GPS 정보를 요구하는 앱들이 많죠. GPS 정보를 맞아서 자신 주변의 맛집이나 정보들을 찾아볼수있습니다.
+
+이제 웹에서도 GPS 정보를 가져올 수 있습니다. 보통 위치 정보는 핸드폰 GPS, IP 주소나,WIFI,기지국 위치 등을 사용해 찾아냅니다.
+
+웹에서는 살짝 정확성이 떨어질 때도 있지만, GPS 를 사용할 수 있다는 것 자체가 매우 행복한 일이죠.
+
+간단하게 아래와 같이 코드로 설명을 해보겠습니다.
+
+### 1.1 Geolocation API 를 활용한 코드
+
+```
+import React, { useEffect, useState } from "react";
+
+interface LocationProps {
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
+const Home = () => {
+  const [location, setLocation] = useState<LocationProps["location"]>({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  useEffect(() => {
+    let watchId: number | null = null;
+    if (navigator.geolocation) {
+      watchId = navigator.geolocation.watchPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        (error) => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 1000,
+        }
+      );
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+
+    return () => {
+      if (watchId) navigator.geolocation.clearWatch(watchId);
+    };
+  }, []);
+
+  return (
+    <div>
+      <p>{location.latitude}</p>
+      <p>{location.longitude}</p>
+    </div>
+  );
+};
+
+export default Home;
+```
+
+## 2. 설명
+
+> React와 Geolocation을 활용한 위치 추적: 이해하기 쉬운 설명
+
+### 2.1 위치 추적의 시작 useEffect Hook
+
+React의 useEffect 훅은 컴포넌트의 생명주기에 중요한 역할을 합니다. 이 훅은 컴포넌트가 화면에 나타날때 즉, 마운트가 될 때 위치 추적 기능을 시작하도록 설정했습니다.
+
+### 2.2 브라우저의 위치 서비스 접근: navigator.geolocation
+
+브라우저에 내장된 Geolocation API를 활용합니다. 'navigator.geolocation' 을 사용하면, 우리는 사용자의 현재 위치에 접근할 수 있게 됩니다. 이 기능은 사용자의 동의를 필요로 하므로, 한번 동의시 위치 정보 접근 요청이 사용자에게 자동으로 표시됩니다.
+
+<br />
+예시 사진
+
+<Image
+  src="/blogs/gps-location/location-1.png"
+  width="500"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+- 이후 동의를 누르면 초기 설정을 제가 현재 위도 , 경도를 0으로 해두었기에 동의를 누르면 현재 위치의 위도와 경도 값이 변경됩니다.
+  저는 pc 보다는 GPS 에 좀더 기능이 좋은 휴대폰으로 확인하는걸 추천드립니다. HTTP 환경에서 GPS 위치에 대한 동의 메시지가 나타나지 않는 이유는 웹 보안 정책과 관련이 있습니다. 위치 추적과 같은 민감한 정보를 다루는 기능들은 보안이 강화된 환경에서만 사용할 수 있도록 제한되어 있습니다. 이러한 제한의 주요 이유는 사용자의 개인정보와 데이터를 보호하기 위함입니다.
+
+### 2.3 실시간 위치 업데이트 watchPosition 함수
+
+watchPosition 함수는 위치 추적의 핵심입니다. 이 함수는 사용자의 위치가 변결될 때 마다 실시간으로 반응합니다. 위치 정보가 업데이트 되면, 함수 내에 정의된 첫 번째 콜백 함수가 실행됩니다. 이 콜백 함수에서는 setLocation 을 사용하여 컴포넌트의 상태를 최선 위치 정보로 업데이트 합니다.
+
+두번째 콜백 함수는 예를 들어, 사용자가 위치 정보 접근을 거부했거나, 기타 이유로 위치 정보를 가져올수 없는 경우 오류 발생 시 필요한 조치를 취할 수 있습니다.
+
+### 2.4 watchPosition 옵션
+
+함수의 세 번째 인자는 위치 추적과 관련된 여러 옵션을 설정하는 데 사용됩니다. 여기에는 `enableHighAccuracy{:html}` (배터리를 더 소모해서 더 정확한 위치를 찾음 ) ,`timeout{:html}`(주어진 초 안에 찾지 못하면 에러 발생) , `maximumAge{:html}`(한 번 찾은 위치 정보를 해당 초만큼 캐싱) 이 있습니다.
+
+### 2.5 위치 추적의 종료
+
+마지막으로, useEffect 훅은 컴포넌트가 화면에서 사라질 때, 즉 언마운트 될때 실행되는 정리(clean-up) 함수를 제공합니다. 이 함수는 watchPosition에 의해 시작된 위치 추적을 중단합니다. 이는 리소스를 효율적으로 관리하고, 불필요한 위치 추적으로 인한 문제를 방지하기 위한 중요한 단계입니다.
+
+위에 예시 코드에서 저장한 watchId 를 `navigator.geolocation.clearWatch(watchId){:html}`해주면 됩니다.
+
+### 3. 마무리
+
+참고로 크롬에서는 https, localhost 에서만 동작합니다. 개인정보 보호 및 보안을 위해 그렇게 조치를 해둔거 같습니다.
+
+일부 브라우저랑 모바일 웹에서는 speed나 altitude 같은 것을 지원해주지 않는 경우가 많습니다. 위도와 경도의 변화를 이용해서 거리를 찾을 수 있고, 속도 = 거리 / 시간 이기 때문에 이 공식을 이용해서 speed 를 찾을수도 있습니다.
+
+제로초님 블로그를 통해서 사용방법을 익히고 마이크로서울 페스티벌서 서비스를 체험한 경험토대로 추후에 간단한 프로젝트를 만들어보려고합니다.
+
+긴글 읽어주셔서 감사합니다😆
+
+[zerocho 블로그 참고](https://www.zerocho.com/category/HTML&DOM/post/59155228a22a5d001827ea5d)
