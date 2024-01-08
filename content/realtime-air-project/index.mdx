@@ -1,0 +1,289 @@
+---
+title: 'Realtime-air 프로젝트'
+description: '현재 사용자의 디바이스 위치에 실시간 대기정보 전달 프로젝트'
+image: '../../public/blogs/logo/web-project-logo.jpg'
+publishedAt: '2024-01-07'
+updatedAt: '2024-01-07'
+author: 'DH'
+isPublished: true
+tags:
+  - Web-project
+---
+
+안녕하세요 제가 이번에 웹 프로젝트를 배포를 완료하고, 서비스에 대해서 간단하게 소개하고자 블로그를 작성했습니다.
+
+<Image
+  src="/blogs/realtime-air-project/project-photo.png"
+  width="1000"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/realtime-air-project/project-photo1.png"
+  width="1000"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+
+## 1. 프로젝트 소개
+
+[Realtime-air Link](https://realtime-air.netlify.app/)
+
+이 프로젝트는 실시간 사용자의 위치에 따른 대기의 정보를 제공하는 데 초점을 맞춘 리액트 기반 웹 애플리케이션으로 만들었습니다.최근 미세먼지 농도가 이전 코로나때는 낮았지만, 다시 올라가는 추세이기도 하며, 코로나,독감등 다양한 이유로 이제는 마스크를 다시 찾아야할때가 아닌가 싶어서, 시각적으로 매력적으로 보이고 정보전달이 잘 전달될 수 있도록 사용자에게 친숙하게 다가가는 서비스로 만들었습니다.
+
+### 1.1 프로젝트 설계
+
+가장 먼저! 내가 사용하고자 하는 공공기관에 API 사용하고자 하면 신청을 해야합니다. 그리고 내가 알고있는 GPS lat,lng 를 통해, ~~시~~구~~동 위치를 알아야합니다. 저는 그래서 카카오 API를 통해서 위치 정보를 알아야합니다. 그래서 준비물이 필요합니다.
+
+[카카오 개발자도구](https://developers.kakao.com/)
+
+[공공기관 API](https://www.data.go.kr/index.do)
+
+<Image
+  src="/blogs/realtime-air-project/Preparation1.png"
+  width="400"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/realtime-air-project/Preparation2.png"
+  width="400"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+<Image
+  src="/blogs/realtime-air-project/Preparation3.png"
+  width="400"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+프로젝트를 설계할때 이전에 블로그에 작성된 현재 디바이스에 위치를 알아야합니다. 이전에 블로그 작성시 Geolocation 활용한 위치 추적 방법을 작성했습니다. 현재 디바이스에 위치를 안다면 AirKorea 공공기관 Rest api 를 통해서 동네 데이터를 가져와야합니다.
+
+## 2 프로젝트 설명
+
+현재 실시간 위도(lat), 경도(lng) 를 카카오 API를 사용하여, 해당 위치의 정확한 주소로 변환을 해야합니다.
+
+### 2.1 useGeolocation
+
+useGeolocation Hook: 이 커스텀 훅은 사용자의 현재 위치(위도와 경도)를 반환합니다. 이 위치 정보는 navigator.geolocation을 사용하여 얻어집니다.
+
+```
+import { useState, useEffect } from "react";
+
+interface LocationStateType {
+  loaded: boolean;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  error?: GeolocationPositionError | { code?: number; message?: string };
+}
+
+export default function useGeolocation() {
+  const [location, setLocation] = useState<LocationStateType>({
+    loaded: false,
+    coordinates: { lat: 0, lng: 0 },
+  });
+
+  // 성공에 대한 로직
+  const onSuccess = (location: GeolocationPosition) => {
+    setLocation({
+      loaded: true,
+      coordinates: {
+        lat: location.coords.latitude,
+        lng: location.coords.longitude,
+      },
+    });
+  };
+
+  // 에러에 대한 로직
+  const onError = (error: GeolocationPositionError) => {
+    setLocation({
+      loaded: true,
+      coordinates: { lat: 0, lng: 0 }, // 기본 좌표값 추가
+      error,
+    });
+  };
+
+  useEffect(() => {
+    if (!("geolocation" in navigator)) {
+      // navigator.geolocation이 없는 경우, 사용자 정의 오류 처리
+      setLocation({
+        loaded: true,
+        coordinates: { lat: 0, lng: 0 },
+        error: {
+          code: 0, // 사용자 정의 코드
+          message: "Geolocation not supported", // 사용자 정의 오류 메시지
+        },
+      });
+    } else {
+      navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    }
+  }, []);
+
+  return location;
+}
+
+```
+
+### 2.2 좌표 변환 요청
+
+```
+import useGeolocation from "../../hook/useGeolocation";
+import { useCallback, useEffect, useState } from "react";
+
+  const location = useGeolocation();
+
+
+  const fetchAddress = useCallback(
+    async (lat: number, lng: number, key: string) => {
+      try {
+        const response = await axios.get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?input_coord=WGS84&y=${lat}&x=${lng}`,
+          {
+            headers: {
+              Authorization: `KakaoAK ${key}`,
+            },
+          }
+        );
+        const addressData = response.data.documents?.[0]?.address;
+
+        if (addressData) {
+          setAddress(
+            `${addressData.region_1depth_name} ${addressData.region_2depth_name} ${addressData.region_3depth_name}`
+          );
+        } else {
+          console.log("No address data found");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (
+      location.coordinates &&
+      location.coordinates.lat &&
+      location.coordinates.lng
+    ) {
+      fetchAddress(
+        location.coordinates.lat,
+        location.coordinates.lng,
+        kakao_key
+      );
+
+      axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/transcoord.json?x=${location.coordinates.lng}&y=${location.coordinates.lat}&input_coord=WGS84&output_coord=TM`,
+          {
+            headers: {
+              Authorization: "KakaoAK " + kakao_key,
+            },
+          }
+        )
+        .then((res) => {
+          const coordinatesData = res.data.documents[0];
+          if (
+            typeof coordinatesData.x === "number" &&
+            typeof coordinatesData.y === "number"
+          ) {
+            setChangeCoord({ x: coordinatesData.x, y: coordinatesData.y });
+            setIsCoordValid(true);
+          } else {
+            console.log("Invalid coordinates data");
+            // 필요에 따라 여기에 기본값을 설정하거나 다른 처리를 할 수 있습니다.
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [location, kakao_key, fetchAddress]);
+
+```
+
+> fetchAddress 함수:Hook 에서 리턴값으로 location을 통해서 매개변수로 , 위도,경도,카카오 개발자 API_KEY 를 통하여, 카카오 API에 위치 정보를 보내고 반환된 데이터를 통해 사용자의 최신 현재 위치를 제공받을수 있습니다.
+> 이 과정에서 useCallback 훅을 사용하는데, 이는 함수를 메모이제이션 하는 데 유용합니다. 즉, 동일한 인자가 전달될 때마다 함수를 새로 생성하지 않아 성능을 최적화할 수 있습니다.
+
+카카오 개발자 API DOCS
+
+[카카오 좌표로 주소 변환하기 ](https://developers.kakao.com/docs/latest/ko/local/dev-guide#coord-to-address)
+
+[카카오 좌표계 변환하기 ](https://developers.kakao.com/docs/latest/ko/local/dev-guide#trans-coord)
+
+우리는 현재 location.lat , location.lng WGS84 좌표(위도와 경도)를 TM(Transverse Mercator) 좌표계로 변환합니다. 그래야지만 공공기관의 측정소를 알수가 있습니다. 변경하지 않고, location.lat, location.lng 를 적용한다면 주소가 이상한 곳으로 나오니 꼭! 참고하시기 바랍니다.
+
+```
+  useEffect(() => {
+    if (isCoordValid) {
+      axios
+        .get(
+          `https://apis.data.go.kr/B552584/MsrstnInfoInqireSvc/getNearbyMsrstnList?tmX=${Number(
+            changeCoord.x
+          )}&tmY=${Number(changeCoord.y)}&returnType=json&serviceKey=${String(
+            public_key
+          )}`
+        )
+        .then((res) => {
+          const items = res.data.response?.body.items;
+
+
+          if (items && items.length > 0) {
+            setCenter(items[0]?.stationName);
+          } else {
+            console.log("측정소 error");
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [changeCoord, public_key]);
+
+
+  useEffect(() => {
+    if (center) {
+      axios
+        .get(
+          `https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?dataTerm=month&pageNo=1&numOfRows=100&returnType=json&stationName=${center}&serviceKey=${public_key}`
+        )
+        .then((res) => {
+          // console.log(res.data.response?.body.items[0]);
+          setCoGrade(res.data.response?.body.items[0].coGrade);
+          setCo(res.data.response?.body.items[0].coValue);
+          setKhaiGrade(res.data.response?.body.items[0].khaiGrade);
+          setKhai(res.data.response?.body.items[0].khaiValue);
+          setNoGrade(res.data.response?.body.items[0].no2Grade);
+          setNo(res.data.response?.body.items[0].no2Value);
+          setOzGrade(res.data.response?.body.items[0].o3Grade);
+          setOz(res.data.response?.body.items[0].o3Value);
+          setGrade(res.data.response?.body.items[0].pm10Grade);
+          setDusty(res.data.response?.body.items[0].pm10Value);
+          setSo(res.data.response?.body.items[0].so2Value);
+
+          setSoGrade(res.data.response?.body.items[0].so2Grade);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [center, public_key]);
+```
+
+changeCoord 카카오를 통해 TM 좌표계로 변환시킨값을 State 로 저장해둔 값, 공공기관에서 제공된 public_key 랑 함께 쿼리파라미터에 포함시켜 현재 위치에 기반한 근처 측정소를 알기위한 작업입니다. 측정소를 State 값에 저장해두어 두번째 useEffect에 쿼리파라미터로 측정소(center) , public 로 API 요청시
+각 대기별 등급, 수치값이 나온걸 State 로 저장하여 UI에 적용시켰습니다.
+
+## 3. 프로젝트를 하면서
+
+사실 회사를 다니면서 서버개발자가 제공해준 API를 써보기만 했지, 공공기관에서 사용하는 Rest api 를 통해서 내가 이런 사용자를 위한 서비를 내가 처음부터 끝까지 구상하며 만들어본건 처음이였습니다.
+블로그를 작성하면서 UI 적 부분은 설명은 따로 안했지만, 결과값은 이렇게 해서 받아낸걸로 react-minimal-pie-chart 라이브러리를 통해 그려낸것뿐입니다.
+[Air Korea](https://www.airkorea.or.kr/web/) 웹사이트에 들어가보면 차트별로 된것도 있지만, 도넛모양의 UI가 좀더 눈에 잘들어오는 기분탓인지 저 또한 참고를해서 비슷하게 구현을 해봤습니다.
+프로젝트 설명에 React Three Fiber 에 대한 설명은 추후에 블로그 작성을 할 예정이며, 끝까지 읽어주신점 감사합니다. 글을 읽는데 불편한점이 있거나 이해가 안되는점이 있다면 , Contact 메일을 통해서 간단하게 저에게 피드백을 주신다면 이행할 수 있도록 노력해보겠습니다.
+다음 블로그 작성은 Realtime-air 메인에 있는 Mask 3D 를 어떻게 적용시켰는지 작성해보도록 하겠습니다.

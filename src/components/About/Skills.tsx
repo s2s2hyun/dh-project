@@ -29,6 +29,98 @@ const Skills = () => {
               className="text-4xl font-semibold capitalize
               transition-all duration-200 dark:border-light dark:font-normal "
             >
+              2024
+            </span>
+            <li className=" flex flex-col  justify-center py-12">
+              <span className="py-2 text-xl">Realtime-air</span>
+              <div className="flex w-full flex-col">
+                <div
+                  className=" flex h-[100px] items-center border-l-8 border-l-sky-400 bg-zinc-200 capitalize  transition-all
+              duration-200 dark:bg-accentDark/90"
+                >
+                  <h5 className="pl-4 text-xl ">
+                    현재 실시간 위치 대기환경 정보전달
+                  </h5>
+                </div>
+                <div className="flex items-center py-7">
+                  <h4 className="pr-2 text-xl">Tech</h4>
+                  <span className="pr-1">-</span>
+                  <ul className="flex text-xs xs:text-base">
+                    <li className="mx-1 bg-zinc-200 text-red-500">Vite</li>
+                    <li className="mx-1 bg-zinc-200 text-red-500">React.js</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">
+                      @emotion styled
+                    </li>
+                    ,
+                    <li className="mx-1 bg-zinc-200 text-red-500">
+                      React Three Fiber
+                    </li>
+                    ,<li className="mx-1 bg-zinc-200 text-red-500">axios</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">
+                      react-minimal-pie-chart
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <ul className="list-disc pl-5">
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <span className='xs:text-base" text-base dark:border-light dark:text-light'>
+                        사용하고 있는 디바이스에 위도, 경도를 통해서 실시간 위치
+                        확인후, 공공데이터포탈 에서 제공된 Rest Api를 통한
+                        미세먼지 측정 정보를 전달하는 서비스입니다.
+                      </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <span className='xs:text-base" text-base dark:border-light dark:text-light'>
+                        요 근래, 코로나가 다시 급증 및 미세먼지에 대한 농도가
+                        다시 짙어지고 있다보니 경각심을 위해 마스크를 메인에
+                        두었으며, 좀더 입체적으로 보이고자 하는 욕심에 3D 모델
+                        마스크를 보여지게 했습니다.
+                      </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <span className='xs:text-base" text-base dark:border-light dark:text-light'>
+                        현재 PWA까지 적용 예정이며, 실사용에 편하게 이용이
+                        가능하도록 프로젝트를 개선할 예정입니다.
+                      </span>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://realtime-air.netlify.app/"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [배포된 프로젝트]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://donghyundev.com/blogs/realtime-air-project"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [기술구현 블로그]
+                      </a>
+                    </li>
+                    <li className="py-3 text-black dark:border-light dark:text-light">
+                      <a
+                        href="https://github.com/s2s2hyun/RealTime-air"
+                        target="_blank"
+                        className="text-base text-blue-500 dark:border-light dark:text-accentDark/90 xs:text-base"
+                      >
+                        [Realtime-air github]
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <span
+              className="text-4xl font-semibold capitalize
+              transition-all duration-200 dark:border-light dark:font-normal "
+            >
               2023
             </span>
             <li className=" flex flex-col  justify-center py-12">
