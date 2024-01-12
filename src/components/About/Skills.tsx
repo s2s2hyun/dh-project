@@ -80,8 +80,8 @@ const Skills = () => {
                     </li>
                     <li className="py-3 text-black dark:border-light dark:text-light">
                       <span className='xs:text-base" text-base dark:border-light dark:text-light'>
-                        현재 PWA까지 적용 예정이며, 실사용에 편하게 이용이
-                        가능하도록 프로젝트를 개선할 예정입니다.
+                        PWA까지 적용 , 실사용에 편하게 이용이 가능하도록
+                        프로젝트를 만들었습니다.
                       </span>
                     </li>
                     <li className="py-3 text-black dark:border-light dark:text-light">
