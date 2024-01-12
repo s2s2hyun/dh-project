@@ -8,6 +8,3 @@
 - 빌드 시 Sitemap이 생성되도록 구현하였습니다.
 
 ### information
-
-
-
