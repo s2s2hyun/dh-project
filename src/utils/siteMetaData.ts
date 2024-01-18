@@ -1,6 +1,7 @@
 const SiteMetaData = {
   title: 'Jr.Frontend Developer 임동현',
-  description: '프론트엔드 개발자 임동현 Blog',
+  description:
+    '프론트엔드 개발자 임동현 블로그입니다. 기술구현, CS 지식을 쌓고 좋은 글을 공유하고자 만든 블로그입니다.',
   authors: [
     {
       name: 'DH',
