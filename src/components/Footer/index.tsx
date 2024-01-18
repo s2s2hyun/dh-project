@@ -80,9 +80,7 @@ const Footer = () => {
         <Link
           href="/sitemap.xml"
           className="my-4 text-center underline md:my-0"
-        >
-          sitemap.xml
-        </Link>
+        ></Link>
         <div className="text-center">
           Made with &hearts; by{' '}
           <a

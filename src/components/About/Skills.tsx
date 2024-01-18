@@ -46,18 +46,11 @@ const Skills = () => {
                   <h4 className="pr-2 text-xl">Tech</h4>
                   <span className="pr-1">-</span>
                   <ul className="flex text-xs xs:text-base">
-                    <li className="mx-1 bg-zinc-200 text-red-500">Vite</li>
                     <li className="mx-1 bg-zinc-200 text-red-500">React.js</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">axios</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">R3F</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">
-                      @emotion styled
-                    </li>
-                    ,
-                    <li className="mx-1 bg-zinc-200 text-red-500">
-                      React Three Fiber
-                    </li>
-                    ,<li className="mx-1 bg-zinc-200 text-red-500">axios</li>,
-                    <li className="mx-1 bg-zinc-200 text-red-500">
-                      react-minimal-pie-chart
+                      minimal-pie-chart
                     </li>
                   </ul>
                 </div>
@@ -140,12 +133,11 @@ const Skills = () => {
                   <span className="pr-1">-</span>
                   <ul className="flex text-xs xs:text-base">
                     <li className="mx-1 bg-zinc-200 text-red-500">React.js</li>,
-                    <li className="mx-1 bg-zinc-200 text-red-500">
-                      @emotion styled
-                    </li>
-                    ,<li className="mx-1 bg-zinc-200 text-red-500">Recoil</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">Nest.js</li>,
+                    <li className="mx-1 bg-zinc-200 text-red-500">Recoil</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">axios</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">Gsap</li>
+                    <li className="mx-1 bg-zinc-200 text-red-500">MUI</li>
                   </ul>
                 </div>
                 <div>
@@ -264,11 +256,10 @@ const Skills = () => {
                   <ul className="flex text-xs xs:text-base">
                     <li className="mx-1 bg-zinc-200 text-red-500">React.js</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">
-                      styled-component
+                      styled component
                     </li>
                     ,<li className="mx-1 bg-zinc-200 text-red-500">Redux</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">axios</li>
-                    <br />
                     <li className="mx-1 bg-zinc-200 text-red-500">R3F</li>
                   </ul>
                 </div>
@@ -352,7 +343,7 @@ const Skills = () => {
                     <li className="mx-1 bg-zinc-200 text-red-500">Redux</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">axios</li>,
                     <li className="mx-1 bg-zinc-200 text-red-500">
-                      styled-component
+                      styled component
                     </li>
                   </ul>
                 </div>
