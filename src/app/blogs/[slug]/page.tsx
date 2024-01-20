@@ -110,12 +110,14 @@ export default function Page({ params }: { params: { slug: string } }) {
           <div className="absolute left-1/2 top-1/2 z-10 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center ">
             <Tag
               name={slug(blog?.tags?.[0] ?? 'defaultTags')}
-              link={`/categories/${blog?.tags?.[0]}`}
+              // link={`/categories/${blog?.tags?.[0]}`}
               className="px-6 py-2 text-sm"
             />
-            <h1 className="relative mt-6 inline-block w-5/6 text-2xl  font-semibold capitalize leading-normal text-light md:text-3xl lg:text-5xl">
-              {blog?.title}
-            </h1>
+            <div className="ease mt-10 inline-block rounded-full border border-solid border-light  bg-dark p-6 text-sm font-semibold capitalize text-light transition-all duration-200 hover:scale-105 sm:px-6 sm:py-6 sm:text-base">
+              <h1 className="relative  inline-block  text-2xl  font-semibold capitalize leading-normal text-light md:text-3xl lg:text-5xl">
+                {blog?.title}
+              </h1>
+            </div>
           </div>
           <div className="absolute bottom-0 left-0 right-0 top-0 h-full bg-dark/60 dark:bg-dark/40 ">
             <Image

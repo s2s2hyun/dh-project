@@ -145,19 +145,19 @@ const Header = () => {
         </button>
       </nav>
       <div className=" hidden sm:block">
-        <a href={SiteMetaData.linkedIn} className="mr-8 inline-block h-6 w-6">
+        <a href={SiteMetaData.linkedIn} className="mr-8 inline-block h-4 w-4">
           {/* <Image src={linkedInImg} alt="sns_LinkedIn_logo" /> */}
-          <LinkedIcon className="ease transition-all duration-200 hover:scale-125" />
+          <LinkedIcon className="ease transition-all duration-200 hover:scale-110" />
         </a>
-        <a href={SiteMetaData.github} className="mr-8 inline-block h-6 w-6">
+        <a href={SiteMetaData.github} className="mr-8 inline-block h-4 w-4">
           {/* <Image src={githubImg} alt="Github" /> */}
           {mode === 'light' ? (
             <>
-              <GithubIcon className="ease transition-all duration-200 hover:scale-125" />
+              <GithubIcon className="ease transition-all duration-200 hover:scale-110" />
             </>
           ) : (
             <>
-              <GithubLightIcon className="ease transition-all duration-200 hover:scale-125" />
+              <GithubLightIcon className="ease transition-all duration-200 hover:scale-110" />
             </>
           )}
         </a>
