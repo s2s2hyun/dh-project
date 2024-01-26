@@ -33,7 +33,6 @@ code {
 code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-
   display: inline-block;
   width: 1rem;
   margin-right: 2rem;
