@@ -1,0 +1,84 @@
+---
+title: '클로저(Closure)'
+description: 'Javascript 에서 놓치고 있었던,  Closure 에 대해 복습해보는시간'
+image: '../../public/blogs/logo/javascript-logo.jpg'
+publishedAt: '2024-02-02'
+updatedAt: '2024-02-02'
+author: 'DH'
+isPublished: true
+tags:
+  - javascript
+---
+
+이전에 호이스팅에 관련된 글을 작성하면서 클로저도 이번기회에 한번 내용을 정리해서 추후에 설명시 조금더 말로서 전달이 잘 될수 있도록 블로그를 참고후 작성했습니다.
+
+## 1. 클로저(Closure) 란?
+
+> MDN : JavaScript 클로저는 주변 상태(어휘적 환경)에 대한 참조와 함께 묶인(포함된) 함수의 조합입니다. 즉, 클로저는 내부 함수에서 외부 함수의 범위에 대한 접근을 제공합니다. JavaScript에서 클로저는 함수 생성 시 함수가 생성될 때마다 생성됩니다.
+
+- 클로저는 쉽게 말해 함수 선언시 생성되는 `유효 범위{:html}`이다.<br/>
+  먼저 자바스크립트에서 클로저를 이해하려면 `범위 지정{:html}`(Lexical Scoping)을 이해하여야 한다.
+
+## 2. 코드
+
+```js
+var cat = '🐱'
+
+function displayApple() {
+  console.log(cat)
+}
+
+displayApple()
+//result : 🐱
+```
+
+간단하게 고양이를 출력해주는 함수다.하지만, 정작 함수안에는 cat 이라는 변수가 없는데도 불구하고 고양이가 출력되었다.<br/>
+해당 유요범위에서 식별자를 찾지 못하면 점점 상위 ~ 전역으로 탐색한다.(Scope Chain)
+
+- 이번에는 내부함수 innerFunc를 함수 outerFunc 내에서 호출하는 것이 아니라 반환하도록 변경해 보자.
+
+```js
+function outerFunc() {
+  var cat = '🐱'
+
+  var innerFunc = function () {
+    console.log(cat)
+  }
+  return innerFunc
+}
+
+var inner = outerFunc()
+
+inner()
+
+//result : 🐱
+```
+
+함수 outerFunc는 내부함수 innerFunc를 반환하고 생을 마감했다. 즉, 함수 outerFunc는 실행된 이후 콜스택(실행 컨텍스트 스택) 에서 제거되었으므로 함수 outerFunc의 변수 cat 또한 더이상 유효하지 않게 되어 변수 cat에 접근할 수 있는 방법은 달리 없어 보인다.<br />
+그러나 위 코드의 실행 결과는 변수 cat 의 값인 이모지 🐱 가 나왔다. 이미 life-cycle 이 종료되어 실행 컨텍스트 스택에서 제거된 함수 outerFunc의 지역변수가 cat 이 다시 부활이라도 한 듯 동작하고 있다.
+
+이처럼 자신을 포함하고 있는 외부함수보다 내부함수가 더 오래 유지되는 경우, 외부 함수 밖에서 내부함수가 호출되더라도 외부함수의 지역변수에 접근할 수 있는데 이러한 함수를 클로저(Closure) 라고 부른다.<br/>
+
+**내용 정리:** 클로저는 반환된 내부함수가 자신이 선언됐을 때의 환경(Lexical enviroment)인 스코프를 기억하여 자신이 선언됐을 떄의 환경(scope) 밖에서 호출되어도 그 환경(scope)에 접근할 수 있는 함수를 말한다.
+이를 조금 더 간단히 말하면 클로저는 자신이 생성될 때의 환경(Lexical enviroment)을 기억하는 함수다 라고 말할 수 있겠다.
+
+<Image
+  src="/blogs/closure/closure.png"
+  width="1000"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+
+[poiemaweb 블로그 및 사진 출처](https://poiemaweb.com/js-closure)
+
+위에 사진과 같이 즉, 외부함수가 이미 반환되었어도 외부함수 내의 변수는 이를 필요로 하는 내부함수가 하나 이상 존재하는 경우 계속 유지된다. 이때 내부함수가 외부함수에 있는 변수의 복사본이 아니라 실제 변수에 접근한다는 것에 주의하여야 한다.<br/>
+**(ex) 사진 var x = 10; 을 저는 var cat="🐱") **
+
+## 3. 클로저의 활용
+
+클로저는 자신이 생성될 때의 환경(Lexical enviroment)을 기억해야 하므로 메모리 차원에서 손해를 볼 수 있습니다. 하지만 클로저는 자바스크립트의 강력한 기능으로 이를 적극적으로 사용해야 합니다. 클로저가 유용하게 ㅅ사용되는 상황에 대해 직접 구현해보겠습니다.
+
+### 3.1 상태유지
+
+## 2/2 ~2/3 추가 작성예정
