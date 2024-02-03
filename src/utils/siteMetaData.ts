@@ -12,7 +12,7 @@ const SiteMetaData = {
   theme: 'system',
   siteUrl: 'https://donghyundev.com/',
   siteLogo: '/favicon.ico',
-  socialBanner: './og-image.png',
+  socialBanner: '/og-image.png',
   email: 's2s2hyun0601@gmail.com',
   github: 'https://github.com/s2s2hyun',
   linkedIn: 'https://www.linkedin.com/in/s2s2hyun/',

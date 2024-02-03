@@ -67,17 +67,12 @@ export default function RootLayout({
     <html lang="kor">
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:type" content="image/png" />
         <meta
           property="og:url"
           content={
             (metadata?.openGraph?.url as string) ?? 'https://donghyundev.com/'
           }
         />
-        <meta property="og:image" content={SiteMetaData.socialBanner} />
-
         <meta
           name="google-site-verification"
           content="HnXW6PvAgRAB4tkaRIQpZawuDzASeMGRheyYGRNwLVE"
