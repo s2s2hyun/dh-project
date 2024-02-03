@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     description: SiteMetaData.description,
     url: SiteMetaData.siteUrl,
     siteName: SiteMetaData.title,
-    images: [SiteMetaData.siteLogo],
+    images: [SiteMetaData.socialBanner],
     locale: 'ko-KR',
     type: 'website',
   },
