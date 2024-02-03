@@ -7,6 +7,7 @@ import Footer from '../components/Footer'
 import SiteMetaData from '@/src/utils/siteMetaData'
 import Script from 'next/script'
 import Providers from '../utils/providers'
+import Head from 'next/head'
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -28,6 +29,7 @@ export const metadata: Metadata = {
     default: SiteMetaData.title,
   },
   description: SiteMetaData.description,
+
   openGraph: {
     title: SiteMetaData.title,
     description: SiteMetaData.description,
@@ -65,6 +67,15 @@ export default function RootLayout({
     <html lang="kor">
       <head>
         <link rel="icon" href="/favicon.ico" />
+
+        <meta
+          property="og:url"
+          content={
+            (metadata?.openGraph?.url as string) ?? 'https://donghyundev.com/'
+          }
+        />
+        <meta property="og:image" content={SiteMetaData.siteLogo} />
+
         <meta
           name="google-site-verification"
           content="HnXW6PvAgRAB4tkaRIQpZawuDzASeMGRheyYGRNwLVE"
@@ -74,6 +85,7 @@ export default function RootLayout({
           content="3ec8b6ae3e09d81748339a89bbe42c30372614b6"
         />
       </head>
+
       <body
         className={cx(
           notoSansKr.variable,

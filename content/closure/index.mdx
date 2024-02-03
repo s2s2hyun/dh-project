@@ -81,4 +81,97 @@ inner()
 
 ### 3.1 상태유지
 
-## 2/2 ~2/3 React 상황 예시코드 작성후 추가업데이트 예정
+- 클로저가 가장 유용하게 사용되는 상황은 현재 상태를 기억하고 변경된 최신 상태를 유지하는 것이다. 아래 React 예제 입니다.
+
+```html
+import { useState, useEffect } from "react";
+
+function Closure() {
+  const [animal, setAnimal] = useState("🐱");
+
+  useEffect(() => {
+    const displayAnimal = () => {
+      console.log(animal);
+    };
+
+    displayAnimal();
+  }, [animal]);
+
+  const changeAnimal = (newAnimal) => {
+    setAnimal(newAnimal);
+  };
+
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <h4 style={{ fontSize: "2em" }}>Current Animal: {animal}</h4>
+      <button
+        style={{
+          border: "1px solid",
+          borderRadius: "5px",
+          padding: "16px",
+          marginTop: "16px",
+        }}
+        onClick={() => changeAnimal("🐶")}
+      >
+        Change to Dog
+      </button>
+    </div>
+  );
+}
+
+export default Closure;
+
+```
+
+1. 상태유지 : useState를 통해 컴포넌트의 상태 'animal'를 정의하고 초기값을 "🐱" 지정했습니다.
+
+2. 클로저를 통한 상태 접근 및 변경: useEffect 내에 정의된 displayAnimal 함수는 클로저를 형성 하여, useEffect 가 실행될 떄의 'animal' 상태를 기억합니다. 이는 클로저가 외부 함수의 지역변수('animal')에 접근할 수 있게 해주는 자바스크립트의 특성 때문입니다.
+   displayAnimal 함수는 animal 상태가 변경될 때 마다 콘솔에 현재 상태를 출력합니다.
+
+3. React에서 클로저를 사용하여 컴포넌트의 상태를 효과적으로 관리하고,상태 변화에 따른 효과 처리 방법을 보여주는 예시로 만들어봤습니다.
+
+### 3.2 은닉화
+
+- 자바스크립트에서는 여타 언어와는 달리 접근 제어자를 명확하게 지원하지 않는다.<br />
+  클로저를 통해 변수의 유효 범위를 세밀하게 제어할 수 있다.
+
+```js
+function Animals() {
+  var cat = '🐱'
+
+  this.getAnimal = function () {
+    return cat
+  }
+
+  this.setAnimal = function (item) {
+    cat = item
+  }
+}
+
+// `Animals` 인스턴스 생성
+var myAnimal = new Animals()
+
+console.log(myAnimal.getAnimal()) // 🐱 출력
+console.log(myAnimal.cat) // 오류: `cat`은 private 변수이므로 직접 접근X
+myAnimal.setAnimal('🐶')
+console.log(myAnimal.getAnimal()) // 🐶 출력
+```
+
+1. 클로저는 외부 함수가 반횐된 후에도 내부 함수가 외부 함수 범위에 있는 변수에 액세스 할수 있는 Javascript 기능입니다. 이 경우 'getAnimal" 및 'setAnimal'은 'cat'변수에 액세스 할 수 있는 클로저 입니다.
+
+2. 'new'를 사용하여 인스턴스를 생성하는것은 Javascript 객체 지향 프로그래밍 패턴에 필수적입니다. 이를 통해 각 인스턴스는 자체 캡슐화된 데이터 세트(이 예에서는 'cat')와 클로저를 활용해 해당 데이터 상호작용하는 메서드를 가질 수 있습니다.
+
+3. console.log(myAnimal.cat) 는 비공개 변수에 직접 액세스하려고 시도하는데,이는 Javascript의 폐쇄 및 범위 지정 규칙으로 인해 이 컨텍스트에서는 불가능하며 오류가 발생하거나 출력이 '정의되지 않음'으로 이어집니다.
+
+## 4. 정리
+
+JavaScript의 클로저는 자신이 시작된 렉시컬 환경(lexical environment)을 보존하고 참조할 수 있는 함수로, 외부 함수의 실행이 완료된 후에도 바깥쪽 범위에 있는 변수와 상호 작용할 수 있습니다.
