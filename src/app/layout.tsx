@@ -74,7 +74,7 @@ export default function RootLayout({
             (metadata?.openGraph?.url as string) ?? 'https://donghyundev.com/'
           }
         />
-        <meta property="og:image" content={SiteMetaData.siteLogo} />
+        <meta property="og:image" content={SiteMetaData.socialBanner} />
 
         <meta
           name="google-site-verification"
