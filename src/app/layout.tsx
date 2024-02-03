@@ -23,7 +23,6 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SiteMetaData.siteUrl),
-
   title: {
     template: `%s | ${SiteMetaData.title}`,
     default: SiteMetaData.title,
@@ -35,7 +34,7 @@ export const metadata: Metadata = {
     description: SiteMetaData.description,
     url: SiteMetaData.siteUrl,
     siteName: SiteMetaData.title,
-    images: [SiteMetaData.socialBanner],
+    // images: [SiteMetaData.socialBanner],
     locale: 'ko-KR',
     type: 'website',
   },
@@ -81,6 +80,13 @@ export default function RootLayout({
           name="naver-site-verification"
           content="3ec8b6ae3e09d81748339a89bbe42c30372614b6"
         />
+        <meta
+          property="og:image"
+          content="https://donghyundev.com/og-image.png"
+        />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
       </head>
 
       <body
