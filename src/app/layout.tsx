@@ -85,8 +85,8 @@ export default function RootLayout({
           content="https://donghyundev.com/og-image.png"
         />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content="400" />
-        <meta property="og:image:height" content="400" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
       </head>
 
       <body
