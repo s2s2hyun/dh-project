@@ -1,0 +1,449 @@
+---
+title: 'Promise객체 '
+description: '비동기 작업을 다룰 때 사용되는 프로미스 객체에 대해 공부'
+image: '../../public/blogs/logo/javascript-logo.jpg'
+publishedAt: '2024-02-09'
+updatedAt: '2024-02-09'
+author: 'DH'
+isPublished: true
+tags:
+  - javascript
+---
+
+안녕하세요😄 이번에는 비동기 작업을 다룰 떄 사용되는 프로미스 객체에 대해서 블로그 작성하겠습니다.
+
+## 1. 비동기 처리
+
+이전 동기 vs 비동기 블로그를 작성했었습니다. 그때 저는 setTimeout 함수를 이용해 작업을 비동기적으로 처리했었고, setTimeout 함수는 작성된 코드와 같이 콜백함수와 ms 단위의 지연 시간을 매개변수로 입력받는 함수입니다.
+
+ex) 이전 비동기 관련 코드예시입니다.
+
+```js
+const exampleA = () => {
+  setTimeout(() => {
+    console.log('exampleA')
+  }, 5000)
+}
+const exampleB = () => {
+  setTimeout(() => {
+    console.log('exampleB')
+  }, 3000)
+}
+const exampleC = () => {
+  setTimeout(() => {
+    console.log('exampleC')
+  }, 10000)
+}
+const exampleD = () => {
+  console.log('exampleD')
+}
+
+exampleA()
+exampleB()
+exampleC()
+exampleD()
+```
+
+이번에는 위에 함수들을 호출할 때, 출력할 단어와, 단어를 출력하는 함수를 인수로 넘겨주도록 하겠습니다.
+
+```js
+const exampleA = (value, callback) => {
+  setTimeout(() => {
+    callback(value)
+  }, 5000)
+}
+const exampleB = (value, callback) => {
+  setTimeout(() => {
+    callback(value)
+  }, 3000)
+}
+const exampleC = (value, callback) => {
+  setTimeout(() => {
+    callback(value)
+  }, 10000)
+}
+const exampleD = (value, callback) => {
+  callback(value)
+}
+
+exampleA('exampleA', (res) => {
+  console.log(res)
+})
+exampleB('exampleB', (res) => {
+  console.log(res)
+})
+exampleC('exampleC', (res) => {
+  console.log(res)
+})
+exampleD('exampleD', (res) => {
+  console.log(res)
+})
+
+// 출력 'exampleD' , 'exampleB' ,'exampleA''exampleD' 순서대로 나온다.
+```
+
+코드를 실행하면, exampleD 함수가 동기적으로 처리되어 exampleD 가 먼저 출력되고, 이번엔 비동기 함수의 결과값을 계속해서 전달해야하기 때문에 exampleA, exampleB,exampleC가 순서대로 출력됩니다.
+
+여기까지 setTimeout을 사용했을 때 코드의 순서가 어떻게 흘러가는지에 대해 이해를 하셨을껍니다. 자바스크립트의 비동기 처리에 대한 간단한 구현을 통해 저 또한 쉽게 이해를 할수있었습니다.
+
+그렇다면, 이번에는 exampleA에서 매개변수로 받은 값에 4를 더하고, 그 결과값을 exampleB에서 전달받아 다시 2을 빼고, 다시 그 결과값에 7을 더하는 exampleC 함수로 코드를 변경해보도록 하겠습니다.
+
+```js
+const exampleA = (value, callback) => {
+  setTimeout(() => {
+    callback(value + 4)
+  }, 5000)
+}
+const exampleB = (value, callback) => {
+  setTimeout(() => {
+    callback(value - 2)
+  }, 3000)
+}
+const exampleC = (value, callback) => {
+  setTimeout(() => {
+    callback(value + 7)
+  }, 10000)
+}
+const exampleD = (value, callback) => {
+  callback(value)
+}
+
+exampleA(10, (resA) => {
+  console.log(`1. ${resA}`)
+  exampleB(resA, (resB) => {
+    console.log(`2. ${resB}`)
+    exampleC(resB, (resC) => {
+      console.log(`3. ${resC}`)
+    })
+  })
+})
+
+exampleD('exampleD', (res) => {
+  console.log(res)
+})
+
+// 출력 'exampleD' , '1. 14' , '2. 12' , '3. 19'
+```
+
+코드를 실행하면 exampleD 함수가 동기적으로 처리되어 'exampleD' 가 가장 먼저 출력되고, 이번엔 비동기 함수의 결과값을 계속해서 전달해야하기 때문에 exampleA,exampleB,exampleC 가 순서대로 실행되어 10에서 4를 더한 14, 14에서 2를 뺀 12, 12에서 7을 더한 19가 순서대로 출력되는걸 볼수있습니다.
+
+자바스크립트에서 비동기 함수의 결과값을 또 다른 비동기 함수에서 사용하기 위해 이렇게 콜백함수 안에 콜백함수를 전달하는 방식으로 전달하게 되면, 함수의 실행 순서를 알기 쉽고, 유연한 프로그래밍을 할 수 있다는 장점이 있지만, 가독성이 매우 좋지 않은 코드가 되어 많은 오류를 발생시킨다는 단점이 있습니다.
+
+우리는 이렇게 > 모양으로 복잡하게 생긴 코드를 콜백 지옥이라고 부르며, 이러한 콜백지옥은 프로미스(promise) 객체 를 이용해 해결할 수 있습니다.
+
+## 2. 프로미스 객체
+
+프로미스 객체는 비동기 작업을 더 편리하게 처리할 수 있게 도와주는 자바스크립트의 내장 객체 입니다.
+
+생성법 부터 알아보겠습니다.
+
+프로미스 객체는 new 키워드와 생성자를 사용해 생성이 가능합니다.
+
+```js
+const promise = new Promise()
+```
+
+프로미스 객체를 만들 때에는 인수로 executor 라는 실행함수를 전달합니다.
+
+```js
+const executor = (resolve, reject) => {
+  //코드
+}
+
+const promise = new Promise(executor)
+```
+
+실행함수란 프로미스 생성자에 반드시 들어가야 하는 함수이며, 작업을 비동기로 처리하는 함수입니다.
+
+2초 후에 실행되는 비동기 함수를 프로미스 객체를 이용해 구현해 보겠습니다.
+
+executor 실행함수 안에 setTimeout 함수를 작성해 "2초만 기다려주세요" 라는 문장을 출력해보겠습니다.
+
+```js
+const executor = (resolve, reject) => {
+  setTimeout(() => {
+    console.log('2초만 기다려주세요')
+  }, 2000)
+}
+
+const promise = new Promise(executor)
+
+//'2초만 기다려주세요' 출력완료
+```
+
+코드를 실행하면 2초 후에 '2초만 기다려주세요' 문장이 출력되는 것을 확인할 수 있습니다.
+
+이렇게 executor 함수는 프로미스 객체를 생성함과 동시에 실행되는 실행함수입니다.
+
+## 3.resolve, reject
+
+executor 함수의 매개변수인 resolve,reject 콜백함수 입니다.
+
+resolve와 reject은 자바스크립트에서 자체적으로 제공하는 콜백함수로, executor는 비동기처리가 성공하면 resolve를,실패하면 reject를 호출합니다.
+
+비동기 처리 작업은 항상 성골할 수도 있고, 실패할 수도 있기 때문에 이 resolve와 reject 둘 중 하나는 반드시 호출해야합니다.
+
+### 3.1 프로미스 내부 프로퍼티
+
+프로미스는 객체이기 때문에 프로퍼티들을 갖고 있는데요, 더 자세한 설명을 위해 프로미스 객체의 내부 프로퍼티들을 살펴보겠습니다.
+
+프로미스 객체는 state, result 이렇게 두 가지의 내부 프로퍼티들을 갖습니다.
+
+프로미스 객체는 맨 처음 대기(pending) 상태와 undefined의 값을 가지고 있다가, executor 가 호출하는 콜백 함수에 따라 state와 result가 변화됩니다.
+
+<Image
+  src="/blogs/promise-asynchronous/newpromise-img.png"
+  width="800"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+
+[출처 이미지 :웹 프론트엔드를 위한 자바스크립트 첫걸음](https://gitbook-js.hyobb.com/section4/4-2)
+
+그림에서 볼 수 있듯이, executor가 실행되고,처음엔 대기 상태에 있다가,resolve가 호출 될 경우 프로미스의 state를 fulfilled(성공)로 변경하고, reject가 호출 될 경우 상태를 rejected(실패)로 변경됩니다.
+
+result 값도 마찬가지로,처음엔 undefined의 값을 갖고 있다가 resolve가 호출되면 value로, reject가 호출이 되면 error 로 변경됩니다.
+
+이렇게 프로미스 객체의 상태는 resolve와 reject를 통해 변하지만, 한 번 변경된 상태는 더 이상 변하지 않기 때문에, 처리가 끝난 프로미스 객체에 resolve 또는 reject를 호출하면, 무시된다는 것을 주의해야합니다.
+
+### 3.2 resolve 와 reject 사용하기
+
+resolve와 reject가 호출 될 때 프로미스의 내부 프로퍼티 값들이 어떻게 변화하는지에 대해 함께 공부했습니다. 이번에는 resolve 와 reject의 사용법에 함께 공부해보겠습니다.
+
+** resovle **
+
+2초 후에 "성공"을 출력하는 비동기 함수를 resolve를 이용해 구현해보겠습니다.
+
+executor 함수에서 비동기 처리된 결과 값을 반환할 때, 매개변수로 받은 resovle 콜백함수에 결과값을 전달하면 됩니다.
+
+그리고 이 resolve콜백함수에 전달된 값은 프로미스 객체의 **then 메서드**를 이용해 사용할 수 있고, then 메서드에 executor 함수에서 전달한 값이 매개변수로 전달됩니다.
+
+그렇기 때문에 이 매개변수를 console.log를 통해 출력해보는걸 해보겠습니다.
+
+```js
+const executor = (resolve, reject) => {
+  setTimeout(() => {
+    resolve('성공')
+  }, 2000)
+}
+
+const promise = new Promise(executor)
+
+promise.then((res) => {
+  console.log(res)
+})
+
+//'성공' 출력완료
+```
+
+먼저 프로미스 객체가 생성됨과 동시에 executor 함수가 실행되었고, executor함수에서는 매개변수로 받은 콜백함수들 중, resolve 함수를 이용해 "성공" 라는 값을 전달했습니다.
+
+이때, 프로미스 객체의 state는 pending 에서 fulfilled로 변경되고, result는 undefined에서 "성공"으로 변경됩니다.
+
+그 다음, then 메서드를 통해 프로미스 객체의 result 값을 매개변수로 받아 콘솔에 출력하는 코드입니다.
+
+** reject **
+
+그럼 그 반대로 reject 를 이용해 비동기 처리가 실패했다고 가정하에 reject 함수의 사용법을 함께 공부해보겠습니다.
+
+executor 함수에서 reject 콜백함수를 사용해 "실패"라고 값을 전달해보겠습니다.
+
+```js
+const executor = (resolve, reject) => {
+  setTimeout(() => {
+    reject('실패')
+  }, 2000)
+}
+
+const promise = new Promise(executor)
+
+promise.then((res) => {
+  console.log(res)
+})
+
+//Uncaught (in promise) 실패 출력
+```
+
+reject 함수가 실행되었기 때문에, 프로미스 객체의 state는 pending 에서 rejected로, result는 undefined에서 "실패"로 변경됩니다.
+
+동일하게 then 메서드를 통해 프로미스 객체의 result 값을 콘솔에 출력해봤지만, 이번엔 아무것도 출력 되지 않는 것을 볼 수 있습니다.
+
+then 메서드는 작업이 성공했을 때 사용되는 메서드이고, 이렇게 reject 함수를 사용해, 작업이 실패했을 때 결과값을 사용하기 위해선 .catch 메서드를 사용해야합니다.
+
+```js
+const executor = (resolve, reject) => {
+  setTimeout(() => {
+    reject('실패')
+  }, 2000)
+}
+
+const promise = new Promise(executor)
+
+promise
+  .then((res) => {
+    console.log(res)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+//'실패' 출력완료
+```
+
+이렇게 작업이 실패하게 되면,then 메서드는 실행되지 않고, catch 메서드만 실행되어, 콘솔창에는 "실패"가 출력이 됩니다.
+
+## 4. 콜백지옥을 해결하는 Promise 객체
+
+프로미스 객체를 생성하고, executor와 프로미스 객체의 내부 프로퍼티들에 대해 공부하면서, 프로미스 객체를 활용해 비동기 작업이 성공했을 때와, 실패했을 떄의 처리하는 방법 까지 공부했습니다.
+
+마지막으로는 우리가 프로미스 객체를 배우기 전에 겪었던 **콜백지옥** 함수를 지금까지 배운 프로미스 객체를 사용해 작성해보겠습니다.
+
+위에서 작성했던 대제목 1번에 예시코드로 Promise 객체를 사용해서 만들어보도록 하겠습니다.
+
+- 이전코드
+
+```js
+const exampleA = (value, callback) => {
+  setTimeout(() => {
+    callback(value + 4)
+  }, 5000)
+}
+const exampleB = (value, callback) => {
+  setTimeout(() => {
+    callback(value - 2)
+  }, 3000)
+}
+const exampleC = (value, callback) => {
+  setTimeout(() => {
+    callback(value + 7)
+  }, 10000)
+}
+const exampleD = (value, callback) => {
+  callback(value)
+}
+
+exampleA(10, (resA) => {
+  console.log(`1. ${resA}`)
+  exampleB(resA, (resB) => {
+    console.log(`2. ${resB}`)
+    exampleC(resB, (resC) => {
+      console.log(`3. ${resC}`)
+    })
+  })
+})
+
+exampleD('exampleD', (res) => {
+  console.log(res)
+})
+
+// 출력 'exampleD' , '1. 14' , '2. 12' , '3. 19'
+```
+
+promise 객체 사용
+
+```js
+const exampleA = (value) => {
+  const promise = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(value + 4)
+    }, 5000)
+  })
+  return promise
+}
+const exampleB = (value) => {
+  const promise = new Promise((resove) => {
+    setTimeout(() => {
+      resove(value - 2)
+    }, 3000)
+  })
+  return promise
+}
+const exampleC = (value) => {
+  const promise = new Promise((resove) => {
+    setTimeout(() => {
+      resove(value + 7)
+    }, 10000)
+  })
+  return promise
+}
+
+exampleA(10)
+  .then((resA) => {
+    console.log(`1. ${resA}`)
+    exampleB(resA).then((resB) => {
+      console.log(`2. ${resB}`)
+      exampleC(resB).then((resC) => {
+        console.log(`3. ${resC}`)
+      })
+    })
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+```
+
+이렇게 작성해본 결과,여전히 콜백지옥 코드의 모양과 비슷하기 떄문에 큰 차이가 있다고 생각이 그닥 나질 않습니다.
+
+그럼 이 then 메서드를 한번 다른 방식으로 사용해보겠습니다.
+
+** 프로미스 체이닝 **
+
+이번에는 then 메서드의 콜백함수 안에서 exampleA => exampleB 함수를 리턴해주도록 하겠습니다.
+
+```js
+const exampleA = (value) => {
+  const promise = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(value + 4)
+    }, 5000)
+  })
+  return promise
+}
+const exampleB = (value) => {
+  const promise = new Promise((resove) => {
+    setTimeout(() => {
+      resove(value - 2)
+    }, 3000)
+  })
+  return promise
+}
+const exampleC = (value) => {
+  const promise = new Promise((resove) => {
+    setTimeout(() => {
+      resove(value + 7)
+    }, 10000)
+  })
+  return promise
+}
+
+exampleA(10)
+  .then((resA) => {
+    console.log(`1. ${resA}`)
+    return exampleB(resA)
+  })
+  .then((resB) => {
+    console.log(`2. ${resB}`)
+    return exampleC(resB)
+  })
+  .then((resC) => {
+    console.log(`3. ${resC}`)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+```
+
+이렇게 계속해서 프로미스 객체를 반환하며,then 메서드를 연속으로 사용하는 것을 ** 프로미스 체이닝 ** 이라고 부릅니다.
+
+프로미스 체이닝을 사용해 코드를 작성하면, 코드를 아래쪽으로 계속 작성할 수 있기 때문에 훨신 직관적으로 코드를 해석할 수 있고, 혼자만이 아닌 다른 팀원들에게도 쉽게 해석할 수 있게 됩니다.
+
+## 5. 정리
+
+최근 블로그 게시글을 동기-비동기에 관련된 공부가 계속 이뤄지고있습니다. 사실 이러한 내용들은 면접시 질문도 많이 나오는 방면, 개발자라 하면 말로서 의사 전달도 매우 잘되어야 하며, 팀원들간의 소통을 중요시 되기에 이러한 개념들은 꼭 탑재를 해야함으로, 제가 참고한 블로그를 보며, 코드도 직접 구현해보며 공부해봤습니다. 다음번에는 이 프로미스 객체를 더 쉽게 사용할 수 있는 async/await 에 대해서 추가적으로 블로그를 작성해볼 예정입니다. 끝까지 읽어주셔서 감사하며,
+
+참고한 블로그입니다.
+
+[비동기 - 프로미스 :웹 프론트엔드를 위한 자바스크립트 첫걸음](https://gitbook-js.hyobb.com/section4/4-2)
+
+[6.9 Promise - 프로미스 : poiemaweb 블로그 ](https://poiemaweb.com/es6-promise)
