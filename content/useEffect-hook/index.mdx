@@ -1,0 +1,196 @@
+---
+title: 'useEffect란?'
+description: 'React Hook useEffect'
+image: '../../public/blogs/logo/react-logo.jpg'
+publishedAt: '2024-02-10'
+updatedAt: '2024-02-10'
+author: 'DH'
+isPublished: true
+tags:
+  - react
+---
+
+안녕하세요. React로 개발을 하다보면 자주 사용되는 React Hook useEffect에 대해 소개해드리겠습니다.
+
+## 1. useEffect
+
+useEffect() 함수는 React component가 렌더링 될 때마다 특정 작업(Side effect)을 실행할 수 있도록 하는 리액트 hook 입니다.
+
+여기서 Side effect 는 component가 렌더링 된 이후에 비동기로 처리되어야 하는 부수적인 효과들을 뜻합니다. 이러한 기능으로 인해 함수형 컴포넌트에서도 클래스형 컴포넌트에서 사용했던 생명주기 메서드를 사용할 수 있게 되었습니다.
+
+useEffect는 component가 mount 됐을 때, component가 unmount 됐을 때, component가 update 됐을 때, 특정 작업을 처리할 수 있습니다.
+
+<Image
+  src="/blogs/react-hook-useEffect/react-hook-image.png"
+  width="1200"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+이미지 출처: https://despiteallthat.tistory.com/182#[_useEffect_]
+
+- componentDidMount: 컴포넌트를 만들고, 첫 렌더링을 다 마친 후 실행합니다.
+
+- componentDidUpdate: 리렌더링을 완료한 후 실행. 즉 render()가 업데이트될 때 마다 실행합니다.
+
+- componentWillUnMount: 컴포넌트를 DOM에서 제거할 때 실행합니다.
+
+## 2. useEffect 사용방법
+
+```js
+useEffect(function,deps)
+```
+
+- function: 수행하고자 하는 작업(리액트는 이 함수를 기억 했다가 DOM 업데이트 후 불러냅니다.) 또한, 이 함수에서 함수를 return 할 경우 그 함수가 컴포넌트가 Unmount 될 때 다시 한 번 실행됩니다.
+
+- deps: 배열 형태이며,배열 안에는 검사하고자 하는 특정 값 or 빈 배열 deps에 특정 값을 넣게 되면 컴포넌트가 mount 될 때, 지정한 값이 업데이트 될 떄 useEffect를 실행합니다.
+
+```js
+import React, { useEffect } from 'react'
+```
+
+### 2.1 componentDidMount
+
+Component가 mount 됐을 때 (처음 나타났을 떄 실행)
+
+```js
+useEffect(() => {
+  console.log('마운트 될 때만 실행된다.')
+}, [])
+```
+
+<br />
+
+컴포넌트가 화면에 가장 처음 렌더링 될 때 한 번만 실행하고 싶다면 deps 위치에 빈 배열을 넣어줍니다.
+
+<br />
+
+```js
+useEffect(() => {
+  console.log('마운트 될 때만 실행된다.')
+})
+```
+
+<br />
+
+만약 배열을 생략한다면 리렌더링 될 떄마다 실행됩니다.
+
+### 2.2 componentDidUpdate
+
+Component가 update 될 때 (특정 props, state가 바뀔 때 실행)
+
+<br />
+
+```js
+const [name, setName] = useState('')
+
+useEffect(() => {
+  console.log(name)
+  console.log('업데이트 될 때 실행된다.')
+}, [name])
+```
+
+<br />
+
+특정 값이 업데이트 될 떄 실행하고 싶다면, deps 위치의 배열 안에 검사하고 싶은 값을 넣어줍니다.
+(의존 값이 들어있는 배열 deps 라고도 합니다.dependency를 의미 )
+
+하지만 업데이트 될 떄만 실행하는 것이 아니라 마운트 될 때도 실행됩니다. 만약 업데이트 될 떄만 실행시키고 싶다면 아래와 같은 방법을 사용합니다.
+
+```js
+const [name, setName] = useState('')
+const mounted = useRef(false)
+
+useEffect(() => {
+  if (!mounted.current) {
+    mounted.current = ture
+  } else {
+    console.log(name)
+    console.log('업데이트 될 때마다 실행')
+  }
+}, [name])
+```
+
+### 2.3 componentDidUnMount
+
+Component가 unmount 될 때 (사라질 때) & update 되기 직전에 실행
+
+```js
+useEffect(() => {
+  console.log('hello')
+  console.log(name)
+  return () => {
+    console.log('cleanup')
+    console.log(name)
+  }
+}, [])
+```
+
+cleanup 함수 변환(return 뒤에 나오는 함수이며, useEffect 에 대한 뒷정리 함수라고 합니다.)
+
+1. 언마운트 될 떄만 cleanup 함수를 실행하고 싶다면 , 두 번째 파라미터에 빈 배열을 넣습니다.
+
+2. 특정 값이 업데이트 되기 직전에 cleanup 함수를 실행하고 싶다면, deps 배열 안에 검사하고 싶은 값을 넣어줍니다.
+
+💡 useEffect 함수가 실행 되기 전에 (처음 실행되는 경우를 제외하고는) cleanup 함수가 실행됩니다.
+
+즉, 컴포넌트가 재사용 될 때마다 실행되며 모든 새로운 sideEffect 함수가 실행되기 전에 (처음 실행 제외) , 그리고 컴포넌트가 제거되기 전에 실행됩니다.
+
+## 2.4 deps 에 특정값 넣기
+
+deps 에 특정 값을 넣게 된다면 컴포넌트가 처음 마운트 될 때, 지정한 값이 바뀔 때, 언마운트 될 때, 값이 바뀌기 직전에 모두 호출이 됩니다.
+
+useEffect 안에서 사용하는 상태나,props 가 있다면, useEffect 의 deps에 넣어주어야 하는 것이 규칙입니다.
+
+만약 사용하는 값을 넣어주지 않는다면, useEffect 안의 함수가 실행될 때 최신 상태,props를 가리키지 않습니다.
+
+deps 파라미터를 생략한다면, 컴포넌트가 리렌더링 될 때마다 useEffect 함수가 호출됩니다.
+
+```tsx
+import React, { useState, useEffect } from 'react'
+
+function ClickCounter({ externalCount }) {
+  const [count, setCount] = useState(0)
+
+  // 의존성이 없는 경우 - 모든 렌더링 후 실행
+  useEffect(() => {
+    console.log('컴포넌트가 렌더링되거나 다시 렌더링되었습니다.')
+  })
+
+  // 의존성 배열이 비어 있는 경우 - 마운트 시 한 번만 실행
+  useEffect(() => {
+    console.log('컴포넌트가 마운트되었습니다.')
+
+    return () => {
+      console.log('컴포넌트가 언마운트될 것입니다.')
+    }
+  }, [])
+
+  // 특정 의존성이 있는 경우 - 마운트 시 그리고 `count`나 `externalCount`가 변경될 때마다 실행
+  useEffect(() => {
+    console.log(
+      `count (${count}) 또는 externalCount (${externalCount})가 변경되었습니다.`,
+    )
+
+    return () => {
+      console.log(
+        `count (${count}) 또는 externalCount (${externalCount})가 변경되기 전입니다.`,
+      )
+    }
+  }, [count, externalCount])
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <p>External Count: {externalCount}</p>
+      <button onClick={() => setCount(count + 1)}>카운트 증가</button>
+    </div>
+  )
+}
+
+export default ClickCounter
+```
+
+## 3. 정리
+
+React를 통한 웹 개발을 하는 개발자라면 React Hook에 대한 설명을 조금 더 다양한 예시와 설명을 잘해야한다고 생각한다. useEffect 를 보다 적재적소에 제대로 활용을 할수 있도록 공부를 함께 해봅시다! 화이팅
