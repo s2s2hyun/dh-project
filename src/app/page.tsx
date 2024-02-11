@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center ">
       <HomeCoverSection blogs={allBlogs as BlogPost[]} />
-      <FeaturedPost blogs={allBlogs as BlogPost[]} />
+      {/* <FeaturedPost blogs={allBlogs as BlogPost[]} /> */}
       <RecentPost blogs={allBlogs as BlogPost[]} />
     </main>
   )
