@@ -105,7 +105,7 @@ useEffect(() => {
   if (!mounted.current) {
     mounted.current = ture
   } else {
-    console.log(name)
+    setName('mount')
     console.log('업데이트 될 때마다 실행')
   }
 }, [name])
