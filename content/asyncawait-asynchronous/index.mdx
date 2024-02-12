@@ -1,0 +1,177 @@
+---
+title: 'async-await 비동기처리'
+description: '자바스크립트 비동기처리 async-await에 공부 '
+image: '../../public/blogs/logo/javascript-logo.jpg'
+publishedAt: '2024-02-12'
+updatedAt: '2024-02-12'
+author: 'DH'
+isPublished: true
+tags:
+  - javascript
+---
+
+안녕하세요😄 이번에는 비동기 작업을 다룰 떄 사용되는 프로미스 객체를 더욱 쉽게 직관적으로 작성할 수 있게 도와주는 async/await 문법에 대해 공부해보겠습니다.
+
+## 1. async/await
+
+저번에 블로그 작성한 프로미스 객체에 대한 복습할 겸, 프로미스 객체를 사용해 간단한 비동기 처리 함수를 작성해보겠습니다.
+
+delay 라는 함수를 작성하고, delay 함수에서는 setTimeout 함수에서 사용될 지연 시간을 매개변수로 받도록 하겠습니다.
+
+그 다음 프로미스 객체를 반환하고, resolve 함수를 호출해주고, delay 함수의 아래쪽에는 start 라는 함수를 생성하고, 이 delay 함수를 호출해주도록 하겠습니다.
+
+이 delay 함수의 인수로는 2000을 넘겨 2초 동안 지연하게 해주고, then 메서드를 사용해, "대기"라는 단어를 출력해줍시다.
+
+```js
+const delay = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
+const start = () => {
+  delay(2000).then(() => {
+    console.log('대기')
+  })
+}
+
+start()
+```
+
+이렇게 작성된 start 함수를 호출하면, 2초 후에 "대기" 라는 단어가 출력됩니다.
+
+우리는 이와 같이 작성된 코드를 async/await 을 이용해 좀 더 직관적인 코드로 바꿔 작성할 수 있습니다.
+
+async 와 await 문법은 프로미스 객체를 더욱 쉽게 작성할 수 있고, 직관적으로 코드를 해석할 수 있게 도와주는 역할을 합니다.
+
+먼저 async 키워드를 사용해 작성된 코드를 변경해보겠습니다.
+
+```js
+const delay = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
+const start = async () => {
+  delay(2000).then(() => {
+    console.log('대기')
+  })
+}
+
+start()
+```
+
+asnyc 키워드는 함수 이름의 오른쪽에 작성됩니다.
+
+async 키워드가 붙은 함수 start에 마우스를 올려보면, 이 함수는 프로미스 객체를 반환한다고 표시 됩니다.
+
+실제로 이 async 키워드가 붙은 start 함수를 출력해보면, Promise{}, state가 pending인 프로미스가 출력되는 것을 볼 수 있습니다.
+
+따라서 이렇게 async를 붙인 함수는 자동으로 프로미스 객체를 반환하는 비동기처리 함수가 되기 때문에, 이 start 함수를 이렇게 then 메서드를 사용해 작성할 수 있습니다.
+
+```js
+const delay = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
+const start = async () => {
+  //  delay(2000).then(() => {
+  //   console.log('대기')
+  //  })
+
+  return '대기'
+}
+
+start().then((res) => {
+  console.log(res)
+})
+```
+
+코드를 실행해보면, "대기"가 바로 출력되는 것을 볼 수 있는데, 그 이유는 이 start 함수의 반환 값이,start 함수가 반환하는 프로미스 객체의 resolve 값과 동일하기 때문입니다.
+
+이렇게 함수에 async 키워드만 붙이면 프로미스 객체를 반환함과 동시에 리턴문 옆에 작성한 resolve 의 결괏값으로 전달되기 떄문에 훨씬 깔끔한 코드를 작성할 수 있게 해줍니다.
+
+다시 돌아와서 이번에는 await에 대해 작성해보겠습니다.
+
+await 키워드는 이렇게 특정 함수의 앞에 작성되고, 이 then 키워드를 대신해 사용할 수 있습니다.
+
+```js
+const delay = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
+const start = async () => {
+  await delay(2000)
+  console.log('대기')
+}
+
+start()
+```
+
+await 키워드는 async 키워드가 붙어있는 함수의 내부에서만 사용 가능하며,
+
+이 await은 "기다리다" 라는 뜻을 지닌 만큼, 말 그대로 해당 프로미스가 처리될 떄까지, 즉 delay 함수가 처리완료 될 떄까지 기다린 다음, 결괏값을 받아볼 수 있기 떄문에 await가 작성된 함수가 종료되기 전에는 그 아래 작성된 코드들은 수행되지 않습니다.
+
+await 을 지우고, 코드를 실행하면 이렇게 "대기"라는 단어가 바로 실행되지만, await을 작성하고 코드를 실행하면, 2초 후에 "대기" 라는 단어가 출력되는걸 볼 수 있습니다.
+
+이렇게 asnyc와 await으로 비동기 함수를 처리하게 되면, 프로미스 객체를 훨씬 가독성 좋게 사용 가능하고, 편리하게 사용할 수 있으며, 기존에 실행 숮ㄴ서가 예측이 불가능 했던 비동기 처리 방식과는 달리, 비동기 함수의 실행 순서를 예측할 수 있게 만들어줍니다.
+
+## 2. 에러 핸들링
+
+이 async/await 을 사용할 때 에러를 처리하는 방법에 대해 알아보겠습니다.
+
+앞서 프로미스 객체를 이용해 비동기 처리를 할 경우에는 .catch 를 이용해 에러처리를 했었는데요, async와 await 을 이용해 비동기 처리를 할 경우에는 어떻게 에러처리를 하는지 알아봅시다.
+
+asnyc 와 await 을 이용한 비동기 처리 함수에서는 try catch 문법을 이용해 예외처리를 할 수 있습니다.
+
+async 키워드가 작성된 start 함수 안에 try 라는 키워드를 작성해주겠습니다.
+
+이 try의 블록 안에 작성된 코드가 실행되고, 해당코드에서 에러가 발생하면, 아래와 작성할 catch 블록 안의 코드가 실행되게 됩니다.
+
+발견된 에러는 이 catch에 전달된 error 객체에 담기게 되기 때문에, 에러 발생 시 이 error 객체를 사용하면, 어떠한 에러가 발생했는지 출력할 수 있습니다.
+
+```js
+const delay = (ms) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, ms)
+  })
+}
+
+const start = async () => {
+  try {
+    await delay(2000)
+    console.log('대기')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+start()
+```
+
+이렇게 프로미스 객체를 좀 더 편리하고 직관적으로 사용할 수 있는 async/await 에 대해 공부해봤습니다.
+
+오늘 함께 공부한 async/await 은 프로미스 객체를 좀 더 직관적이고 편리하게 사용할 수 있게 도와주는 키워드이고, async가 붙은 함수는 항상 프로미스 객체를 반환하고, await 키워드는 async 함수 내부에서만 사용 가능하며, 이 await 가 붙은 함수에서는 항상 해당 프로미스가 처리 될 때 까지 대기하게 됩니다.
+
+그리고 이 async/await 는 try/catch를 사용해 에러를 핸들링이 가능합니다.
+
+async/await 을 통해서 비동기처리를 하는데 있어서 조금더 직관적이며, 최신 ES2017에 도입된 문법이라 하지만, 적재적소에 필요한 상황에서만 사용되어야합니다.
+
+## 3. async / awiat 함정과 병렬처리
+
+(오후에 추후 작성 예정 )
