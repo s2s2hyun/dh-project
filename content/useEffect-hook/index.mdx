@@ -98,17 +98,34 @@ useEffect(() => {
 하지만 업데이트 될 떄만 실행하는 것이 아니라 마운트 될 때도 실행됩니다. 만약 업데이트 될 떄만 실행시키고 싶다면 아래와 같은 방법을 사용합니다.
 
 ```js
-const [name, setName] = useState('')
-const mounted = useRef(false)
+import React, { useState, useEffect, useRef } from 'react'
 
-useEffect(() => {
-  if (!mounted.current) {
-    mounted.current = ture
-  } else {
-    setName('mount')
-    console.log('업데이트 될 때마다 실행')
+function ExampleComponent() {
+  const [name, setName] = useState('')
+  const mounted = useRef(false)
+
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true
+    } else {
+      console.log(name)
+      console.log('업데이트 될 때마다 실행')
+    }
+  }, [name])
+
+  const handleChange = (event) => {
+    setName(event.target.value)
   }
-}, [name])
+
+  return (
+    <div>
+      <input type="text" value={name} onChange={handleChange} />
+      <p>The name is: {name}</p>
+    </div>
+  )
+}
+
+export default ExampleComponent
 ```
 
 ### 2.3 componentDidUnMount
