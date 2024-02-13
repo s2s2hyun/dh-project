@@ -115,3 +115,8 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+#image-div {
+  display: flex;
+  justify-content: center;
+}
