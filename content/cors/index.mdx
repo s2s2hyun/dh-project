@@ -10,4 +10,114 @@ tags:
   - network
 ---
 
-2024-02-15 Cors 블로그 작성 예정
+## 1. Cors란?
+
+CORS는 `Cross-Origin Resource Sharing{:html}`의 약자로 직역하면 "`교차 출처 리소스 공유{:html}`"이다.
+
+좀 더 쉽게 말하면 동일한 출처가 아닌 다른 출처에서 데이터를 주고 받는 것을 허용한 정책이다.
+
+그렇다면 이러한 정책이 왜 필요한 것일까?
+
+그건 먼저 "동일 출처 정책"에 대해서 알아야 한다.
+
+## 2. Same Origin Plicy(동일 출처 정책)
+
+동일 출처 정책은 웹 브라우저에서 보안을 강화하기 위하여 동일한 출처에서만 리소스를 주고 받도록 하는 정책이다.
+
+그렇다면 "출처"는 도대체 무엇일까?
+
+쉽게 말하면 URL 주소이다.
+
+today 2/15 URL 에 대한 MDN 설명을 간략하게 블로그에 추가작성 예정
+
+https://developer.mozilla.org/ko/docs/Learn/Common_questions/Web_mechanics/What_is_a_URL
+
+(먼저 URL의 구성요소를 모르는 분들에게 여기 먼저 읽고 오길 바란다.)
+
+하지만 "동일한 출처"는 정확히 똑같은 URL을 의미하는 것은 아니다.
+
+동일한 출처는 UR 중에서도 프로토콜,도메인 주소, 포트번호가 같은 것을 의미한다.
+
+예를 들면 아래와 같다.
+
+## 3. return Cors
+
+다시 CORS로 돌아와서 이러한 동일 출처 정책이 있기 때문에 원래는 다른 출처에서 리소스를 받아오는 것이 제한된다.
+
+하지만 다른 출처로부터 리소스를 받아오는 것은 필수 요소가 되었고, 이러한 문제를 해결하기 위해 나온 정책이 바로 CORS(교차 출처 자원 공유)이다.
+
+그렇다면 CORS는 어떻게 안전하게 다른 출처와 리ㅗ스를 공유하는 것일까?
+
+바로 두 가지 방법이 있는데, 단순 요청 방법과 예비 요청 방법이 있다.
+
+## 3.1 Header
+
+요청 방법은 요청하는 헤더와 응답하는 헤더를 통해서 이루어진다.
+
+<b>요청 헤더</b>
+
+1. Access-Control-Request-Method
+
+요청을 할 때 어떤 메서드를 사용할 것인지를 알려주는 것이다.
+
+2. Access-Control-Request-Headers
+
+요청을 할 때 어떤 헤더를 사요할 것인지 알려주는 것이다.
+
+<b>응답 헤더</b>
+
+1. Access-Control-Allow-Origin
+
+리소스에 접근할 수 있도록 허용하는지를 알려주는 것이다.
+
+2. Access-Control-Expose-Headers
+
+브라우저에게 접근할 수 있는 리스트들을 알려주는 것이다.
+
+3. Access-Control-Max-Age
+
+캐싱되는 시간을 알려주는 것이다.
+
+4. Access-Control-Allow-Credentials
+
+크레덴셜이 true일 때 요청할지에 대한 것을 알려주는 것이다.
+
+5. Access-Control-Allow-Methods
+
+허용되는 메서드를 알려주는 것이다.
+
+6. Access-Control-Allow-Headers
+
+사용 가능한 HTTP 헤더를 알려주는 것이다.
+
+이제 헤더에 대해 알아 보왔습니다. 본격적으로 요청에 대해 한번 공부해보겠습니다.
+
+## 3.2 Preflight Request (예비 요청)
+
+예비 요청은 말 그대로 미리 요청을 보내보고, 안전한지를 판단한 뒤에 본격적으로 요청하는 방식이다.
+
+아래와 같이 예비 요청을 보내고 그에 대한 응답을 받은 뒤 실제 요청을 보내고 응답받게 된다.
+
+조금 더 구체적으로 말하면 헤더에 Access-Control-Request-Method를 통해 요청하는 HTTP 메서드 GET,POST,PUT,DELETE중 하나의 메서드와 Access-Control-Request-Headers를 통해 OPTIONS라는 헤더를 넣고 요청을 보낸다.
+
+이 때 예비로 확인하는 것 뿐이기 때문에 바디에 아무것도 작성하지 않고 헤더만 보낸다,
+
+해당 메서드와 헤더가 유효하다면 서버는 응답 헤더를 통해 접근 가능한지(Access-Control-Allow-Origin),사용할 수 있는 리소스의 리스트(Access-Control-Expose-Headers),캐싱 되는 시간(Access-Control-Max-Age)등을 알려주는 것이다.
+
+## 3.3 Simple Request(단순 요청)
+
+단순 요청은 우의 예비 요청과는 달리 서버에 바로 본격적으로 요청을 시작한다.
+
+그렇다면 미리 확인하지 않고 어떻게 안전하게 리소스를 요청하는 것일까?
+
+그 방법은 조금 까다로운 조건들을 거는 것이다.
+
+1. Access-Control-Request-Method를 통해 요청할 떄 메서드는 HTTP 메서드가 아닌 GET,HEAD,POST 중 하나여야 한다.
+
+2. Access-Control-Request-Headers 통해 요청을 보낼 때 Accept, Accept-Language, Content-Language , Content-TypeDPR, DownLink,Save-Data,Viewport-Width 중 하나여야 한다.
+
+3. Content-Type을 사용할 경우 application/x-www-form-urlencoded , multipart/form-data , text/plain 중 하나여야 한다.
+
+이렇게 까다로운 조건을 걸고 해당 조건에 부합하다면 안전한 요청이라 인식하고 데이터를 응답하는 형식이다.
+
+## 추가적인 내용은 MDN 좀 더 참고하고 정리하는 글과 이미지로 마무리 예정
