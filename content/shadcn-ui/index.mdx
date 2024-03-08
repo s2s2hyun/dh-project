@@ -1,0 +1,258 @@
+---
+title: 'tailwind + shadcn/ui 사용하기'
+description: 'shadcn에서 디자인된 컴포넌트를 copy and paste로 간편하게 사용'
+image: '../../public/blogs/logo/nextjs-logo.png'
+publishedAt: '2024-03-08'
+updatedAt: '2024-03-08'
+author: 'DH'
+isPublished: true
+tags:
+  - Next.JS
+---
+
+<Image
+  src="/blogs/shadcn-ui/shadcn-ui.png"
+  width="1000"
+  height="800"
+  alt="Image"
+  sizes="100vw"
+/>
+
+안녕하세요 오늘은 Next.JS tailwind + shadcn/ui 사용하는 방법을 작성해보겠습니다.
+
+## 1. tailwind는 무엇인가요?
+
+Tailwind CSS는 모든 HTML 파일, 자바스크립트 구성 요소 및 클래스 이름에 대한 다른 템플릿을 스캔하여 해당 스타일을 생성한 후 정적 CSS 파일에 쓰는 방식으로 작동한다. 런타임이 없고 빠르고 유연하며 안정적이다.
+
+- 출처: tailwind 공식문서 번역
+
+```
+
+npx create-next-app@latest
+
+What is your project named? my-app
+Would you like to use TypeScript? No / Yes
+Would you like to use ESLint? No / Yes
+Would you like to use Tailwind CSS? No / Yes
+Would you like to use `src/` directory? No / Yes
+Would you like to use App Router? (recommended) No / Yes
+Would you like to customize the default import alias (@/*)? No / Yes
+What import alias would you like configured? @/*
+```
+
+Next.js 프로젝트를 생성시, 위와 같은 선택사항들을 보실수 있습니다. Next.js는 이제 기본적으로 Typescript, EsLint 및 Tailwind CSS 구성과 함께 제공되어지고 있습니다.
+
+## 2. shadcn/ui은 무엇인가?
+
+> Radix UI 및 Tailwind CSS를 사용하여 구축된 재사용 가능한 컴포넌트. 컴포넌트 라이브러리가 아닌 앱에 copy and paste 하여 재사용 가능한 구성요소 모음이다. npm install 을 하여 종속성 설치를 하지 않는다는 뜻이다. shadcn에서 디자인된 컴포넌트를 copy and paste로 간편하게 사용 가능하다.
+
+### 2.1 shadcn/ui를 Next.js 에 적용해보기.
+
+1. 먼저 Next.js 프로젝트에 tailwind가 적용되어 있다는 하에 설명입니다.
+
+2. Run The CLI
+
+```
+npx shadcn-ui@latest init
+```
+
+3. components.json 구성하기
+
+```
+Would you like to use TypeScript (recommended)? no / yes
+Which style would you like to use? › Default
+Which color would you like to use as base color? › Slate
+Where is your global CSS file? › › app/globals.css
+Do you want to use CSS variables for colors? › no / yes
+Are you using a custom tailwind prefix eg. tw-? (Leave blank if not) ...
+Where is your tailwind.config.js located? › tailwind.config.js
+Configure the import alias for components: › @/components
+Configure the import alias for utils: › @/lib/utils
+Are you using React Server Components? › no / yes
+
+```
+
+4. 사용할 컴포넌트 추가하기
+
+```
+npx shadcn-ui@latest add button
+```
+
+5. 프로젝트 트리 확인
+
+```
+src
+├── app
+│   ├── (auth)
+│   │   ├── (routes)
+│   │   │   ├── login
+│   │   │   │   └── page.tsx
+│   │   │   └── signup
+│   │   │       └── page.tsx
+│   │   └── layout.tsx
+│   ├── (main)
+│   │   └── (routes)
+│   │       └── page.tsx
+│   ├── favicon.ico
+│   ├── globals.css
+│   ├── layout.tsx
+│   └── test
+│       └── page.tsx
+├── components
+│   └── ui
+│       └── button.tsx
+└── lib
+    └── utils.ts
+```
+
+Next.js app router 로 프로젝트를 생성하고 shadcn/ui 명령어를 통해서 설치후 lib/utils.ts 파일과 globals.css 파일변화와 명령어를 통해 추가한 Button 컴포넌트를 명령어를 통해서 추가했더니, components/ui폴더에 button.tsx 파일이 생긴걸 볼수있습니다.
+
+components.json
+
+```
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
+  "tsx": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "src/app/globals.css",
+    "baseColor": "stone",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
+}
+```
+
+lib/utils.ts
+
+```
+import { clsx, ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...classes: ClassValue[]) {
+  return twMerge(clsx(classes));
+}
+```
+
+➡️components.json 구성 시에 Configure the import alias for utils: › @/lib/utils 경로를 설정해주었을 때 해당 경로에 생성되는 utils.ts 파일인데 해당 파일은 tailwind를 merge할 때 발생할 수 있는 클래스 충돌 문제를 해결해주는 역할을 한다.
+
+추가된 버튼 컴포넌트 를 확인해봅시다.
+
+src/components/ui/button.tsx
+
+```tsx
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cva, type VariantProps } from 'class-variance-authority'
+
+import { cn } from '@/lib/utils'
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+        destructive:
+          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+        outline:
+          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        secondary:
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        link: 'text-primary underline-offset-4 hover:underline',
+        test: 'bg-indigo-500',
+      },
+      size: {
+        default: 'h-10 px-4 py-2',
+        sm: 'h-9 rounded-md px-3',
+        lg: 'h-11 rounded-md px-8',
+        icon: 'h-10 w-10',
+      },
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default',
+    },
+  },
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  asChild?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button'
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    )
+  },
+)
+Button.displayName = 'Button'
+
+export { Button, buttonVariants }
+```
+
+➡️ variants 객체 안에 추가된 속성인 font, weight의 css를 작성해주고 기존 variant는 스타일을 추가해준다.
+
+➡️ 저는 variants 객체 안에 test:"bg-indigo-500"을 추가했습니다. 간단하게 테스트예정입니다.
+
+```tsx
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import Image from 'next/image'
+
+export default function Home() {
+  return (
+    <div className="">
+      <p className="text-3xl font-bold text-indigo-500">Hello Pikscord </p>
+      <Button variant="test">Click me</Button>
+    </div>
+  )
+}
+```
+
+<Image
+  src="/blogs/shadcn-ui/shadcn-ui-1.png"
+  width="1000"
+  height="400"
+  alt="Image"
+  sizes="100vw"
+/>
+
+사진과 같이 간단하게 variants에 추가한 test "bg-indigo-500"컬러가 나오고 있는걸 보실수 있습니다.내가 원하는 스타일을 정의하여 편하게 커스텀을 뽐낼수 있습니다.
+
+## 3.장단점 분석
+
+장점
+
+- 컴포넌트 전체가 내 소스코드에 복사되기 때문에,Props를 추가하거나,스타일 변경을 쉽게 할수 있습니다.
+
+- Button,Dropdown 수 많은 제작되어진 컴포넌트를 통해 빠른속도로 작업이 가능합니다.
+
+- 테마가 제공되어 내가 원하는 무드로 변경이 가능합니다.
+
+단점
+
+- 모든 스타일링이 tailwind를 통해서 이뤄지므로 tailwind에 대한 사전지식이 필요합니다.
+
+- 타 UI 라이브러리에 대비하여 자료가 많이 부족한거같습니다.(MUI,bootstrap)
+
+## 4. 결론
+
+아직은 tailwind에 완전히 익숙치는 않지만 여러번 보다보니, 눈에 익어가고 있다는 생각이 드는 순간쯤! shadcn/ui 를 알게되어 편리하다 생각이 많이 들었습니다.
+
+이전에는 @emotion + Material-UI 를 사용하여 웹 퍼블리싱 및 반응형을 하는데 있어서 편리하고 좋았는데, 고민 하던참 검색 한번에 등장하는 바람에 나에게 큰 편리함을 주고 있습니다. tailwind css를 사용하시는분이라면 shadcn/ui 강력 추천드립니다!
