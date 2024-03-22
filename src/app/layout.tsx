@@ -6,8 +6,6 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import SiteMetaData from '@/src/utils/siteMetaData'
 import Script from 'next/script'
-import Providers from '../utils/providers'
-import Head from 'next/head'
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
@@ -63,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="kor">
+    <html lang="ko">
       <head>
         <link rel="icon" href="/favicon.ico" />
         <meta

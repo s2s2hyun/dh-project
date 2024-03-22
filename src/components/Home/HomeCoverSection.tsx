@@ -34,6 +34,7 @@ const HomeCoverSection = ({ blogs }: { blogs: Blog[] }) => {
           blurDataURL={blog.image.blurhashDataUrl}
           alt={blog.title}
           fill
+          loading="eager"
           className="-z-10 h-full w-full rounded-3xl object-cover object-center"
         />
         <div className="z-0 flex w-full flex-col items-start justify-center p-6 text-light sm:p-8 md:p-12  lg:w-3/4 lg:p-16">
