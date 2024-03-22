@@ -34,6 +34,7 @@ const Footer = () => {
         <a
           href="https://github.com/s2s2hyun"
           className="mr-8 inline-block h-6 w-6 fill-white"
+          aria-label="Visit S2S2Hyun's github profile"
         >
           <GithubLightIcon className="ease fill-white transition-all duration-200 hover:scale-125 dark:fill-dark" />
         </a>
@@ -44,7 +45,7 @@ const Footer = () => {
         </span>
 
         <div className="text-center">
-          Made with &hearts; by{' '}
+          Made with &hearts; by
           <a
             href="https://github.com/s2s2hyun"
             className="underline"
