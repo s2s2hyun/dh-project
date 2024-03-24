@@ -145,11 +145,19 @@ const Header = () => {
         </button>
       </nav>
       <div className=" hidden sm:block">
-        <a href={SiteMetaData.linkedIn} className="mr-8 inline-block h-4 w-4">
+        <a
+          href={SiteMetaData.linkedIn}
+          className="mr-8 inline-block h-4 w-4"
+          aria-label="Visit S2S2Hyun's Linked-in profile"
+        >
           {/* <Image src={linkedInImg} alt="sns_LinkedIn_logo" /> */}
           <LinkedIcon className="ease transition-all duration-200 hover:scale-110" />
         </a>
-        <a href={SiteMetaData.github} className="mr-8 inline-block h-4 w-4">
+        <a
+          href={SiteMetaData.github}
+          className="mr-8 inline-block h-4 w-4"
+          aria-label="Visit S2S2Hyun's github profile"
+        >
           {/* <Image src={githubImg} alt="Github" /> */}
           {mode === 'light' ? (
             <>
