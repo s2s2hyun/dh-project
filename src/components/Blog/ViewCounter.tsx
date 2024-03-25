@@ -1,10 +1,10 @@
 'use client'
-
 import React, { useEffect, useRef, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { ViewCounterProps } from '@/types/BlogPost'
+import { supabase } from '@/src/utils/supabaseClient'
 
-const supabase = createClientComponentClient()
+// const supabase = createClientComponentClient()
 
 const ViewCounter = ({
   slug,
