@@ -1,0 +1,171 @@
+---
+title: '프론트엔드가 로딩을 최적화 하는 방법'
+description: '어떤 웹페이지의 로딩 속도를 빠르게 하는 방법엔 어떤 것들이 있을까?'
+image: '../../public/blogs/logo/nextjs-logo.png'
+publishedAt: '2024-03-25'
+updatedAt: '2024-03-25'
+author: 'DH'
+isPublished: true
+tags:
+  - javascript
+---
+
+안녕하세요 프론트엔드 개발중 겪었던 상황이나, 어떻게 하면 로딩을 최적화 하는 방법에 대해서 적어보도록 하겠습니다.
+
+## 1. 측정 분석
+
+먼저 웹사이트가 느리다면 왜 느린지 문제를 먼저 파악하고, 그문제에 맞는 해결책을 찾아야하기 때문에 "측정"을 하는 과정은 중요합니다.
+
+chrome 브라우저의 Lighthouse를 통해 웹사이트를 측정해 속도에 영향을 끼치는 부분을 찾아 볼수있습니다.
+
+<Image
+  src="/blogs/web-frontend/light-housetest.png"
+  width="1000"
+  height="600"
+  alt="Image"
+  sizes="100vw"
+/>
+
+이런식으로 성능 분석 리포트를 통해 웹 사이트의 속도가 느린 이유를 찾을 수 있고, 이를 톧대로 어떻게 웹사이트의 성능을 개선할 수 있다. 내가 파악한 문제점들은 아래와 같았다.
+
+피드백을 주기에 그것을 보고 하나 하나 해결하고 지워나가면 높은 점수를 받을 수 있습니다.
+
+## 2 Gzip
+
+- 텍스트 파일의 압축에 특히 효과적(사이트를 구성하는 HTML,CSS,JS는 모두 텍스트)
+- 웹 서버와 클라이언트 간의 통신에서 Gzip 압축은 텍스트 기반의 HTTP 페이로드를 압축하는 데 널리 사용
+- 대부분의 최신 웹 브라우저는 Gzip 압축을 자동으로 처리
+
+[Gzip 압축을 이용한 데이터 전송과정]
+
+1. 사용자가 웹 브라우저를 통해 특정 웹페이지를 요청
+2. 웹 브라우저는 요청을 만들고, 이 요청에 'Accept-Encoding' 헤더를 포함. 이 헤더는 브라우저가 지원하는 인코딩 방식의 목록을 서버에 알려준다.
+3. 웹 서버는 요청을 받고, 'Accept-Encoding' 헤더를 확인해 브라우저가 어떤 인코딩 방식을 지원하는지 확인
+4. 서버 브라우저가 Gzip 인코딩을 지원한다는 것을 확인하면, 응답 데이터를 Gzip으로 압축
+5. 서버는 압축된 응답을 브라우저로 보내고, 이때 'Content-Encoding:gzip' 헤더를 포함 , 이 헤더는 응답 데이터가 Gzip으로 압축 되어있다는 것을 알려줌
+6. 웹 브라우저는 응답을 받고, 'Content-Encoding' 헤더를 통해 응답이 Gzip으로 압축되었다는 것을 인식
+7. 브라우저는 응답을 Gzip 압축 해제하고, 웹페이지를 사용자에게 표시
+
+서버는 동적으로 브라우저가 지원하는 압축형식에 따라 응답을 압축할 수 있다. 이를 통해 서버는 최적의 압축형식을 선택하고, 웹브라우저와의 호환성 문제를 피할수 있습니다.
+
+아래 예시는 vite.config.js 파일에 Gzip 빌드시 추출되게 만들어두었습니다.
+
+```js
+
+Vite React
+
+vite.config..js
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import compress from 'vite-plugin-compression'
+import reactRefresh from '@vitejs/plugin-react-refresh'
+import imageMin from 'vite-plugin-imagemin'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    react({
+      jsxImportSource: '@emotion/react',
+      babel: {
+        plugins: ['@emotion/babel-plugin'],
+      },
+    }),
+    reactRefresh(),
+    compress({
+      verbose: true,
+      algorithm: 'gzip',
+    }),
+    imageMin({
+      webp: {
+        quality: 95, // Set the quality for WebP images
+      },
+      gifsicle: {
+        // Optional, for GIFs
+        optimizationLevel: 7,
+        interlaced: false,
+      },
+      mozjpeg: {
+        // For JPEGs
+        quality: 95,
+      },
+      pngquant: {
+        // For PNGs
+        quality: [0.9, 1],
+        speed: 4,
+      },
+      svgo: {
+        // For SVGs
+        plugins: [
+          { name: 'removeViewBox' },
+          { name: 'removeEmptyAttrs', active: false },
+        ],
+      },
+    }),
+  ],
+})
+```
+
+## 3. 이미지,동영상 압축
+
+- 리소스의 용량을 줄여 로딩시간을 단축
+- Webp 또는 프로그레시브 JPEG 과 같이 더 작은 파일의 크기로 더 높은 품질을 제공하는 형식 사용
+  (위에 예시 코드를 본다면 이미지 파일의 용량을 웹사이트를 통해서 용량을 줄이거나 하지만, imageMin 라이브러리를 통해 이미지 품질의 영향이 안가는선으로 빌드시 용량을 줄일 수 있습니다.)
+
+## 3.CDN
+
+CDN은 전세계에 분산된 서버 네트워크를 사용하여 사용자에게 웹 ㅗㄴ텐츠를 더 빠르게 제공하는 서비스이다.
+
+사용자는 가까운 CDN 서버에서 콘텐츠를 다운로드 받기 때문에 콘텐츠 로딩 시간이 크게 줄어드는 효과가 있습니다.
+
+특징.
+
+1. 성능 향상 : 이미지 CDN은 사용자에게 가장 가까운 서버에서 이미지를 제공함으로써 지연 시간을 최소화 하고 , 웹사이트의 로딩 속도를 향상
+
+2. 보안: 이미지 CDN은 DDos 공격과 같은 보안 위협으로부터 웹사이트를 보호하는 추가적인 보안 계층을 제공
+
+3. 이미지 최적화: 이미지 CDN은 브라우저, 디바이스,네트워크 상태 등을 고려하여 이미지를 동적으로 최적화 예를 들어, 모바일 사용자에게는 작은 크기의 이미지를, 데스크톱 사용자에게는 큰 크기의 이미지를 제공할 수 있다.
+
+- 정적파일을 여러 취이에 분산하여 둠으로서, 물리적으로 사용자에게 가까운 거리에서 빠른 속도로 컨텐츠를 전송할 수 있습니다.
+
+## 4. 그외 방법들
+
+브라우저 캐싱
+
+- 자주 액세스 하는 리소스를 사용자 브라우저 로컬에 만료날짜를 지정하여 저장
+- 만료날짜 이전에 재접속 하는 경우, 브라우저 캐쉬에 남아있는 리소스를 사용
+
+Preload
+
+- tab,Carousel 메뉴 등의 경우 리소스를 미리 pre-load 하여 브라우저 캐쉬에 저장
+
+Minify
+
+- Javascript 와 CSS의 불필요한 공백과 줄바꿈(white space)을 제거
+- 변수와 함수명 압축
+
+HTTP 요청 최소화
+
+- 여러 CSS파일을 병합
+- Overfetching과 Underfetching 되지 않도록 backend와의 협의
+
+ATF(Above-the-fold)와 Lazyloading
+
+- 스크롤 없이 볼수 있는 영역을 먼저 렌더링 되도록 우선순위 결정
+
+과도한 애니메이션 자제
+
+- CSS doslapdltusdl javascript 애니메이션 보다 빠른 경우가 많다.
+- reflow가 발생하는 애니메이션이 repaint 보다 부화가 많이 발생
+
+Font 용량 최적화
+
+- WOFF2 폰트 우선 사용
+  - 기존 WOFF 보다 용량이 적으나 호환성이 낮음
+- 사용하지 않은 폰트 삭제
+- 서브셋 폰트 사용
+
+그외
+
+- 불필요한 라이브러리 삭제,외부 스크립트 최소화
+- 정적페이지의 경우 빌드시 SSG 또는 ISR 활용
